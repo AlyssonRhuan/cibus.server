@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.arcs.cibus.server.domain.Produto;
 import com.arcs.cibus.server.repository.ProdutoRepository;
+import com.arcs.cibus.server.service.exceptions.ObjectNotFoundException;
 
 @Service
 public class ProdutoService {
@@ -15,8 +16,8 @@ public class ProdutoService {
 	private ProdutoRepository produtoRepository;
 	
 	public Produto findById(Long produtoId) {
-		Optional<Produto> produto = produtoRepository.findById(produtoId);
-		
-		return produto.orElse(null);
+		Optional<Produto> produto = produtoRepository.findById(produtoId);		
+		return produto.orElseThrow(() -> new ObjectNotFoundException(
+				"Produto não encontrado! Id " + produtoId + " não existe."));
 	}
 }

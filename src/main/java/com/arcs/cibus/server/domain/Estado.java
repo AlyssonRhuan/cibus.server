@@ -1,0 +1,53 @@
+package com.arcs.cibus.server.domain;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import com.arcs.cibus.server.serializer.EstadoSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+@Getter
+@Builder
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
+@JsonSerialize(using = EstadoSerializer.class)
+@Entity(name = "cibus_estados")
+public class Estado implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@EqualsAndHashCode.Include
+	private Long estadoId;
+	private String nome;
+
+	@Builder.Default
+	@OneToMany(mappedBy = "estado")
+	private List<Cidade> cidades = new ArrayList<>();
+
+//	================[ GETTERS AND SETTERS ]================		//
+
+	public void addCidade(Cidade cidade) {
+		this.cidades.add(cidade);
+	}
+
+	public void addCidades(List<Cidade> cidades) {
+		this.cidades.addAll(cidades);
+	}
+}
