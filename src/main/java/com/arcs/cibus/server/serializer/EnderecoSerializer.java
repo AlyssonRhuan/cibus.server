@@ -48,8 +48,8 @@ public class EnderecoSerializer extends JsonSerializer<Endereco> {
 		jsonGenerator.writeStringField("bairro", endereco.getBairro());		
 		jsonGenerator.writeStringField("cep", endereco.getCep());	
 		
-		jsonGenerator.writeObject(endereco.getCidade());		
-		jsonGenerator.writeObject(endereco.getCliente());
+		jsonGenerator.writeFieldName("cidade");
+		jsonGenerator.writeObject(endereco.getCidade());
 		
 		jsonGenerator.writeEndObject();
 	}

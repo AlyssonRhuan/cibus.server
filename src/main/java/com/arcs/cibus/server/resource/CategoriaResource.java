@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.arcs.cibus.server.domain.Categoria;
-import com.arcs.cibus.server.domain.Produto;
 import com.arcs.cibus.server.domain.enums.TipoSerializer;
 import com.arcs.cibus.server.service.CategoriaService;
 import com.arcs.cibus.server.service.exceptions.ObjectNotFoundException;
@@ -23,14 +22,13 @@ public class CategoriaResource {
 	private CategoriaService categoriaService;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public List<Produto> listar() {
+	public List<Categoria> listar() {
 		return null;
 	}
 	
 	@RequestMapping(value="/{categoriaId}", method = RequestMethod.GET)
 	public ResponseEntity<Categoria> find(@PathVariable Long categoriaId) throws ObjectNotFoundException {
 		Categoria categoria = categoriaService.findById(categoriaId);
-		categoria.setTipoSerializer(TipoSerializer.COMPLETA);
 		return ResponseEntity.ok(categoria);
 	}
 }

@@ -9,25 +9,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.arcs.cibus.server.domain.Produto;
+import com.arcs.cibus.server.domain.Cliente;
 import com.arcs.cibus.server.domain.enums.TipoSerializer;
-import com.arcs.cibus.server.service.ProdutoService;
+import com.arcs.cibus.server.service.ClienteService;
+import com.arcs.cibus.server.service.exceptions.ObjectNotFoundException;
 
 @RestController
-@RequestMapping(value = "/produtos")
-public class ProdutoResource {
+@RequestMapping(value = "/clientes")
+public class ClienteResource {
 	
 	@Autowired
-	private ProdutoService produtoService;
+	private ClienteService clienteService;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public List<Produto> listar() {
+	public List<Cliente> listar() {
 		return null;
 	}
 	
-	@RequestMapping(value="/{produtoId}", method = RequestMethod.GET)
-	public ResponseEntity<Produto> find(@PathVariable Long produtoId) {
-		Produto produto = produtoService.findById(produtoId);
-		return ResponseEntity.ok(produto);
+	@RequestMapping(value="/{clienteId}", method = RequestMethod.GET)
+	public ResponseEntity<Cliente> find(@PathVariable Long clienteId) throws ObjectNotFoundException {
+		Cliente cliente = clienteService.findById(clienteId);
+		return ResponseEntity.ok(cliente);
 	}
 }
+	

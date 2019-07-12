@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import com.arcs.cibus.server.domain.enums.TipoSerializer;
 import com.arcs.cibus.server.serializer.EstadoSerializer;
@@ -31,8 +32,10 @@ import lombok.ToString;
 @Entity(name = "cibus_estados")
 public class Estado implements Serializable {
 	
-	private static final long serialVersionUID = 1L;    
-    private TipoSerializer tipoSerializer;
+	private static final long serialVersionUID = 1L;  
+	@Transient  
+	@Builder.Default
+    private TipoSerializer tipoSerializer = TipoSerializer.COMPLETA;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

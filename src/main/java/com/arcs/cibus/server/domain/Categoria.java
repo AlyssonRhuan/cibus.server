@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.Transient;
 
 import com.arcs.cibus.server.domain.enums.TipoSerializer;
 import com.arcs.cibus.server.serializer.CategoriaSerializer;
@@ -32,7 +33,9 @@ import lombok.ToString;
 public class Categoria implements Serializable {
 
 	private static final long serialVersionUID = 1L;    
-    private TipoSerializer tipoSerializer;
+	@Transient
+	@Builder.Default
+    private TipoSerializer tipoSerializer = TipoSerializer.COMPLETA;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

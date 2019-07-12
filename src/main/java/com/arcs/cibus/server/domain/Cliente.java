@@ -15,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import com.arcs.cibus.server.domain.enums.TipoCliente;
 import com.arcs.cibus.server.domain.enums.TipoSerializer;
@@ -39,7 +40,9 @@ import lombok.ToString;
 public class Cliente implements Serializable {
 
 	private static final long serialVersionUID = 1L;    
-    private TipoSerializer tipoSerializer;
+	@Transient
+	@Builder.Default
+    private TipoSerializer tipoSerializer = TipoSerializer.COMPLETA;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

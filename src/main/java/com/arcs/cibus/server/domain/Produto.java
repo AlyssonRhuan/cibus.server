@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.Transient;
 
 import com.arcs.cibus.server.domain.enums.TipoSerializer;
 import com.arcs.cibus.server.serializer.ProdutoSerializer;
@@ -35,7 +36,9 @@ import lombok.ToString;
 public class Produto implements Serializable {
 
 	private static final long serialVersionUID = 1L;    
-    private TipoSerializer tipoSerializer;
+	@Transient
+	@Builder.Default
+    private TipoSerializer tipoSerializer = TipoSerializer.COMPLETA;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

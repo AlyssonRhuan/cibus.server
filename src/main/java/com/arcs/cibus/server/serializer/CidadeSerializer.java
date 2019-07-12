@@ -40,7 +40,10 @@ public class CidadeSerializer extends JsonSerializer<Cidade> {
 		jsonGenerator.writeStartObject();
 		
 		jsonGenerator.writeNumberField("id", cidade.getCidadeID());
-		jsonGenerator.writeStringField("nome", cidade.getNome());	
+		jsonGenerator.writeStringField("nome", cidade.getNome());
+
+		jsonGenerator.writeFieldName("estado");
+		jsonGenerator.writeObject(cidade.getEstado());
 		
 		jsonGenerator.writeEndObject();
 	}
