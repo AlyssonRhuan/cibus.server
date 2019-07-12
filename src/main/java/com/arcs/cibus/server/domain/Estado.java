@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.arcs.cibus.server.domain.enums.TipoSerializer;
 import com.arcs.cibus.server.serializer.EstadoSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -29,7 +30,9 @@ import lombok.ToString;
 @JsonSerialize(using = EstadoSerializer.class)
 @Entity(name = "cibus_estados")
 public class Estado implements Serializable {
-	private static final long serialVersionUID = 1L;
+	
+	private static final long serialVersionUID = 1L;    
+    private TipoSerializer tipoSerializer;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,13 +44,15 @@ public class Estado implements Serializable {
 	@OneToMany(mappedBy = "estado")
 	private List<Cidade> cidades = new ArrayList<>();
 
-//	================[ GETTERS AND SETTERS ]================		//
-
 	public void addCidade(Cidade cidade) {
-		this.cidades.add(cidade);
+		cidades.add(cidade);
 	}
 
 	public void addCidades(List<Cidade> cidades) {
 		this.cidades.addAll(cidades);
 	}
+
+	public void setTipoSerializer(TipoSerializer tipoSerializer) {
+		this.tipoSerializer = tipoSerializer;
+	}	
 }

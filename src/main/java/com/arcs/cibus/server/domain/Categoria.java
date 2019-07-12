@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import com.arcs.cibus.server.domain.enums.TipoSerializer;
 import com.arcs.cibus.server.serializer.CategoriaSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -30,7 +31,8 @@ import lombok.ToString;
 @Entity(name = "cibus_categorias")
 public class Categoria implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;    
+    private TipoSerializer tipoSerializer;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,15 +46,17 @@ public class Categoria implements Serializable {
     @Builder.Default
 	@ManyToMany(mappedBy = "categorias")
     private List<Produto> produtos = new ArrayList<>();
-
-//	================[ GETTERS AND SETTERS ]================		//
 	
 	public void addProduto(Produto produto) {
-		this.produtos.add(produto);
+		produtos.add(produto);
 	}
 	
 	public void addProdutos(List<Produto> produtos) {
 		this.produtos.addAll(produtos);
+	}
+
+	public void setTipoSerializer(TipoSerializer tipoSerializer) {
+		this.tipoSerializer = tipoSerializer;
 	}	
 }
 	

@@ -1,7 +1,5 @@
 package com.arcs.cibus.server.resource;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.arcs.cibus.server.domain.Produto;
+import com.arcs.cibus.server.domain.enums.TipoSerializer;
 import com.arcs.cibus.server.service.ProdutoService;
 
 @RestController
@@ -29,6 +28,7 @@ public class ProdutoResource {
 	@RequestMapping(value="/{produtoId}", method = RequestMethod.GET)
 	public ResponseEntity<Produto> find(@PathVariable Long produtoId) {
 		Produto produto = produtoService.findById(produtoId);
+		produto.setTipoSerializer(TipoSerializer.COMPLETA);
 		return ResponseEntity.ok(produto);
 	}
 }

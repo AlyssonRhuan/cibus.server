@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+import com.arcs.cibus.server.domain.enums.TipoSerializer;
 import com.arcs.cibus.server.serializer.ProdutoSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -33,7 +34,8 @@ import lombok.ToString;
 @Entity(name = "cibus_produtos")
 public class Produto implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;    
+    private TipoSerializer tipoSerializer;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,8 +55,6 @@ public class Produto implements Serializable {
 		inverseJoinColumns = @JoinColumn(name = "categoriaId"))
 	private List<Categoria> categorias = new ArrayList<>();
 
-//	================[ GETTERS AND SETTERS ]================		//
-
 	public void addCategoria(Categoria categoria) {
 		categorias.add(categoria);
 	}
@@ -62,4 +62,8 @@ public class Produto implements Serializable {
 	public void addCategorias(List<Categoria> categorias) {
 		this.categorias.addAll(categorias);
 	}
+
+	public void setTipoSerializer(TipoSerializer tipoSerializer) {
+		this.tipoSerializer = tipoSerializer;
+	}	
 }

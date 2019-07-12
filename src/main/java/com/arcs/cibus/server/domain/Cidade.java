@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.arcs.cibus.server.domain.enums.TipoSerializer;
 import com.arcs.cibus.server.serializer.CidadeSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -29,7 +30,8 @@ import lombok.ToString;
 @Entity(name = "cibus_cidades")
 public class Cidade implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;    
+    private TipoSerializer tipoSerializer;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,4 +42,8 @@ public class Cidade implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "estado_id")
 	private Estado estado;
+
+	public void setTipoSerializer(TipoSerializer tipoSerializer) {
+		this.tipoSerializer = tipoSerializer;
+	}	
 }

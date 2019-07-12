@@ -13,8 +13,32 @@ public class CategoriaSerializer extends JsonSerializer<Categoria> {
 	@Override
 	public void serialize(final Categoria categoria, 
 			final JsonGenerator jsonGenerator, final SerializerProvider serializers)
-			throws IOException {
+			throws IOException {		
+		switch(categoria.getTipoSerializer()) {
+			case SIMPLES:
+				serializerSimples(categoria, jsonGenerator, serializers);
+				break;
+			case COMPLETA:			
+				serializerCompleta(categoria, jsonGenerator, serializers);
+				break;
+		}
+	}
+	
+	private void serializerSimples(final Categoria categoria, 
+			final JsonGenerator jsonGenerator, final SerializerProvider serializers) throws IOException {
 		jsonGenerator.writeStartObject();
+		
+		jsonGenerator.writeNumberField("id", categoria.getCategoriaID());
+		jsonGenerator.writeStringField("nome", categoria.getNome());
+		jsonGenerator.writeStringField("descricao", categoria.getDescricao());
+		
+		jsonGenerator.writeEndObject();
+	}
+	
+	private void serializerCompleta(final Categoria categoria, 
+			final JsonGenerator jsonGenerator, final SerializerProvider serializers) throws IOException {
+		jsonGenerator.writeStartObject();
+		
 		jsonGenerator.writeNumberField("id", categoria.getCategoriaID());
 		jsonGenerator.writeStringField("nome", categoria.getNome());
 		jsonGenerator.writeStringField("descricao", categoria.getDescricao());
@@ -25,7 +49,7 @@ public class CategoriaSerializer extends JsonSerializer<Categoria> {
 		for(final Produto produto : categoria.getProdutos()) {
 			jsonGenerator.writeObject(produto);
 		}
-		jsonGenerator.writeEndArray();
+		jsonGenerator.writeEndArray();		
 		
 		jsonGenerator.writeEndObject();
 	}

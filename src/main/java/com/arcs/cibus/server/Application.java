@@ -10,10 +10,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.arcs.cibus.server.domain.Categoria;
 import com.arcs.cibus.server.domain.Cidade;
+import com.arcs.cibus.server.domain.Cliente;
+import com.arcs.cibus.server.domain.Endereco;
 import com.arcs.cibus.server.domain.Estado;
 import com.arcs.cibus.server.domain.Produto;
+import com.arcs.cibus.server.domain.enums.TipoCliente;
 import com.arcs.cibus.server.repository.CategoriaRepository;
 import com.arcs.cibus.server.repository.CidadeRepository;
+import com.arcs.cibus.server.repository.ClienteRepository;
+import com.arcs.cibus.server.repository.EnderecoRepository;
 import com.arcs.cibus.server.repository.EstadoRepository;
 import com.arcs.cibus.server.repository.ProdutoRepository;
 
@@ -31,6 +36,12 @@ public class Application implements CommandLineRunner {
 	
 	@Autowired
 	private CidadeRepository cidadeRepository;
+
+	@Autowired
+	private ClienteRepository clienteRepository;
+	
+	@Autowired
+	private EnderecoRepository enderecoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
@@ -110,6 +121,37 @@ public class Application implements CommandLineRunner {
 				.estado(estadoSaoPaulo)
 				.build();
 		
+		Cliente primeiroCliente = Cliente
+				.builder()
+				.nome("Maria Dheilany")
+				.email("maria.dheilany@gmail.com")
+				.cpfCnpj("12345678900")
+				.tipoCliente(TipoCliente.PESSOA_FISICA)
+				.build();
+		
+		Endereco primeiroEndereco = Endereco
+				.builder()
+				.logradouro("Rua Flores")
+				.numero("300")
+				.complemento("Apartamento 301")
+				.bairro("Jardim")
+				.cep("12345-67")
+				.cliente(primeiroCliente)
+				.cidade(primeiraCidade)
+				.build();
+		
+		Endereco segundoEndereco = Endereco
+				.builder()
+				.logradouro("Avenida Matos")
+				.numero("105")
+				.complemento("Sala 800")
+				.bairro("Centro")
+				.cep("89101-12")
+				.cliente(primeiroCliente)
+				.cidade(segundaCidade)
+				.build();
+		
+		
 //		================[ ASSOCIAÇÕES ]================		//
 		
 		primeiraCategoria.addProdutos(Arrays.asList(primeiroProduto));
@@ -121,6 +163,10 @@ public class Application implements CommandLineRunner {
 		
 		estadoMinasGerais.addCidades(Arrays.asList(primeiraCidade));
 		estadoSaoPaulo.addCidades(Arrays.asList(segundaCidade));
+
+//		primeiroCliente.setTipoCliente(TipoCliente.PESSOA_FISICA);
+		primeiroCliente.addTelefones(Arrays.asList("1111 1111", "2222 2222"));
+		primeiroCliente.addEnderecos(Arrays.asList(primeiroEndereco, segundoEndereco));
 				
 //		================[ PERSISTENCIA ]================		//
 		
@@ -128,5 +174,7 @@ public class Application implements CommandLineRunner {
 		produtoRepository.saveAll(Arrays.asList(primeiroProduto, segundoProduto, terceiroProduto));
 		estadoRepository.saveAll(Arrays.asList(estadoMinasGerais, estadoSaoPaulo));
 		cidadeRepository.saveAll(Arrays.asList(primeiraCidade, segundaCidade));
+		clienteRepository.saveAll(Arrays.asList(primeiroCliente));
+		enderecoRepository.saveAll(Arrays.asList(primeiroEndereco, segundoEndereco));
 	}
 }
