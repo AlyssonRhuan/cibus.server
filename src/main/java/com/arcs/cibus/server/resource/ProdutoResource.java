@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.arcs.cibus.server.domain.Produto;
-import com.arcs.cibus.server.domain.enums.TipoSerializer;
 import com.arcs.cibus.server.service.ProdutoService;
 
 @RestController

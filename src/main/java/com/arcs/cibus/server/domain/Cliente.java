@@ -63,7 +63,11 @@ public class Cliente implements Serializable {
 	@ElementCollection
 	@CollectionTable(name = "cibus_telefone")
 	private Set<String> telefones = new HashSet<>();
-	
+
+    @Builder.Default
+    @OneToMany(mappedBy = "cliente")
+    private List<Pedido> pedidos = new ArrayList<>();
+    
 	public void addEndereco(Endereco endereco) {
 		this.enderecos.add(endereco);
 	}
@@ -83,4 +87,12 @@ public class Cliente implements Serializable {
 	public void setTipoSerializer(TipoSerializer tipoSerializer) {
 		this.tipoSerializer = tipoSerializer;
 	}	
+	
+	public void addPedidos(List<Pedido> pedidos) {
+		this.pedidos.addAll(pedidos);
+	}
+	
+	public void addPedido(Pedido pedido) {
+		pedidos.add(pedido);
+	}
 }

@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.arcs.cibus.server.domain.Categoria;
-import com.arcs.cibus.server.domain.enums.TipoSerializer;
 import com.arcs.cibus.server.service.CategoriaService;
 import com.arcs.cibus.server.service.exceptions.ObjectNotFoundException;
 
