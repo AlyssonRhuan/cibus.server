@@ -189,7 +189,7 @@ public class Application implements CommandLineRunner {
 		
 		Pagamento segundoPagamento = PagamentoBoleto
 				.builder()
-				.estado(EstadoPagamento.QUITADO)
+				.estado(EstadoPagamento.PENDENTE)
 				.pedido(segundoPedido)
 				.dataPagamento(new Date())
 				.dataVencimento(new Date())

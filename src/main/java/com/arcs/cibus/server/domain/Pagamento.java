@@ -3,6 +3,8 @@ package com.arcs.cibus.server.domain;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -31,7 +33,9 @@ public abstract class Pagamento implements Serializable {
 	
 	@Id
 	@EqualsAndHashCode.Include
-	private Long pagamentoID;
+	private Long pagamentoID;	
+
+	@Enumerated(EnumType.STRING)
 	private EstadoPagamento estado;
 	
 	@OneToOne

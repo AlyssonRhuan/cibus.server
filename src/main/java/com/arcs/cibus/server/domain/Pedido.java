@@ -53,7 +53,7 @@ public class Pedido implements Serializable {
 	@JoinColumn(name = "endereco_entraga_id")
 	private Endereco enderecoEntrega;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
 	private Pagamento pagamento;
 
 	public void setTipoSerializer(TipoSerializer tipoSerializer) {
