@@ -3,7 +3,9 @@ package com.arcs.cibus.server.domain;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
 import com.arcs.cibus.server.domain.enums.TipoSerializer;
@@ -57,6 +60,18 @@ public class Produto implements Serializable {
 		joinColumns = @JoinColumn(name = "produtoId"), 
 		inverseJoinColumns = @JoinColumn(name = "categoriaId"))
 	private List<Categoria> categorias = new ArrayList<>();
+	
+	@Builder.Default
+	@OneToMany(mappedBy = "pedido")
+	private Set<ItemPedido> itens = new HashSet<>();
+	
+	public List<Pedido> pedidos(){
+		List<Pedido> pedidos = new ArrayList<>();
+		for(ItemPedido itemPedido : itens) {
+			pedidos.add(itemPedido.getPedido());			
+		}
+		return pedidos;
+	}
 
 	public void addCategoria(Categoria categoria) {
 		categorias.add(categoria);
