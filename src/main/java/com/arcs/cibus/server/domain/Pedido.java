@@ -1,9 +1,9 @@
 package com.arcs.cibus.server.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -61,17 +61,18 @@ public class Pedido implements Serializable {
 	
 	@Builder.Default
 	@OneToMany(mappedBy = "pedido")
-	private Set<ItemPedido> itens = new HashSet<>();
+	private List<ItemPedido> itens = new ArrayList<>();
 
 	public void setTipoSerializer(TipoSerializer tipoSerializer) {
 		this.tipoSerializer = tipoSerializer;
 	}
 
-	/**
-	 * @param pagamento the pagamento to set
-	 */
 	public void setPagamento(Pagamento pagamento) {
 		this.pagamento = pagamento;
 	}	
+	
+	public void addItemPedido(List<ItemPedido> itens) {
+		this.itens = itens;
+	}
 }
 	

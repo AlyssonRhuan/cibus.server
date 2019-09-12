@@ -14,6 +14,7 @@ import com.arcs.cibus.server.domain.Cidade;
 import com.arcs.cibus.server.domain.Cliente;
 import com.arcs.cibus.server.domain.Endereco;
 import com.arcs.cibus.server.domain.Estado;
+import com.arcs.cibus.server.domain.ItemPedido;
 import com.arcs.cibus.server.domain.Pagamento;
 import com.arcs.cibus.server.domain.PagamentoBoleto;
 import com.arcs.cibus.server.domain.PagamentoCartao;
@@ -26,6 +27,7 @@ import com.arcs.cibus.server.repository.CidadeRepository;
 import com.arcs.cibus.server.repository.ClienteRepository;
 import com.arcs.cibus.server.repository.EnderecoRepository;
 import com.arcs.cibus.server.repository.EstadoRepository;
+import com.arcs.cibus.server.repository.ItemPedidoRepository;
 import com.arcs.cibus.server.repository.PagamentoRepository;
 import com.arcs.cibus.server.repository.PedidoRepository;
 import com.arcs.cibus.server.repository.ProdutoRepository;
@@ -56,6 +58,9 @@ public class Application implements CommandLineRunner {
 	
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
+	
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
@@ -195,6 +200,34 @@ public class Application implements CommandLineRunner {
 				.dataVencimento(new Date())
 				.build();
 		
+		ItemPedido primeiroItemPedido = ItemPedido
+				.builder()
+				.pedido(primeiroPedido)
+				.produto(primeiroProduto)
+				.desconto(new Double(0.0))
+				.quantidade(new Integer(1))
+				.preco(new Double(2000.0))
+				.build();
+		
+		ItemPedido segundoItemPedido = ItemPedido
+				.builder()
+				.pedido(primeiroPedido)
+				.produto(terceiroProduto)
+				.desconto(new Double(0.0))
+				.quantidade(new Integer(2))
+				.preco(new Double(80.0))
+				.build();
+		
+		ItemPedido terceiroItemPedido = ItemPedido
+				.builder()
+				.pedido(segundoPedido)
+				.produto(segundoProduto)
+				.desconto(new Double(100.0))
+				.quantidade(new Integer(2))
+				.preco(new Double(800.0))
+				.build();
+				
+		
 //		================[ ASSOCIAÇÕES ]================		//
 		
 		primeiraCategoria.addProdutos(Arrays.asList(primeiroProduto));
@@ -213,6 +246,13 @@ public class Application implements CommandLineRunner {
 		primeiroPedido.setPagamento(primeiroPagamento);
 		segundoPedido.setPagamento(segundoPagamento);		
 		primeiroCliente.addPedidos(Arrays.asList(primeiroPedido, segundoPedido));
+
+		primeiroPedido.addItemPedido(Arrays.asList(primeiroItemPedido, segundoItemPedido));
+		segundoPedido.addItemPedido(Arrays.asList(terceiroItemPedido));
+
+		primeiroProduto.addItemPedido(Arrays.asList(primeiroItemPedido));
+		segundoProduto.addItemPedido(Arrays.asList(terceiroItemPedido));
+		terceiroProduto.addItemPedido(Arrays.asList(segundoItemPedido));
 				
 //		================[ PERSISTENCIA ]================		//
 		
@@ -224,5 +264,6 @@ public class Application implements CommandLineRunner {
 		enderecoRepository.saveAll(Arrays.asList(primeiroEndereco, segundoEndereco));
 		pedidoRepository.saveAll(Arrays.asList(primeiroPedido, segundoPedido));
 		pagamentoRepository.saveAll(Arrays.asList(primeiroPagamento, segundoPagamento));
+		itemPedidoRepository.saveAll(Arrays.asList(primeiroItemPedido, segundoItemPedido, terceiroItemPedido));
 	}
 }

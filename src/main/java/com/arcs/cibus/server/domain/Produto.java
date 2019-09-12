@@ -3,9 +3,7 @@ package com.arcs.cibus.server.domain;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -63,7 +61,7 @@ public class Produto implements Serializable {
 	
 	@Builder.Default
 	@OneToMany(mappedBy = "pedido")
-	private Set<ItemPedido> itens = new HashSet<>();
+	private List<ItemPedido> itens = new ArrayList<>();
 	
 	public List<Pedido> pedidos(){
 		List<Pedido> pedidos = new ArrayList<>();
@@ -79,6 +77,10 @@ public class Produto implements Serializable {
 
 	public void addCategorias(List<Categoria> categorias) {
 		this.categorias.addAll(categorias);
+	}
+	
+	public void addItemPedido(List<ItemPedido> itens) {
+		this.itens = itens;
 	}
 
 	public void setTipoSerializer(TipoSerializer tipoSerializer) {
