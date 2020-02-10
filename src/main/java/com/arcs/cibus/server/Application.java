@@ -132,7 +132,6 @@ public class Application implements CommandLineRunner {
 				.nome("Itajubá")
 				.estado(estadoMinasGerais)
 				.build();
-
 		
 		Cidade segundaCidade = Cidade
 				.builder()

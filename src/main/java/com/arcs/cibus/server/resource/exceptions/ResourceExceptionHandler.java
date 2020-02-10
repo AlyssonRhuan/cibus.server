@@ -24,4 +24,17 @@ public class ResourceExceptionHandler {
 		
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
 	}
+	
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<StandardError> objectNotFound(Exception e){
+		StandardError error = StandardError.builder()
+			.status(HttpStatus.BAD_REQUEST.value())
+			.message(e.getMessage())
+			.timestamp(System.currentTimeMillis())
+			.error("Exception")
+			.path(e.getStackTrace().toString())
+			.build();
+		
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+	}
 }

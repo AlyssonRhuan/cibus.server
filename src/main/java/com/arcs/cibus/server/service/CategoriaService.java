@@ -19,27 +19,23 @@ public class CategoriaService {
 	@Autowired
 	private CategoriaRepository categoriaRepository;
 	
-	public Page<Categoria> getAll(int pagina, int qtdElementos) {
+	public Page<Categoria> getAll(int pagina, int qtdElementos) throws Exception {
 		Pageable paginacao = PageRequest.of(pagina, qtdElementos);
 		return categoriaRepository.findAll(paginacao);
 	}
 	
-	public Categoria findById(Long categoriaId) throws ObjectNotFoundException {
+	public Categoria getById(Long categoriaId) throws ObjectNotFoundException {
 		Optional<Categoria> categoria = categoriaRepository.findById(categoriaId);		
 		return categoria.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id " + categoriaId + " não existe."));
 	}
 	
-	public void delete(Long categoriaId) {	
-		Categoria categoria = this.findById(categoriaId);
+	public void delete(Long categoriaId) throws Exception {	
+		Categoria categoria = this.getById(categoriaId);
 		categoriaRepository.delete(categoria);
 	}
 	
-	public Categoria insert(Categoria categoria){
+	public Categoria save(Categoria categoria) throws Exception {
 		return categoriaRepository.save(categoria); 
-	}
-	
-	public Categoria update(Categoria categoria) {
-		return categoriaRepository.save(categoria);
 	}
 }
