@@ -2,6 +2,7 @@ package com.arcs.cibus.server.service;
 
 import java.util.Optional;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -30,7 +31,7 @@ public class CategoriaService {
 				"Objeto não encontrado! Id " + categoriaId + " não existe."));
 	}
 	
-	public void delete(Long categoriaId) throws Exception {	
+	public void delete(Long categoriaId) throws ConstraintViolationException, Exception {	
 		Categoria categoria = this.getById(categoriaId);
 		categoriaRepository.delete(categoria);
 	}

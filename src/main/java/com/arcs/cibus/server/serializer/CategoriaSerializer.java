@@ -31,6 +31,8 @@ public class CategoriaSerializer extends JsonSerializer<Categoria> {
 		jsonGenerator.writeNumberField("id", categoria.getCategoriaID());
 		jsonGenerator.writeStringField("nome", categoria.getNome());
 		jsonGenerator.writeStringField("descricao", categoria.getDescricao());
+		jsonGenerator.writeBooleanField("ativo", categoria.getAtivo());
+		jsonGenerator.writeStringField("icone", categoria.getIcone());
 		
 		jsonGenerator.writeEndObject();
 	}

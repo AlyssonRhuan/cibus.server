@@ -37,7 +37,7 @@ public class Categoria implements Serializable {
 	private static final long serialVersionUID = 1L;    
 	@Transient
 	@Builder.Default
-    private TipoSerializer tipoSerializer = TipoSerializer.COMPLETA;
+    private TipoSerializer tipoSerializer = TipoSerializer.SIMPLES;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
