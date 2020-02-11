@@ -1,5 +1,7 @@
 package com.arcs.cibus.server.resource;
 
+import java.util.List;
+
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -53,6 +55,12 @@ public class CategoriaResource {
 		categoria.setCategoriaID(null);
 		categoria = categoriaService.save(categoria);
 		return ResponseEntity.ok(categoria);			
+	}
+		
+	@RequestMapping(value="/valuelabel", method = RequestMethod.GET)
+	public ResponseEntity<List<Categoria>> getAllValueLabel() throws Exception {
+		List<Categoria> categorias = categoriaService.getAllValueLabel();
+		return ResponseEntity.ok(categorias);
 	}
 }
 	

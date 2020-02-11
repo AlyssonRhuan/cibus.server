@@ -3,7 +3,6 @@ package com.arcs.cibus.server.serializer;
 import java.io.IOException;
 
 import com.arcs.cibus.server.domain.Categoria;
-import com.arcs.cibus.server.domain.Produto;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
@@ -21,6 +20,9 @@ public class CategoriaSerializer extends JsonSerializer<Categoria> {
 			case COMPLETA:			
 				serializerCompleta(categoria, jsonGenerator, serializers);
 				break;
+			case VALUELABEL:			
+				serializerValueLabel(categoria, jsonGenerator, serializers);
+				break;
 		}
 	}
 	
@@ -30,9 +32,6 @@ public class CategoriaSerializer extends JsonSerializer<Categoria> {
 		
 		jsonGenerator.writeNumberField("id", categoria.getCategoriaID());
 		jsonGenerator.writeStringField("nome", categoria.getNome());
-		jsonGenerator.writeStringField("descricao", categoria.getDescricao());
-		jsonGenerator.writeBooleanField("ativo", categoria.getAtivo());
-		jsonGenerator.writeStringField("icone", categoria.getIcone());
 		
 		jsonGenerator.writeEndObject();
 	}
@@ -47,11 +46,16 @@ public class CategoriaSerializer extends JsonSerializer<Categoria> {
 		jsonGenerator.writeBooleanField("ativo", categoria.getAtivo());
 		jsonGenerator.writeStringField("icone", categoria.getIcone());
 		
-		jsonGenerator.writeArrayFieldStart("produtos");
-		for(final Produto produto : categoria.getProdutos()) {
-			jsonGenerator.writeObject(produto);
-		}
-		jsonGenerator.writeEndArray();		
+		jsonGenerator.writeEndObject();
+	}
+	
+	private void serializerValueLabel(final Categoria categoria, 
+			final JsonGenerator jsonGenerator, final SerializerProvider serializers) throws IOException {
+		jsonGenerator.writeStartObject();
+
+		jsonGenerator.writeNumberField("categoriaID", categoria.getCategoriaID());
+		jsonGenerator.writeNumberField("value", categoria.getCategoriaID());
+		jsonGenerator.writeStringField("label", categoria.getNome());
 		
 		jsonGenerator.writeEndObject();
 	}

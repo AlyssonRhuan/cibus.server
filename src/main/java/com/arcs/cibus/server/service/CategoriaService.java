@@ -1,5 +1,6 @@
 package com.arcs.cibus.server.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.hibernate.exception.ConstraintViolationException;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.arcs.cibus.server.domain.Categoria;
+import com.arcs.cibus.server.domain.enums.TipoSerializer;
 import com.arcs.cibus.server.repository.CategoriaRepository;
 import com.arcs.cibus.server.service.exceptions.ObjectNotFoundException;
 
@@ -38,5 +40,15 @@ public class CategoriaService {
 	
 	public Categoria save(Categoria categoria) throws Exception {
 		return categoriaRepository.save(categoria); 
+	}
+
+	public List<Categoria> getAllValueLabel() {
+		List<Categoria> categoriasValueLabel = categoriaRepository.findAll();
+		
+		for (Categoria categoria : categoriasValueLabel) {
+			categoria.setTipoSerializer(TipoSerializer.VALUELABEL);
+		}
+		
+		return categoriasValueLabel;
 	}
 }

@@ -6,6 +6,7 @@ import lombok.Getter;
 public enum TipoSerializer {
 	
 	SIMPLES,
-	COMPLETA;	
+	COMPLETA,
+	VALUELABEL;	
 	
 }
