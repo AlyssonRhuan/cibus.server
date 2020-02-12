@@ -10,8 +10,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.arcs.cibus.server.domain.Categoria;
 import com.arcs.cibus.server.domain.Produto;
+import com.arcs.cibus.server.domain.Tela;
 import com.arcs.cibus.server.repository.CategoriaRepository;
 import com.arcs.cibus.server.repository.ProdutoRepository;
+import com.arcs.cibus.server.repository.TelaRepository;
 
 @SpringBootApplication
 public class Application implements CommandLineRunner {
@@ -21,6 +23,9 @@ public class Application implements CommandLineRunner {
 	
 	@Autowired
 	private ProdutoRepository produtoRepository;
+	
+	@Autowired
+	private TelaRepository telaRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
@@ -75,7 +80,37 @@ public class Application implements CommandLineRunner {
 				.imagem("")
 				.quantidadeEstoque(new Double(10.0))
 				.visivel(Boolean.TRUE)
-				.build(); 
+				.build();
+		
+		Tela home = Tela
+				.builder()
+				.nome("Home")
+				.caminho("/")
+				.build();
+		
+		Tela user = Tela
+				.builder()
+				.nome("User")
+				.caminho("/user")
+				.build();
+		
+		Tela product = Tela
+				.builder()
+				.nome("Product")
+				.caminho("/product")
+				.build();
+		
+		Tela category = Tela
+				.builder()
+				.nome("Category")
+				.caminho("/category")
+				.build();
+		
+		Tela profile = Tela
+				.builder()
+				.nome("Profile")
+				.caminho("/profile")
+				.build();
 						
 		
 //		================[ ASSOCIAÇÕES ]================		//
@@ -91,5 +126,6 @@ public class Application implements CommandLineRunner {
 		
 		categoriaRepository.saveAll(Arrays.asList(primeiraCategoria, segundaCategoria));
 		produtoRepository.saveAll(Arrays.asList(primeiroProduto, segundoProduto, terceiroProduto));
+		telaRepository.saveAll(Arrays.asList(home, user, product, category, profile));
 	}
 }
