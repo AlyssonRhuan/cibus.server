@@ -16,7 +16,7 @@ import com.arcs.cibus.server.service.ProdutoService;
 import com.arcs.cibus.server.service.exceptions.ObjectNotFoundException;
 
 @RestController
-@RequestMapping(value = "/produtos")
+@RequestMapping(value = "/produto")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class ProdutoResource {
 	

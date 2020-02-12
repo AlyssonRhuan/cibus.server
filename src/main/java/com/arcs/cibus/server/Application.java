@@ -2,7 +2,6 @@ package com.arcs.cibus.server;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
-import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -10,26 +9,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.arcs.cibus.server.domain.Categoria;
-import com.arcs.cibus.server.domain.Cidade;
-import com.arcs.cibus.server.domain.Cliente;
-import com.arcs.cibus.server.domain.Endereco;
-import com.arcs.cibus.server.domain.Estado;
-import com.arcs.cibus.server.domain.ItemPedido;
-import com.arcs.cibus.server.domain.Pagamento;
-import com.arcs.cibus.server.domain.PagamentoBoleto;
-import com.arcs.cibus.server.domain.PagamentoCartao;
-import com.arcs.cibus.server.domain.Pedido;
 import com.arcs.cibus.server.domain.Produto;
-import com.arcs.cibus.server.domain.enums.EstadoPagamento;
-import com.arcs.cibus.server.domain.enums.TipoCliente;
 import com.arcs.cibus.server.repository.CategoriaRepository;
-import com.arcs.cibus.server.repository.CidadeRepository;
-import com.arcs.cibus.server.repository.ClienteRepository;
-import com.arcs.cibus.server.repository.EnderecoRepository;
-import com.arcs.cibus.server.repository.EstadoRepository;
-import com.arcs.cibus.server.repository.ItemPedidoRepository;
-import com.arcs.cibus.server.repository.PagamentoRepository;
-import com.arcs.cibus.server.repository.PedidoRepository;
 import com.arcs.cibus.server.repository.ProdutoRepository;
 
 @SpringBootApplication
@@ -40,27 +21,6 @@ public class Application implements CommandLineRunner {
 	
 	@Autowired
 	private ProdutoRepository produtoRepository;
-
-	@Autowired
-	private EstadoRepository estadoRepository;
-	
-	@Autowired
-	private CidadeRepository cidadeRepository;
-
-	@Autowired
-	private ClienteRepository clienteRepository;
-	
-	@Autowired
-	private EnderecoRepository enderecoRepository;
-	
-	@Autowired
-	private PedidoRepository pedidoRepository;
-	
-	@Autowired
-	private PagamentoRepository pagamentoRepository;
-	
-	@Autowired
-	private ItemPedidoRepository itemPedidoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
@@ -116,116 +76,7 @@ public class Application implements CommandLineRunner {
 				.quantidadeEstoque(new Double(10.0))
 				.visivel(Boolean.TRUE)
 				.build(); 
-		
-		Estado estadoMinasGerais = Estado
-				.builder()
-				.nome("Minas Gerais")
-				.build(); 
-		
-		Estado estadoSaoPaulo = Estado
-				.builder()
-				.nome("São Paulo")
-				.build();
-		
-		Cidade primeiraCidade = Cidade
-				.builder()
-				.nome("Itajubá")
-				.estado(estadoMinasGerais)
-				.build();
-		
-		Cidade segundaCidade = Cidade
-				.builder()
-				.nome("São José dos Campos")
-				.estado(estadoSaoPaulo)
-				.build();
-		
-		Cliente primeiroCliente = Cliente
-				.builder()
-				.nome("Maria Dheilany")
-				.email("maria.dheilany@gmail.com")
-				.cpfCnpj("12345678900")
-				.tipoCliente(TipoCliente.PESSOA_FISICA)
-				.build();
-		
-		Endereco primeiroEndereco = Endereco
-				.builder()
-				.logradouro("Rua Flores")
-				.numero("300")
-				.complemento("Apartamento 301")
-				.bairro("Jardim")
-				.cep("12345-67")
-				.cliente(primeiroCliente)
-				.cidade(primeiraCidade)
-				.build();
-		
-		Endereco segundoEndereco = Endereco
-				.builder()
-				.logradouro("Avenida Matos")
-				.numero("105")
-				.complemento("Sala 800")
-				.bairro("Centro")
-				.cep("89101-12")
-				.cliente(primeiroCliente)
-				.cidade(segundaCidade)
-				.build();
-		
-		Pedido primeiroPedido = Pedido
-				.builder()
-				.instante(new Date())
-				.cliente(primeiroCliente)
-				.enderecoEntrega(segundoEndereco)
-				.build();
-		
-		Pedido segundoPedido = Pedido
-				.builder()
-				.instante(new Date())
-				.cliente(primeiroCliente)
-				.enderecoEntrega(primeiroEndereco)
-				.build();
-		
-		Pagamento primeiroPagamento = PagamentoCartao
-				.builder()
-				.estado(EstadoPagamento.QUITADO)
-				.pedido(primeiroPedido)
-				.numeroParcelas(6)
-				.build();
-		
-		
-		Pagamento segundoPagamento = PagamentoBoleto
-				.builder()
-				.estado(EstadoPagamento.PENDENTE)
-				.pedido(segundoPedido)
-				.dataPagamento(new Date())
-				.dataVencimento(new Date())
-				.build();
-		
-		ItemPedido primeiroItemPedido = ItemPedido
-				.builder()
-				.pedido(primeiroPedido)
-				.produto(primeiroProduto)
-				.desconto(new Double(0.0))
-				.quantidade(new Integer(1))
-				.preco(new Double(2000.0))
-				.build();
-		
-		ItemPedido segundoItemPedido = ItemPedido
-				.builder()
-				.pedido(primeiroPedido)
-				.produto(terceiroProduto)
-				.desconto(new Double(0.0))
-				.quantidade(new Integer(2))
-				.preco(new Double(80.0))
-				.build();
-		
-		ItemPedido terceiroItemPedido = ItemPedido
-				.builder()
-				.pedido(segundoPedido)
-				.produto(segundoProduto)
-				.desconto(new Double(100.0))
-				.quantidade(new Integer(2))
-				.preco(new Double(800.0))
-				.build();
-				
+						
 		
 //		================[ ASSOCIAÇÕES ]================		//
 		
@@ -235,34 +86,10 @@ public class Application implements CommandLineRunner {
 		primeiroProduto.addCategorias(Arrays.asList(primeiraCategoria));
 		segundoProduto.addCategorias(Arrays.asList(segundaCategoria));
 		terceiroProduto.addCategorias(Arrays.asList(segundaCategoria));
-		
-		estadoMinasGerais.addCidades(Arrays.asList(primeiraCidade));
-		estadoSaoPaulo.addCidades(Arrays.asList(segundaCidade));
-
-		primeiroCliente.addTelefones(Arrays.asList("1111 1111", "2222 2222"));
-		primeiroCliente.addEnderecos(Arrays.asList(primeiroEndereco, segundoEndereco));
-		
-		primeiroPedido.setPagamento(primeiroPagamento);
-		segundoPedido.setPagamento(segundoPagamento);		
-		primeiroCliente.addPedidos(Arrays.asList(primeiroPedido, segundoPedido));
-
-		primeiroPedido.addItemPedido(Arrays.asList(primeiroItemPedido, segundoItemPedido));
-		segundoPedido.addItemPedido(Arrays.asList(terceiroItemPedido));
-
-		primeiroProduto.addItemPedido(Arrays.asList(primeiroItemPedido));
-		segundoProduto.addItemPedido(Arrays.asList(terceiroItemPedido));
-		terceiroProduto.addItemPedido(Arrays.asList(segundoItemPedido));
 				
 //		================[ PERSISTENCIA ]================		//
 		
 		categoriaRepository.saveAll(Arrays.asList(primeiraCategoria, segundaCategoria));
 		produtoRepository.saveAll(Arrays.asList(primeiroProduto, segundoProduto, terceiroProduto));
-		estadoRepository.saveAll(Arrays.asList(estadoMinasGerais, estadoSaoPaulo));
-		cidadeRepository.saveAll(Arrays.asList(primeiraCidade, segundaCidade));
-		clienteRepository.saveAll(Arrays.asList(primeiroCliente));
-		enderecoRepository.saveAll(Arrays.asList(primeiroEndereco, segundoEndereco));
-		pedidoRepository.saveAll(Arrays.asList(primeiroPedido, segundoPedido));
-		pagamentoRepository.saveAll(Arrays.asList(primeiroPagamento, segundoPagamento));
-		itemPedidoRepository.saveAll(Arrays.asList(primeiroItemPedido, segundoItemPedido, terceiroItemPedido));
 	}
 }

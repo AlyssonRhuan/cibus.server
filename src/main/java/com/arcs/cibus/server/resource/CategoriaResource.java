@@ -18,7 +18,7 @@ import com.arcs.cibus.server.service.CategoriaService;
 import com.arcs.cibus.server.service.exceptions.ObjectNotFoundException;
 
 @RestController
-@RequestMapping(value = "/categorias")
+@RequestMapping(value = "/categoria")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class CategoriaResource {
 	

@@ -60,18 +60,6 @@ public class Produto implements Serializable {
 		joinColumns = @JoinColumn(name = "produtoId"), 
 		inverseJoinColumns = @JoinColumn(name = "categoriaId"))
 	private List<Categoria> categorias = new ArrayList<>();
-	
-	@Builder.Default
-	@OneToMany(mappedBy = "pedido")
-	private List<ItemPedido> itens = new ArrayList<>();
-	
-	public List<Pedido> pedidos(){
-		List<Pedido> pedidos = new ArrayList<>();
-		for(ItemPedido itemPedido : itens) {
-			pedidos.add(itemPedido.getPedido());			
-		}
-		return pedidos;
-	}
 
 	public void addCategoria(Categoria categoria) {
 		categorias.add(categoria);
@@ -81,10 +69,6 @@ public class Produto implements Serializable {
 		this.categorias.addAll(categorias);
 	}
 	
-	public void addItemPedido(List<ItemPedido> itens) {
-		this.itens = itens;
-	}
-
 	public void setTipoSerializer(TipoSerializer tipoSerializer) {
 		this.tipoSerializer = tipoSerializer;
 	}	
