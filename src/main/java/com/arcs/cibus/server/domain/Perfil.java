@@ -1,14 +1,11 @@
 package com.arcs.cibus.server.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.Transient;
 
 import com.arcs.cibus.server.domain.enums.TipoSerializer;
@@ -44,20 +41,4 @@ public class Perfil implements Serializable {
 	@EqualsAndHashCode.Include
 	private Long perfilID;
 	private String nome;
-
-	@Builder.Default
-	@ManyToMany
-	private List<PerfilTela> perfilTelas = new ArrayList<>();
-
-	public void addPerfilTelas(PerfilTela perfilTela) {
-		perfilTelas.add(perfilTela);
-	}
-
-	public void addPerfisTelas(List<PerfilTela> perfisTelas) {
-		this.perfilTelas.addAll(perfisTelas);
-	}
-	
-	public void setTipoSerializer(TipoSerializer tipoSerializer) {
-		this.tipoSerializer = tipoSerializer;
-	}	
 }

@@ -22,6 +22,8 @@ public class ProdutoSerializer extends JsonSerializer<Produto> {
 			case COMPLETA:			
 				serializerCompleta(produto, jsonGenerator, serializers);
 				break;
+		default:
+			break;
 		}
 	}
 	

@@ -9,9 +9,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.arcs.cibus.server.domain.Categoria;
+import com.arcs.cibus.server.domain.Perfil;
+import com.arcs.cibus.server.domain.PerfilTelaPermissao;
 import com.arcs.cibus.server.domain.Produto;
 import com.arcs.cibus.server.domain.Tela;
 import com.arcs.cibus.server.repository.CategoriaRepository;
+import com.arcs.cibus.server.repository.PerfilRepository;
+import com.arcs.cibus.server.repository.PerfilTelaPermissaoRepository;
 import com.arcs.cibus.server.repository.ProdutoRepository;
 import com.arcs.cibus.server.repository.TelaRepository;
 
@@ -26,6 +30,12 @@ public class Application implements CommandLineRunner {
 	
 	@Autowired
 	private TelaRepository telaRepository;
+	
+	@Autowired
+	private PerfilRepository perfilRepository;
+	
+	@Autowired
+	private PerfilTelaPermissaoRepository perfilTelaPermissaoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
@@ -111,6 +121,18 @@ public class Application implements CommandLineRunner {
 				.nome("Profile")
 				.caminho("/profile")
 				.build();
+		
+		Perfil perfil = Perfil
+				.builder()
+				.nome("perfilTeste")
+				.build();
+		
+		PerfilTelaPermissao perfilTelaPermissao = PerfilTelaPermissao
+				.builder()
+				.tela(category)
+				.perfil(perfil)
+				.permissao(Boolean.TRUE)
+				.build();
 						
 		
 //		================[ ASSOCIAÇÕES ]================		//
@@ -126,6 +148,8 @@ public class Application implements CommandLineRunner {
 		
 		categoriaRepository.saveAll(Arrays.asList(primeiraCategoria, segundaCategoria));
 		produtoRepository.saveAll(Arrays.asList(primeiroProduto, segundoProduto, terceiroProduto));
-		telaRepository.saveAll(Arrays.asList(home, user, product, category, profile));
+		telaRepository.saveAll(Arrays.asList(home, user, category, product, profile));
+		perfilRepository.saveAll(Arrays.asList(perfil));
+		perfilTelaPermissaoRepository.saveAll(Arrays.asList(perfilTelaPermissao));
 	}
 }

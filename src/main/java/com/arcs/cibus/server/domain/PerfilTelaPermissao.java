@@ -6,10 +6,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 import com.arcs.cibus.server.domain.enums.TipoSerializer;
-import com.arcs.cibus.server.serializer.TelaSerializer;
+import com.arcs.cibus.server.serializer.PerfilTelaPermissaoSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import lombok.AllArgsConstructor;
@@ -27,9 +28,9 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-@JsonSerialize(using = TelaSerializer.class)
-@Entity(name = "cibus_perfil_tela")
-public class PerfilTela implements Serializable {
+@JsonSerialize(using = PerfilTelaPermissaoSerializer.class)
+@Entity(name = "cibus_perfil_tela_permissoes")
+public class PerfilTelaPermissao implements Serializable {
 
 	private static final long serialVersionUID = 1L;    
 	@Transient
@@ -39,8 +40,12 @@ public class PerfilTela implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@EqualsAndHashCode.Include
-	private Long perfilTelasID;
-	private Perfil perfil;
-	private Tela tela;
+	private Long PerfilTelaPermissaoID;	
 	private Boolean permissao;
+
+    @OneToOne
+	private Tela tela;
+    
+    @OneToOne
+    private Perfil perfil;
 }
