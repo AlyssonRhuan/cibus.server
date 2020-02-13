@@ -3,6 +3,8 @@ package com.arcs.cibus.server.serializer;
 import java.io.IOException;
 
 import com.arcs.cibus.server.domain.Perfil;
+import com.arcs.cibus.server.domain.Tela;
+import com.arcs.cibus.server.domain.enums.TipoSerializer;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
@@ -40,7 +42,14 @@ public class PerfilSerializer extends JsonSerializer<Perfil> {
 		jsonGenerator.writeStartObject();
 		
 		jsonGenerator.writeNumberField("id", perfil.getPerfilID());
-		jsonGenerator.writeStringField("nome", perfil.getNome());
+		jsonGenerator.writeStringField("nome", perfil.getNome());	
+		
+		jsonGenerator.writeArrayFieldStart("telas");
+		for(final Tela tela : perfil.getTelas()) {
+			tela.setTipoSerializer(TipoSerializer.SIMPLES);
+			jsonGenerator.writeObject(tela);
+		}
+		jsonGenerator.writeEndArray();		
 		
 		jsonGenerator.writeEndObject();
 	}

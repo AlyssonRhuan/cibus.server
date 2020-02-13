@@ -1,10 +1,12 @@
 package com.arcs.cibus.server.service;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.arcs.cibus.server.domain.Perfil;
@@ -18,8 +20,9 @@ public class PerfilService {
 	@Autowired
 	private PerfilRepository perfilRepository;
 	
-	public List<Perfil> getAll() throws Exception {
-		return perfilRepository.findAll();
+	public Page<Perfil> getAll(int pagina, int qtdElementos) throws Exception {
+		Pageable paginacao = PageRequest.of(pagina, qtdElementos);
+		return perfilRepository.findAll(paginacao);
 	}
 	
 	public Perfil getById(Long perfilId) throws ObjectNotFoundException {

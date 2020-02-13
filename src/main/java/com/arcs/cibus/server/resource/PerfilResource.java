@@ -1,9 +1,8 @@
 package com.arcs.cibus.server.resource;
 
-import java.util.List;
-
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,8 +24,8 @@ public class PerfilResource {
 	private PerfilService perfilService;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<Perfil>> getAll() throws Exception {
-		List<Perfil> perfis = perfilService.getAll();
+	public ResponseEntity<Page<Perfil>> getAll(int pagina, int qtdElementos) throws Exception {
+		Page<Perfil> perfis = perfilService.getAll(pagina - 1, qtdElementos);
 		return ResponseEntity.ok(perfis);
 	}
 	
