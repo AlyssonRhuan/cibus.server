@@ -31,7 +31,7 @@ public class PerfilSerializer extends JsonSerializer<Perfil> {
 			final JsonGenerator jsonGenerator, final SerializerProvider serializers) throws IOException {
 		jsonGenerator.writeStartObject();
 		
-		jsonGenerator.writeNumberField("id", perfil.getPerfilID());
+		jsonGenerator.writeNumberField("id", perfil.getId());
 		jsonGenerator.writeStringField("nome", perfil.getNome());
 		
 		jsonGenerator.writeEndObject();
@@ -41,7 +41,7 @@ public class PerfilSerializer extends JsonSerializer<Perfil> {
 			final JsonGenerator jsonGenerator, final SerializerProvider serializers) throws IOException {
 		jsonGenerator.writeStartObject();
 		
-		jsonGenerator.writeNumberField("id", perfil.getPerfilID());
+		jsonGenerator.writeNumberField("id", perfil.getId());
 		jsonGenerator.writeStringField("nome", perfil.getNome());	
 		
 		jsonGenerator.writeArrayFieldStart("telas");

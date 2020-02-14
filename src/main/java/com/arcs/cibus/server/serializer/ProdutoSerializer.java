@@ -32,7 +32,7 @@ public class ProdutoSerializer extends JsonSerializer<Produto> {
 			throws IOException {				
 		jsonGenerator.writeStartObject();
 		
-		jsonGenerator.writeNumberField("id", produto.getProdutoID());
+		jsonGenerator.writeNumberField("id", produto.getId());
 		jsonGenerator.writeStringField("nome", produto.getNome());
 		
 		jsonGenerator.writeEndObject();
@@ -43,7 +43,7 @@ public class ProdutoSerializer extends JsonSerializer<Produto> {
 			throws IOException {				
 		jsonGenerator.writeStartObject();
 		
-		jsonGenerator.writeNumberField("id", produto.getProdutoID());
+		jsonGenerator.writeNumberField("id", produto.getId());
 		jsonGenerator.writeStringField("nome", produto.getNome());
 		jsonGenerator.writeNumberField("preco", produto.getPreco());
 		jsonGenerator.writeNumberField("estoqueMinimo", produto.getEstoqueMinimo());

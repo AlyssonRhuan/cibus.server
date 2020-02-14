@@ -43,14 +43,14 @@ public class ProdutoResource {
 	
 	@RequestMapping(value="/{produtoId}", method = RequestMethod.PUT)
 	public ResponseEntity<Produto> update(@PathVariable Long produtoId, @RequestBody Produto produto) throws Exception {
-		produto.setProdutoID(produtoId);
+		produto.setId(produtoId);
 		produto = produtoService.save(produto);
 		return ResponseEntity.ok(produto);			
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Produto> insert(@RequestBody Produto produto) throws Exception {
-		produto.setProdutoID(null);
+		produto.setId(null);
 		produto = produtoService.save(produto);
 		return ResponseEntity.ok(produto);			
 	}

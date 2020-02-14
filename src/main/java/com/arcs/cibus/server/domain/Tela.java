@@ -28,7 +28,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @EqualsAndHashCode
 @JsonSerialize(using = TelaSerializer.class)
-@Entity(name = "cibus_telass")
+@Entity(name = "cibus_telas")
 public class Tela implements Serializable {
 
 	private static final long serialVersionUID = 1L;    
@@ -39,7 +39,7 @@ public class Tela implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@EqualsAndHashCode.Include
-	private Long telaID;
+	private Long id;
 	private String caminho;
 	private String nome;
 }

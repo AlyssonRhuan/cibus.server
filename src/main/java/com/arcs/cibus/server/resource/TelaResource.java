@@ -44,14 +44,14 @@ public class TelaResource {
 	
 	@RequestMapping(value="/{telaId}", method = RequestMethod.PUT)
 	public ResponseEntity<Tela> update(@PathVariable Long telaId, @RequestBody Tela tela) throws Exception {
-		tela.setTelaID(telaId);
+		tela.setId(telaId);
 		tela = telaService.save(tela);
 		return ResponseEntity.ok(tela);			
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Tela> insert(@RequestBody Tela tela) throws Exception {
-		tela.setTelaID(null);
+		tela.setId(null);
 		tela = telaService.save(tela);
 		return ResponseEntity.ok(tela);			
 	}

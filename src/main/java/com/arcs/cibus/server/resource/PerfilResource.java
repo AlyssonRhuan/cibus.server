@@ -43,15 +43,14 @@ public class PerfilResource {
 	
 	@RequestMapping(value="/{perfilId}", method = RequestMethod.PUT)
 	public ResponseEntity<Perfil> update(@PathVariable Long perfilId, @RequestBody Perfil perfil) throws Exception {
-		perfil.setPerfilID(perfilId);
+		perfil.setId(perfilId);
 		perfil = perfilService.save(perfil);
 		return ResponseEntity.ok(perfil);			
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Perfil> insert(@RequestBody Perfil perfil) throws Exception {
-		perfil.setPerfilID(null);
-		perfil = perfilService.save(perfil);
+		perfil = perfilService.save(perfil);		
 		return ResponseEntity.ok(perfil);		
 	}
 }

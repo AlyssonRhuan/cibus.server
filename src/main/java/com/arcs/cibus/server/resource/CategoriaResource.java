@@ -45,14 +45,14 @@ public class CategoriaResource {
 	
 	@RequestMapping(value="/{categoriaId}", method = RequestMethod.PUT)
 	public ResponseEntity<Categoria> update(@PathVariable Long categoriaId, @RequestBody Categoria categoria) throws Exception {
-		categoria.setCategoriaID(categoriaId);
+		categoria.setId(categoriaId);
 		categoria = categoriaService.save(categoria);
 		return ResponseEntity.ok(categoria);			
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Categoria> insert(@RequestBody Categoria categoria) throws Exception {
-		categoria.setCategoriaID(null);
+		categoria.setId(null);
 		categoria = categoriaService.save(categoria);
 		return ResponseEntity.ok(categoria);			
 	}

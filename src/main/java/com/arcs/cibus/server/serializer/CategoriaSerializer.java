@@ -30,7 +30,7 @@ public class CategoriaSerializer extends JsonSerializer<Categoria> {
 			final JsonGenerator jsonGenerator, final SerializerProvider serializers) throws IOException {
 		jsonGenerator.writeStartObject();
 		
-		jsonGenerator.writeNumberField("id", categoria.getCategoriaID());
+		jsonGenerator.writeNumberField("id", categoria.getId());
 		jsonGenerator.writeStringField("nome", categoria.getNome());
 		
 		jsonGenerator.writeEndObject();
@@ -40,7 +40,7 @@ public class CategoriaSerializer extends JsonSerializer<Categoria> {
 			final JsonGenerator jsonGenerator, final SerializerProvider serializers) throws IOException {
 		jsonGenerator.writeStartObject();
 		
-		jsonGenerator.writeNumberField("id", categoria.getCategoriaID());
+		jsonGenerator.writeNumberField("id", categoria.getId());
 		jsonGenerator.writeStringField("nome", categoria.getNome());
 		jsonGenerator.writeStringField("descricao", categoria.getDescricao());
 		jsonGenerator.writeBooleanField("ativo", categoria.getAtivo());
@@ -53,8 +53,8 @@ public class CategoriaSerializer extends JsonSerializer<Categoria> {
 			final JsonGenerator jsonGenerator, final SerializerProvider serializers) throws IOException {
 		jsonGenerator.writeStartObject();
 
-		jsonGenerator.writeNumberField("categoriaID", categoria.getCategoriaID());
-		jsonGenerator.writeNumberField("value", categoria.getCategoriaID());
+		jsonGenerator.writeNumberField("id", categoria.getId());
+		jsonGenerator.writeNumberField("value", categoria.getId());
 		jsonGenerator.writeStringField("label", categoria.getNome());
 		
 		jsonGenerator.writeEndObject();

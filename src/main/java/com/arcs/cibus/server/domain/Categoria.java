@@ -42,7 +42,7 @@ public class Categoria implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@EqualsAndHashCode.Include
-	private Long categoriaID;
+	private Long id;
 	private String nome;
 	private String descricao;
     private Boolean ativo;

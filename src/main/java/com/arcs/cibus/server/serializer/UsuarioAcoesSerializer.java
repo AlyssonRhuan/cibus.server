@@ -7,7 +7,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
-public class TelaSerializer extends JsonSerializer<Tela> {
+public class UsuarioAcoesSerializer extends JsonSerializer<Tela> {
 
 	@Override
 	public void serialize(final Tela tela, 
