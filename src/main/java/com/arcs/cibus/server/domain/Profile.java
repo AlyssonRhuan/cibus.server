@@ -1,7 +1,6 @@
 package com.arcs.cibus.server.domain;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +14,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Transient;
 
 import com.arcs.cibus.server.domain.enums.TipoSerializer;
-import com.arcs.cibus.server.serializer.ProdutoSerializer;
+import com.arcs.cibus.server.serializer.ProfileSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import lombok.AllArgsConstructor;
@@ -33,42 +32,33 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-@JsonSerialize(using = ProdutoSerializer.class)
-@Entity(name = "cibus_produtos")
-public class Produto implements Serializable {
+@JsonSerialize(using = ProfileSerializer.class)
+@Entity(name = "cibus_profiles")
+public class Profile implements Serializable {
 
 	private static final long serialVersionUID = 1L;    
 	@Transient
 	@Builder.Default
-    private TipoSerializer tipoSerializer = TipoSerializer.COMPLETA;
+    private TipoSerializer tipoSerializer = TipoSerializer.FULL;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@EqualsAndHashCode.Include
 	private Long id;
-	private String nome;
-	private BigDecimal preco;
-	private Double estoqueMinimo;
-	private String imagem;
-	private Double quantidadeEstoque;
-	private Boolean visivel;
+	private String name;
 
 	@Builder.Default
 	@ManyToMany
-	@JoinTable(name = "cibus_produto_categoria", 
-		joinColumns = @JoinColumn(name = "produtoId"), 
-		inverseJoinColumns = @JoinColumn(name = "categoriaId"))
-	private List<Categoria> categorias = new ArrayList<>();
+	@JoinTable(name = "cibus_profile_view", 
+		joinColumns = @JoinColumn(name = "profileId"), 
+		inverseJoinColumns = @JoinColumn(name = "viewId"))
+	private List<View> views = new ArrayList<>();
 
-	public void addCategoria(Categoria categoria) {
-		categorias.add(categoria);
+	public void addView(View view) {
+		views.add(view);
 	}
 
-	public void addCategorias(List<Categoria> categorias) {
-		this.categorias.addAll(categorias);
+	public void addViews(List<View> views) {
+		this.views.addAll(views);
 	}
-	
-	public void setTipoSerializer(TipoSerializer tipoSerializer) {
-		this.tipoSerializer = tipoSerializer;
-	}	
 }

@@ -8,29 +8,34 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.arcs.cibus.server.domain.Categoria;
-import com.arcs.cibus.server.domain.Perfil;
-import com.arcs.cibus.server.domain.Produto;
-import com.arcs.cibus.server.domain.Tela;
-import com.arcs.cibus.server.repository.CategoriaRepository;
-import com.arcs.cibus.server.repository.PerfilRepository;
-import com.arcs.cibus.server.repository.ProdutoRepository;
-import com.arcs.cibus.server.repository.TelaRepository;
+import com.arcs.cibus.server.domain.Category;
+import com.arcs.cibus.server.domain.Product;
+import com.arcs.cibus.server.domain.Profile;
+import com.arcs.cibus.server.domain.User;
+import com.arcs.cibus.server.domain.View;
+import com.arcs.cibus.server.repository.CategoryRepository;
+import com.arcs.cibus.server.repository.ProductRepository;
+import com.arcs.cibus.server.repository.ProfileRepository;
+import com.arcs.cibus.server.repository.UserRepository;
+import com.arcs.cibus.server.repository.ViewRepository;
 
 @SpringBootApplication
 public class Application implements CommandLineRunner {
 
 	@Autowired
-	private CategoriaRepository categoriaRepository;
+	private CategoryRepository categoryRepository;
 	
 	@Autowired
-	private ProdutoRepository produtoRepository;
+	private ProductRepository productRepository;
 	
 	@Autowired
-	private TelaRepository telaRepository;
+	private ViewRepository viewRepository;
 	
 	@Autowired
-	private PerfilRepository perfilRepository;
+	private ProfileRepository profileRepository;
+	
+	@Autowired
+	private UserRepository userRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
@@ -41,104 +46,120 @@ public class Application implements CommandLineRunner {
 		
 //		================[ INICIALIZAÇÕES ]================		//
 		
-		Categoria primeiraCategoria = Categoria
+		Category primeiraCategoria = Category
 				.builder()
-				.nome("Refrigerante")
-				.descricao("Refrigerantes")
-			    .ativo(Boolean.TRUE)
-			    .icone("")
+				.name("Refrigerante")
+				.description("Refrigerantes")
+			    .active(Boolean.TRUE)
+			    .icon("")
 				.build();
 		
-		Categoria segundaCategoria = Categoria
+		Category segundaCategoria = Category
 				.builder()
-				.nome("Salgado")
-				.descricao("Salgados")
-			    .ativo(Boolean.TRUE)
-			    .icone("")
+				.name("Salgado")
+				.description("Salgados")
+			    .active(Boolean.TRUE)
+			    .icon("")
 				.build();
 		
-		Produto primeiroProduto = Produto
+		Product primeiroProduct = Product
 				.builder()
-				.nome("Coca Cola")
-				.preco(new BigDecimal(2.60))
-				.estoqueMinimo(new Double(2.0))
-				.imagem("")
-				.quantidadeEstoque(new Double(10.0))
-				.visivel(Boolean.TRUE)
+				.name("Coca Cola")
+				.price(new BigDecimal(2.60))
+				.minimumStock(new Double(2.0))
+				.image("")
+				.stockQuantity(new Double(10.0))
+				.visible(Boolean.TRUE)
 				.build(); 
 		
-		Produto segundoProduto = Produto
+		Product segundoProduct = Product
 				.builder()
-				.nome("Coxinha")
-				.preco(new BigDecimal(2.60))
-				.estoqueMinimo(new Double(2.0))
-				.imagem("")
-				.quantidadeEstoque(new Double(10.0))
-				.visivel(Boolean.TRUE)
+				.name("Coxinha")
+				.price(new BigDecimal(2.60))
+				.minimumStock(new Double(2.0))
+				.image("")
+				.stockQuantity(new Double(10.0))
+				.visible(Boolean.TRUE)
 				.build(); 
 		
-		Produto terceiroProduto = Produto
+		Product terceiroProduct = Product
 				.builder()
-				.nome("Esfirra")
-				.preco(new BigDecimal(2.60))
-				.estoqueMinimo(new Double(2.0))
-				.imagem("")
-				.quantidadeEstoque(new Double(10.0))
-				.visivel(Boolean.TRUE)
+				.name("Esfirra")
+				.price(new BigDecimal(2.60))
+				.minimumStock(new Double(2.0))
+				.image("")
+				.stockQuantity(new Double(10.0))
+				.visible(Boolean.TRUE)
 				.build();
 		
-		Tela home = Tela
+		View home = View
 				.builder()
-				.nome("Home")
-				.caminho("/")
+				.name("Home")
+				.path("/")
 				.build();
 		
-		Tela user = Tela
+		View user = View
 				.builder()
-				.nome("User")
-				.caminho("/user")
+				.name("User")
+				.path("/user")
 				.build();
 		
-		Tela product = Tela
+		View product = View
 				.builder()
-				.nome("Product")
-				.caminho("/product")
+				.name("Product")
+				.path("/product")
 				.build();
 		
-		Tela category = Tela
+		View category = View
 				.builder()
-				.nome("Category")
-				.caminho("/category")
+				.name("Category")
+				.path("/category")
 				.build();
 		
-		Tela profile = Tela
+		View profile = View
 				.builder()
-				.nome("Profile")
-				.caminho("/profile")
+				.name("Profile")
+				.path("/profile")
 				.build();
 		
-		Perfil perfil = Perfil
+		Profile perfil = Profile
 				.builder()
-				.nome("perfilTeste")
+				.name("perfilTeste")
 				.build();
+		
+		User usuario = User
+				.builder()
+				.name("Alysson")
+				.email("TESTE")
+				.login("TESTE")
+				.pass("teste")
+				.get(Boolean.TRUE)
+				.post(Boolean.TRUE)
+				.put(Boolean.FALSE)
+				.delete(Boolean.FALSE)
+				.profile(perfil)
+				.build();
+				
+				//actions
 						
 		
 //		================[ ASSOCIAÇÕES ]================		//
 		
-		primeiraCategoria.addProdutos(Arrays.asList(primeiroProduto));
-		segundaCategoria.addProdutos(Arrays.asList(segundoProduto, terceiroProduto));
+		primeiraCategoria.addProducts(Arrays.asList(primeiroProduct));
+		segundaCategoria.addProducts(Arrays.asList(segundoProduct, terceiroProduct));
 		
-		primeiroProduto.addCategorias(Arrays.asList(primeiraCategoria));
-		segundoProduto.addCategorias(Arrays.asList(segundaCategoria));
-		terceiroProduto.addCategorias(Arrays.asList(segundaCategoria));
+		primeiroProduct.addCategorys(Arrays.asList(primeiraCategoria));
+		segundoProduct.addCategorys(Arrays.asList(segundaCategoria));
+		terceiroProduct.addCategorys(Arrays.asList(segundaCategoria));
 		
-		perfil.addTelas(Arrays.asList(profile, category));
+		perfil.addViews(Arrays.asList(profile, category));
 				
 //		================[ PERSISTENCIA ]================		//
 		
-		categoriaRepository.saveAll(Arrays.asList(primeiraCategoria, segundaCategoria));
-		produtoRepository.saveAll(Arrays.asList(primeiroProduto, segundoProduto, terceiroProduto));
-		telaRepository.saveAll(Arrays.asList(home, user, category, product, profile));
-		perfilRepository.saveAll(Arrays.asList(perfil));
+		categoryRepository.saveAll(Arrays.asList(primeiraCategoria, segundaCategoria));
+		productRepository.saveAll(Arrays.asList(primeiroProduct, segundoProduct, terceiroProduct));
+		viewRepository.saveAll(Arrays.asList(home, user, category, product, profile));
+		profileRepository.saveAll(Arrays.asList(perfil));
+		userRepository.saveAll(Arrays.asList(usuario));
 	}
 }

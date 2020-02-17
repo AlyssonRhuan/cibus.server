@@ -10,42 +10,42 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.arcs.cibus.server.domain.Categoria;
+import com.arcs.cibus.server.domain.Category;
 import com.arcs.cibus.server.domain.enums.TipoSerializer;
-import com.arcs.cibus.server.repository.CategoriaRepository;
+import com.arcs.cibus.server.repository.CategoryRepository;
 import com.arcs.cibus.server.service.exceptions.ObjectNotFoundException;
 
 
 @Service
-public class CategoriaService {
+public class CategoryService {
 	
 	@Autowired
-	private CategoriaRepository categoriaRepository;
+	private CategoryRepository categoriaRepository;
 	
-	public Page<Categoria> getAll(int pagina, int qtdElementos) throws Exception {
+	public Page<Category> getAll(int pagina, int qtdElementos) throws Exception {
 		Pageable paginacao = PageRequest.of(pagina, qtdElementos);
 		return categoriaRepository.findAll(paginacao);
 	}
 	
-	public Categoria getById(Long categoriaId) throws ObjectNotFoundException {
-		Optional<Categoria> categoria = categoriaRepository.findById(categoriaId);		
+	public Category getById(Long categoriaId) throws ObjectNotFoundException {
+		Optional<Category> categoria = categoriaRepository.findById(categoriaId);		
 		return categoria.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id " + categoriaId + " não existe."));
 	}
 	
 	public void delete(Long categoriaId) throws ConstraintViolationException, Exception {	
-		Categoria categoria = this.getById(categoriaId);
+		Category categoria = this.getById(categoriaId);
 		categoriaRepository.delete(categoria);
 	}
 	
-	public Categoria save(Categoria categoria) throws Exception {
+	public Category save(Category categoria) throws Exception {
 		return categoriaRepository.save(categoria); 
 	}
 
-	public List<Categoria> getAllValueLabel() {
-		List<Categoria> categoriasValueLabel = categoriaRepository.findAll();
+	public List<Category> getAllValueLabel() {
+		List<Category> categoriasValueLabel = categoriaRepository.findAll();
 		
-		for (Categoria categoria : categoriasValueLabel) {
+		for (Category categoria : categoriasValueLabel) {
 			categoria.setTipoSerializer(TipoSerializer.VALUELABEL);
 		}
 		

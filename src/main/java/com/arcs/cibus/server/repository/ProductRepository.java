@@ -3,9 +3,9 @@ package com.arcs.cibus.server.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.arcs.cibus.server.domain.Categoria;
+import com.arcs.cibus.server.domain.Product;
 
 @Repository
-public interface CategoriaRepository extends JpaRepository<Categoria, Long> {
+public interface ProductRepository extends JpaRepository<Product, Long> {
 
 }

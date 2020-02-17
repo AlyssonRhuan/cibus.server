@@ -1,6 +1,7 @@
 package com.arcs.cibus.server.domain;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,11 +9,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Transient;
 
 import com.arcs.cibus.server.domain.enums.TipoSerializer;
-import com.arcs.cibus.server.serializer.CategoriaSerializer;
+import com.arcs.cibus.server.serializer.ProductSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import lombok.AllArgsConstructor;
@@ -30,38 +33,38 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-@JsonSerialize(using = CategoriaSerializer.class)
-@Entity(name = "cibus_categorias")
-public class Categoria implements Serializable {
+@JsonSerialize(using = ProductSerializer.class)
+@Entity(name = "cibus_products")
+public class Product implements Serializable {
 
 	private static final long serialVersionUID = 1L;    
 	@Transient
 	@Builder.Default
-    private TipoSerializer tipoSerializer = TipoSerializer.COMPLETA;
-	
+    private TipoSerializer tipoSerializer = TipoSerializer.FULL;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@EqualsAndHashCode.Include
 	private Long id;
-	private String nome;
-	private String descricao;
-    private Boolean ativo;
-    private String icone;
+	private String name;
+	private BigDecimal price;
+	private Double minimumStock;
+	private String image;
+	private Double stockQuantity;
+	private Boolean visible;
 
-    @Builder.Default
-	@ManyToMany(mappedBy = "categorias")
-    private List<Produto> produtos = new ArrayList<>();
-	
-	public void addProduto(Produto produto) {
-		produtos.add(produto);
-	}
-	
-	public void addProdutos(List<Produto> produtos) {
-		this.produtos.addAll(produtos);
+	@Builder.Default
+	@ManyToMany
+	@JoinTable(name = "cibus_product_ccategory", 
+		joinColumns = @JoinColumn(name = "productId"), 
+		inverseJoinColumns = @JoinColumn(name = "categoryId"))
+	private List<Category> categorys = new ArrayList<>();
+
+	public void addCategory(Category category) {
+		categorys.add(category);
 	}
 
-	public void setTipoSerializer(TipoSerializer tipoSerializer) {
-		this.tipoSerializer = tipoSerializer;
+	public void addCategorys(List<Category> categorys) {
+		this.categorys.addAll(categorys);
 	}	
 }
-	

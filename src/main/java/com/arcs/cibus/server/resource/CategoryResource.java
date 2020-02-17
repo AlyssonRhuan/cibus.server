@@ -13,27 +13,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.arcs.cibus.server.domain.Categoria;
-import com.arcs.cibus.server.service.CategoriaService;
+import com.arcs.cibus.server.domain.Category;
+import com.arcs.cibus.server.service.CategoryService;
 import com.arcs.cibus.server.service.exceptions.ObjectNotFoundException;
 
 @RestController
-@RequestMapping(value = "/categoria")
+@RequestMapping(value = "/category")
 @CrossOrigin(origins = "*", maxAge = 3600)
-public class CategoriaResource {
+public class CategoryResource {
 	
 	@Autowired
-	private CategoriaService categoriaService;
+	private CategoryService categoriaService;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<Page<Categoria>> getAll(int pagina, int qtdElementos) throws Exception {
-		Page<Categoria> categorias = categoriaService.getAll(pagina - 1, qtdElementos);
+	public ResponseEntity<Page<Category>> getAll(int page, int quantity) throws Exception {
+		Page<Category> categorias = categoriaService.getAll(page - 1, quantity);
 		return ResponseEntity.ok(categorias);
 	}
 	
 	@RequestMapping(value="/{categoriaId}", method = RequestMethod.GET)
-	public ResponseEntity<Categoria> getById(@PathVariable Long categoriaId) throws ObjectNotFoundException {
-		Categoria categoria = categoriaService.getById(categoriaId);
+	public ResponseEntity<Category> getById(@PathVariable Long categoriaId) throws ObjectNotFoundException {
+		Category categoria = categoriaService.getById(categoriaId);
 		return ResponseEntity.ok(categoria);
 	}
 	
@@ -44,22 +44,22 @@ public class CategoriaResource {
 	}
 	
 	@RequestMapping(value="/{categoriaId}", method = RequestMethod.PUT)
-	public ResponseEntity<Categoria> update(@PathVariable Long categoriaId, @RequestBody Categoria categoria) throws Exception {
+	public ResponseEntity<Category> update(@PathVariable Long categoriaId, @RequestBody Category categoria) throws Exception {
 		categoria.setId(categoriaId);
 		categoria = categoriaService.save(categoria);
 		return ResponseEntity.ok(categoria);			
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Categoria> insert(@RequestBody Categoria categoria) throws Exception {
+	public ResponseEntity<Category> insert(@RequestBody Category categoria) throws Exception {
 		categoria.setId(null);
 		categoria = categoriaService.save(categoria);
 		return ResponseEntity.ok(categoria);			
 	}
 		
 	@RequestMapping(value="/valuelabel", method = RequestMethod.GET)
-	public ResponseEntity<List<Categoria>> getAllValueLabel() throws Exception {
-		List<Categoria> categorias = categoriaService.getAllValueLabel();
+	public ResponseEntity<List<Category>> getAllValueLabel() throws Exception {
+		List<Category> categorias = categoriaService.getAllValueLabel();
 		return ResponseEntity.ok(categorias);
 	}
 }
