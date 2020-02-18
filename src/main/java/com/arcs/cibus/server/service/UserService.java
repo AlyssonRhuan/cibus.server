@@ -36,7 +36,7 @@ public class UserService {
 		usuarioRepository.delete(usuario);
 	}
 	
-	public User save(User usuario) throws Exception {
-		return usuarioRepository.save(usuario); 
+	public User save(User user) throws Exception {		
+		return usuarioRepository.save(user); 
 	}
 }

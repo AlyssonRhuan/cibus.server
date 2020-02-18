@@ -50,8 +50,12 @@ public class User implements Serializable {
 	private Profile profile;
 	
 	//actions
-	private Boolean get;
-	private Boolean post;
-	private Boolean put;
-	private Boolean delete;		
+	private Boolean actionRead;
+	private Boolean actionAdd;
+	private Boolean actionUpdate;
+	private Boolean actionRemove;
+	
+	public boolean isNewUser() {
+		return id == null || id < 1? true : false;
+	}		
 }

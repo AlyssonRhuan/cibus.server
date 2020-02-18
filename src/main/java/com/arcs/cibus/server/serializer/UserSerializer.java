@@ -47,10 +47,10 @@ public class UserSerializer extends JsonSerializer<User> {
 		jsonGenerator.writeStringField("email", user.getEmail());
 		jsonGenerator.writeStringField("login", user.getLogin());
 		jsonGenerator.writeStringField("pass", user.getPass());
-		jsonGenerator.writeBooleanField("get", user.getGet());
-		jsonGenerator.writeBooleanField("post", user.getPost());
-		jsonGenerator.writeBooleanField("put", user.getPut());
-		jsonGenerator.writeBooleanField("delete", user.getDelete());
+		jsonGenerator.writeBooleanField("actionRead", user.getActionRead());
+		jsonGenerator.writeBooleanField("actionAdd", user.getActionAdd());
+		jsonGenerator.writeBooleanField("actionUpdate", user.getActionUpdate());
+		jsonGenerator.writeBooleanField("actionRemove", user.getActionRemove());
 		
 		user.getProfile().setTipoSerializer(TipoSerializer.VALUELABEL);
 		jsonGenerator.writeObjectField("profile", user.getProfile());

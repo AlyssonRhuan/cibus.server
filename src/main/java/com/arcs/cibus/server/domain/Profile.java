@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 import com.arcs.cibus.server.domain.enums.TipoSerializer;
@@ -46,6 +47,9 @@ public class Profile implements Serializable {
 	@EqualsAndHashCode.Include
 	private Long id;
 	private String name;
+	
+	@OneToOne(mappedBy = "profile")
+	private User user;
 
 	@Builder.Default
 	@ManyToMany
