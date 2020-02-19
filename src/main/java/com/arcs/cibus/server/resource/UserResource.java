@@ -49,9 +49,9 @@ public class UserResource {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<User> insert(@RequestBody User usuario) throws Exception {
-		usuario.setId(null);
-		usuario = usuarioService.save(usuario);
-		return ResponseEntity.ok(usuario);			
+	public ResponseEntity<User> insert(@RequestBody User user) throws Exception {
+		user.setId(null);
+		user = usuarioService.save(user);
+		return ResponseEntity.ok(user);			
 	}
 }

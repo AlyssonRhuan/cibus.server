@@ -2,7 +2,6 @@ package com.arcs.cibus.server.serializer;
 
 import java.io.IOException;
 
-import com.arcs.cibus.server.domain.Category;
 import com.arcs.cibus.server.domain.Profile;
 import com.arcs.cibus.server.domain.View;
 import com.arcs.cibus.server.domain.enums.TipoSerializer;
