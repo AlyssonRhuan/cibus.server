@@ -13,7 +13,7 @@ import com.arcs.cibus.server.domain.User;
 import com.arcs.cibus.server.service.LoginService;
 
 @RestController
-@RequestMapping(value = "/loginTeste")
+@RequestMapping(value = "/login")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class LoginResource {
 	

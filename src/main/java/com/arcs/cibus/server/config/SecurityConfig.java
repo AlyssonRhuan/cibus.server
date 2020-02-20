@@ -41,7 +41,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			"/product/**",
 			"/profile/**",
 			"/user/**",
-			"/view/**"
+			"/view/**",
+			"/login/**"
 	};
 	
 	public static final String[] PUBLIC_MATCHERS_GET = {
