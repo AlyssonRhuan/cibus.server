@@ -23,6 +23,7 @@ public class UserSS implements UserDetails {
 		return id;
 	}
 
+	//Perfis do usuário 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return authorities;

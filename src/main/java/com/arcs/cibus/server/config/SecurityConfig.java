@@ -19,6 +19,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.arcs.cibus.server.security.JWTAuthenticationFilter;
+import com.arcs.cibus.server.security.JWTAuthorizationFilter;
 import com.arcs.cibus.server.security.JWTUtil;
 
 @Configuration
@@ -35,21 +36,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private JWTUtil jwtUtil;
 	
 	public static final String[] PUBLIC_MATCHERS = {
-			"/h2-console/**",
-			"/category/**",
-			"/me/**",
-			"/product/**",
-			"/profile/**",
-			"/user/**",
-			"/view/**",
-			"/login/**"
+			"/h2-console/**"
 	};
 	
 	public static final String[] PUBLIC_MATCHERS_GET = {
 			"/category/**",
-			"/me/**",
-			"/product/**",
-			"/view/**"
+			"/product/**"
 	};
 	
 	@Override
@@ -64,6 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers(PUBLIC_MATCHERS).permitAll()
 			.anyRequest().authenticated();
 		http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
+		http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService));
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
 	
@@ -75,7 +68,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	CorsConfigurationSource corsConfigurationSource(){
 		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+		CorsConfiguration corsConfiguration = new CorsConfiguration();
+		corsConfiguration.setExposedHeaders(Arrays.asList("Authorization"));;
+		corsConfiguration.applyPermitDefaultValues();
+		source.registerCorsConfiguration("/**", corsConfiguration);
 		return source;
 	}
 	

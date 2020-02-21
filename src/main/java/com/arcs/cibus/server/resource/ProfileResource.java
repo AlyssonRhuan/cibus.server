@@ -6,7 +6,6 @@ import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +18,6 @@ import com.arcs.cibus.server.service.exceptions.ObjectNotFoundException;
 
 @RestController
 @RequestMapping(value = "/profile")
-@CrossOrigin(origins = "*", maxAge = 3600)
 public class ProfileResource {
 	
 	@Autowired

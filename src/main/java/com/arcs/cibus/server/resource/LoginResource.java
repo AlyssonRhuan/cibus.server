@@ -2,7 +2,6 @@ package com.arcs.cibus.server.resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,8 +12,7 @@ import com.arcs.cibus.server.domain.User;
 import com.arcs.cibus.server.service.LoginService;
 
 @RestController
-@RequestMapping(value = "/login")
-@CrossOrigin(origins = "*", maxAge = 3600)
+@RequestMapping(value = "/login2")
 public class LoginResource {
 	
 	@Autowired
