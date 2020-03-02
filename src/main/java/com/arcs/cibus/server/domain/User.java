@@ -1,15 +1,21 @@
 package com.arcs.cibus.server.domain;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotEmpty;
 
+import com.arcs.cibus.server.domain.enums.Profile;
 import com.arcs.cibus.server.domain.enums.TipoSerializer;
 import com.arcs.cibus.server.serializer.UserSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -48,17 +54,51 @@ public class User implements Serializable {
 	private String email;
 	private String login;
 	private String pass;
-	
-	@OneToOne
-	private Profile profile;
-	
-	//actions
-	private Boolean actionRead;
-	private Boolean actionAdd;
-	private Boolean actionUpdate;
-	private Boolean actionRemove;
+
+    @Builder.Default
+	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(name = "cibus_profiles")
+	private Set<Integer> profiles = new HashSet<>();
 	
 	public boolean isNewUser() {
 		return id == null || id < 1? true : false;
-	}		
+	}
+
+	public Set<Profile> getProfiles() {
+		return profiles.stream().map(p -> Profile.toEnum(p)).collect(Collectors.toSet());
+	}
+
+	public void addProfile(Profile profile) {
+		profiles.add(profile.getCode());
+	}
+	
+	public boolean isProfileAdmin(){
+		for (Integer profileId : profiles) {
+			if(Profile.toEnum(profileId).equals(Profile.ADMIN)){
+				return true;
+			}
+		}
+
+		return false;
+	}	
+	
+	public boolean isProfileSalesman(){
+		for (Integer profileId : profiles) {
+			if(Profile.toEnum(profileId).equals(Profile.SALESMAN)){
+				return true;
+			}
+		}
+
+		return false;
+	}	
+	
+	public boolean isProfileClient(){
+		for (Integer profileId : profiles) {
+			if(Profile.toEnum(profileId).equals(Profile.CLIENT)){
+				return true;
+			}
+		}
+
+		return false;
+	}	
 }

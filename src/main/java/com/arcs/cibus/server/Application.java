@@ -8,10 +8,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.arcs.cibus.server.domain.Profile;
 import com.arcs.cibus.server.domain.User;
 import com.arcs.cibus.server.domain.View;
-import com.arcs.cibus.server.repository.ProfileRepository;
+import com.arcs.cibus.server.domain.enums.Profile;
 import com.arcs.cibus.server.repository.UserRepository;
 import com.arcs.cibus.server.repository.ViewRepository;
 
@@ -23,10 +22,7 @@ public class Application implements CommandLineRunner {
 	
 	@Autowired
 	private UserRepository userRepository;
-	
-	@Autowired
-	private ProfileRepository profileRepository;
-	
+
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 
@@ -42,36 +38,28 @@ public class Application implements CommandLineRunner {
 				.builder()
 				.name("Home")
 				.path("/")
+				.level(2)
 				.build();
 		
 		View user = View
 				.builder()
 				.name("User")
 				.path("/user")
+				.level(1)
 				.build();
 		
 		View product = View
 				.builder()
 				.name("Product")
 				.path("/product")
+				.level(2)
 				.build();
 		
 		View category = View
 				.builder()
 				.name("Category")
 				.path("/category")
-				.build();
-		
-		View profile = View
-				.builder()
-				.name("Profile")
-				.path("/profile")
-				.build();
-		
-		Profile adminProfile = Profile
-				.builder()
-				.name("Admin")
-				.views(Arrays.asList(home, user, category, product, profile))
+				.level(2)
 				.build();
 		
 		User userAdmin = User
@@ -80,16 +68,21 @@ public class Application implements CommandLineRunner {
 				.email("alyssonr.1993@gmail.com")
 				.login("admin")
 				.pass(passwordEncoder.encode("admin"))
-				.actionAdd(Boolean.TRUE)
-				.actionRead(Boolean.TRUE)
-				.actionUpdate(Boolean.TRUE)
-				.actionRemove(Boolean.TRUE)		
-				.profile(adminProfile)
 				.build();
 		
+		userAdmin.addProfile(Profile.ADMIN);
+		
+		User userSalesman = User
+				.builder()
+				.name("Salesman")
+				.email("alysson_salgado@hotmail.com")
+				.login("vendedor")
+				.pass(passwordEncoder.encode("vendedor"))
+				.build();
+		
+		userSalesman.addProfile(Profile.SALESMAN);
 
-		viewRepository.saveAll(Arrays.asList(home, user, category, product, profile));
-		profileRepository.save(adminProfile);
-		userRepository.save(userAdmin);
+		viewRepository.saveAll(Arrays.asList(home, user, category, product));		
+		userRepository.saveAll(Arrays.asList(userAdmin, userSalesman));
 	}
 }

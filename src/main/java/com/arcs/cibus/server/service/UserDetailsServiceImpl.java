@@ -1,9 +1,11 @@
 package com.arcs.cibus.server.service;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -30,7 +32,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		Long userId = user.getId();
 		String userLogin = user.getLogin();
 		String userPasspass = user.getPass();
-		Collection<? extends GrantedAuthority> userAuthorities = null;		
+		Collection<? extends GrantedAuthority> userAuthorities = user.getProfiles().stream().map(
+				p -> new SimpleGrantedAuthority(p.getDescription())).collect(Collectors.toList());		
 		
 		return new UserSS(userId, userLogin, userPasspass, userAuthorities);
 	}	

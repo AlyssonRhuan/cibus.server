@@ -7,11 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.arcs.cibus.server.domain.User;
 import com.arcs.cibus.server.domain.View;
+import com.arcs.cibus.server.security.JWTUtil;
+import com.arcs.cibus.server.service.UserService;
 import com.arcs.cibus.server.service.ViewService;
 import com.arcs.cibus.server.service.exceptions.ObjectNotFoundException;
 
@@ -21,10 +25,19 @@ public class ViewResource {
 	
 	@Autowired
 	private ViewService telaService;
+	
+	@Autowired
+	private JWTUtil jwtUtil;
+	
+	@Autowired	
+	private UserService userService;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<View>> getAll() throws Exception {
-		List<View> telas = telaService.getAll();
+	public ResponseEntity<List<View>> getAll(@RequestHeader("Authorization") String token) throws Exception {
+		String username = jwtUtil.getUsername(token.substring(7));
+		User user = userService.getByLogin(username);
+		
+		List<View> telas = telaService.getAll(user);
 		return ResponseEntity.ok(telas);
 	}
 	

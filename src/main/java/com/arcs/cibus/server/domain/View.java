@@ -42,4 +42,5 @@ public class View implements Serializable {
 	private Long id;
 	private String path;
 	private String name;
+	private Integer level;
 }

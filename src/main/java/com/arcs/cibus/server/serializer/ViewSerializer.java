@@ -42,6 +42,7 @@ public class ViewSerializer extends JsonSerializer<View> {
 		jsonGenerator.writeNumberField("id", view.getId());
 		jsonGenerator.writeStringField("name", view.getName());
 		jsonGenerator.writeStringField("path", view.getPath());
+		jsonGenerator.writeNumberField("level", view.getLevel());
 		
 		jsonGenerator.writeEndObject();
 	}

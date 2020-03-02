@@ -3,7 +3,7 @@ package com.arcs.cibus.server.serializer;
 import java.io.IOException;
 
 import com.arcs.cibus.server.domain.User;
-import com.arcs.cibus.server.domain.enums.TipoSerializer;
+import com.arcs.cibus.server.domain.enums.Profile;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
@@ -46,13 +46,12 @@ public class UserSerializer extends JsonSerializer<User> {
 		jsonGenerator.writeStringField("name", user.getName());
 		jsonGenerator.writeStringField("email", user.getEmail());
 		jsonGenerator.writeStringField("login", user.getLogin());
-		jsonGenerator.writeBooleanField("actionRead", user.getActionRead());
-		jsonGenerator.writeBooleanField("actionAdd", user.getActionAdd());
-		jsonGenerator.writeBooleanField("actionUpdate", user.getActionUpdate());
-		jsonGenerator.writeBooleanField("actionRemove", user.getActionRemove());
 		
-		user.getProfile().setTipoSerializer(TipoSerializer.VALUELABEL);
-		jsonGenerator.writeObjectField("profile", user.getProfile());
+		jsonGenerator.writeArrayFieldStart("profiles");
+		for(final Profile profile : user.getProfiles()) {
+			jsonGenerator.writeObject(profile);
+		}
+		jsonGenerator.writeEndArray();		
 		
 		jsonGenerator.writeEndObject();
 	}
