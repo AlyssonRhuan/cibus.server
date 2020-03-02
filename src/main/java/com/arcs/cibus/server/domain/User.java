@@ -54,6 +54,7 @@ public class User implements Serializable {
 	private String email;
 	private String login;
 	private String pass;
+	private String image;
 
     @Builder.Default
 	@ElementCollection(fetch = FetchType.EAGER)

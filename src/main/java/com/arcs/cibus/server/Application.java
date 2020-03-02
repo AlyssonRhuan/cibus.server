@@ -67,6 +67,7 @@ public class Application implements CommandLineRunner {
 				.name("Admin")
 				.email("alyssonr.1993@gmail.com")
 				.login("admin")
+				.image("https://www.emaisgoias.com.br/wp-content/uploads/2020/01/Velozes-e-Furiosos-9-Filme-ganha-novo-teaser-Vin-Diesel-620x328.jpg")
 				.pass(passwordEncoder.encode("admin"))
 				.build();
 		
@@ -77,6 +78,7 @@ public class Application implements CommandLineRunner {
 				.name("Salesman")
 				.email("alysson_salgado@hotmail.com")
 				.login("vendedor")
+				.image("https://www.emaisgoias.com.br/wp-content/uploads/2020/01/Velozes-e-Furiosos-9-Filme-ganha-novo-teaser-Vin-Diesel-620x328.jpg")
 				.pass(passwordEncoder.encode("vendedor"))
 				.build();
 		
