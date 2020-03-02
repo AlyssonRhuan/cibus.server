@@ -8,7 +8,8 @@ import lombok.Getter;
 public enum RoleProfile {
 
 	ADMIN(1, "ROLE_ADMIN"),
-	SALESMAN(2, "ROLE_SALESMAN");	
+	SALESMAN(2, "ROLE_SALESMAN"),
+	CLIENT(3, "ROLE_CLIENT");	
 	
 	private int code;
 	private String description;
