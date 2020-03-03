@@ -46,6 +46,7 @@ public class UserSerializer extends JsonSerializer<User> {
 		jsonGenerator.writeStringField("name", user.getName());
 		jsonGenerator.writeStringField("email", user.getEmail());
 		jsonGenerator.writeStringField("login", user.getLogin());
+		jsonGenerator.writeStringField("image", user.getImage());
 		
 		jsonGenerator.writeArrayFieldStart("profiles");
 		for(final Profile profile : user.getProfiles()) {

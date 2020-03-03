@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Transient;
 
 import com.arcs.cibus.server.domain.enums.TipoSerializer;
+import com.arcs.cibus.server.domain.enums.ViewContext;
 import com.arcs.cibus.server.serializer.ViewSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -42,5 +43,12 @@ public class View implements Serializable {
 	private Long id;
 	private String path;
 	private String name;
+	private ViewContext context;
+
+	/**
+	 * LEVEL 1 - FOR ADMIN USER (ALL ACCESS, LEVEL 1, 2 AND 3)
+	 * LEVEL 2 - FOR SALESMAN USER (ACCESS VIEW FROM LEVEL 2 AND LEVEL 3)
+	 * LEVEL 3 - FOR CLIENT USER (ACCESS VIEW FROM LEVEL 3)
+	 */
 	private Integer level;
 }
