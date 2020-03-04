@@ -83,7 +83,7 @@ public class Application implements CommandLineRunner {
 				.name("Salesman")
 				.email("alysson_salgado@hotmail.com")
 				.login("vendedor")
-				.image("https://www.emaisgoias.com.br/wp-content/uploads/2020/01/Velozes-e-Furiosos-9-Filme-ganha-novo-teaser-Vin-Diesel-620x328.jpg")
+				.image("https://abrilveja.files.wordpress.com/2016/06/shia-2014-01-11-original1.jpeg")
 				.pass(passwordEncoder.encode("vendedor"))
 				.build();
 		
