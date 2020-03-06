@@ -38,7 +38,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		try {
 			User user = new ObjectMapper().readValue(request.getInputStream(), User.class);
 			UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-					user.getLogin(), user.getPass(), new ArrayList<>());
+					user.getEmail(), user.getPass(), new ArrayList<>());
 			
 			Authentication auth = authenticationManager.authenticate(authToken);
 			

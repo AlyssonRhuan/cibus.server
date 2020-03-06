@@ -22,7 +22,7 @@ public class LoginService {
 	private UserService userService;
 
 	public User login(User user) throws Exception, MeLoginException {			
-		User newUser = userRepository.findByLogin(user.getLogin());
+		User newUser = userRepository.findByEmail(user.getEmail());
 		boolean passMatches = passwordEncoder.matches(user.getPass(), newUser.getPass());
 
 		if(!passMatches){
@@ -35,7 +35,7 @@ public class LoginService {
 	public User createPass(Long userId, User user) throws Exception {			
 		User newUser = userService.getById(userId);
 		
-		if(!newUser.getLogin().equals(user.getLogin()))
+		if(!newUser.getEmail().equals(user.getEmail()))
 			throw new MeLoginException("Login is wrong");
 		
 		newUser.setPass(passwordEncoder.encode(user.getPass()));

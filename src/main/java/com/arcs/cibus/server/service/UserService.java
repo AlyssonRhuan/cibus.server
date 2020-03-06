@@ -31,8 +31,8 @@ public class UserService {
 				"Objeto não encontrado! Id " + usuarioId + " não existe."));
 	}
 	
-	public User getByLogin(String login) throws ObjectNotFoundException {
-		return usuarioRepository.findByLogin(login);
+	public User getByEmail(String email) throws ObjectNotFoundException {
+		return usuarioRepository.findByEmail(email);
 	}
 	
 	public void delete(Long usuarioId) throws ConstraintViolationException, Exception {	

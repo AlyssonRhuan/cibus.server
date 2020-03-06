@@ -52,7 +52,7 @@ public class User implements Serializable {
 	@NotEmpty(message = "mandatory")
 	private String name;
 	private String email;
-	private String login;
+	private boolean isFirstLogin;
 	private String pass;
 	private String image;
 

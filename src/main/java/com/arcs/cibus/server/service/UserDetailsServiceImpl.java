@@ -22,19 +22,19 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	private UserRepository userRepository;
 	
 	@Override
-	public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-		User user = userRepository.findByLogin(login);
+	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+		User user = userRepository.findByEmail(email);
 		
 		if(user == null){
-			throw new UsernameNotFoundException(login);
+			throw new UsernameNotFoundException(email);
 		}
 		
 		Long userId = user.getId();
-		String userLogin = user.getLogin();
+		String userEmail = user.getEmail();
 		String userPasspass = user.getPass();
 		Collection<? extends GrantedAuthority> userAuthorities = user.getProfiles().stream().map(
 				p -> new SimpleGrantedAuthority(p.getDescription())).collect(Collectors.toList());		
 		
-		return new UserSS(userId, userLogin, userPasspass, userAuthorities);
+		return new UserSS(userId, userEmail, userPasspass, userAuthorities);
 	}	
 }
