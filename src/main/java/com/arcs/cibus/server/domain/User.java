@@ -55,7 +55,7 @@ public class User implements Serializable {
 	private boolean isFirstLogin;
 	private String pass;
 	private String image;
-
+	
     @Builder.Default
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "cibus_profiles")
