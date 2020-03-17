@@ -3,7 +3,6 @@ package com.arcs.cibus.server;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -82,9 +81,9 @@ public class Application implements CommandLineRunner {
 				.builder()
 				.name("Salesman")
 				.email("alysson_salgado@hotmail.com")
-				.isFirstLogin(Boolean.FALSE)
+				.isFirstLogin(Boolean.TRUE)
 				.image("https://abrilveja.files.wordpress.com/2016/06/shia-2014-01-11-original1.jpeg")
-				.pass(passwordEncoder.encode("vendedor"))
+				.pass(passwordEncoder.encode("admin"))
 				.build();
 		
 		userSalesman.addProfile(Profile.SALESMAN);
