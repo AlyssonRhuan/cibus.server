@@ -9,17 +9,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.arcs.cibus.server.domain.User;
-import com.arcs.cibus.server.domain.View;
 import com.arcs.cibus.server.domain.enums.Profile;
-import com.arcs.cibus.server.domain.enums.ViewContext;
 import com.arcs.cibus.server.repository.UserRepository;
-import com.arcs.cibus.server.repository.ViewRepository;
 
 @SpringBootApplication
 public class Application implements CommandLineRunner {
-	
-	@Autowired
-	private ViewRepository viewRepository;
 	
 	@Autowired
 	private UserRepository userRepository;
@@ -33,38 +27,6 @@ public class Application implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		
-		View me = View
-				.builder()
-				.name("Me")
-				.path("/me")
-				.level(2)
-				.context(ViewContext.PERSONAL)
-				.build();
-		
-		View user = View
-				.builder()
-				.name("Users")
-				.path("/user")
-				.level(1)
-				.context(ViewContext.ADMINISTRATIVE)
-				.build();
-		
-		View product = View
-				.builder()
-				.name("Products")
-				.path("/product")
-				.level(2)
-				.context(ViewContext.GENERAL)
-				.build();
-		
-		View category = View
-				.builder()
-				.name("Categorys")
-				.path("/category")
-				.level(2)
-				.context(ViewContext.GENERAL)
-				.build();
 		
 		User userAdmin = User
 				.builder()
@@ -86,9 +48,8 @@ public class Application implements CommandLineRunner {
 				.pass(passwordEncoder.encode("admin"))
 				.build();
 		
-		userSalesman.addProfile(Profile.SALESMAN);
-
-		viewRepository.saveAll(Arrays.asList(user, category, product, me));		
+		userSalesman.addProfile(Profile.ADMIN);
+	
 		userRepository.saveAll(Arrays.asList(userAdmin, userSalesman));
 	}
 }

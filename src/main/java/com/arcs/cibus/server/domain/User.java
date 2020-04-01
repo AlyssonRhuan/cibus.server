@@ -82,24 +82,4 @@ public class User implements Serializable {
 
 		return false;
 	}	
-	
-	public boolean isProfileSalesman(){
-		for (Integer profileId : profiles) {
-			if(Profile.toEnum(profileId).equals(Profile.SALESMAN)){
-				return true;
-			}
-		}
-
-		return false;
-	}	
-	
-	public boolean isProfileClient(){
-		for (Integer profileId : profiles) {
-			if(Profile.toEnum(profileId).equals(Profile.CLIENT)){
-				return true;
-			}
-		}
-
-		return false;
-	}	
 }

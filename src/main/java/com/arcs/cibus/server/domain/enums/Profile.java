@@ -7,9 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum Profile {
 
-	ADMIN(1, "ROLE_ADMIN"),
-	SALESMAN(2, "ROLE_SALESMAN"),
-	CLIENT(3, "ROLE_CLIENT");	
+	ADMIN(1, "ROLE_ADMIN");
 	
 	private int code;
 	private String description;
