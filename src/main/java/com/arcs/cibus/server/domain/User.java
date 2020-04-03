@@ -52,7 +52,10 @@ public class User implements Serializable {
 	@NotEmpty(message = "mandatory")
 	private String name;
 	private String email;
-	private boolean isFirstLogin;
+    @Builder.Default
+	private boolean isFirstLogin = Boolean.TRUE;
+    @Builder.Default
+	private boolean isEmailConfirmed = Boolean.FALSE;
 	private String pass;
 	private String image;
 	

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.arcs.cibus.server.domain.User;
+import com.arcs.cibus.server.domain.enums.Profile;
+import com.arcs.cibus.server.service.EmailService;
 import com.arcs.cibus.server.service.UserService;
 import com.arcs.cibus.server.service.exceptions.ObjectNotFoundException;
 
@@ -22,6 +25,12 @@ public class UserResource {
 	@Autowired
 	private UserService usuarioService;
 
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
+
+	@Autowired
+	private EmailService emailService;
+	
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<Page<User>> getAll(int page, int quantity) throws Exception {
@@ -51,11 +60,15 @@ public class UserResource {
 		return ResponseEntity.ok(usuario);			
 	}
 	
-	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<User> insert(@RequestBody User user) throws Exception {
 		user.setId(null);
+		user.setPass(passwordEncoder.encode(user.getPass()));
 		user = usuarioService.save(user);
+		user.addProfile(Profile.ADMIN);
+		
+		emailService.sendMailConfirmAccount(user.getEmail(), user.getName());
+		
 		return ResponseEntity.ok(user);			
 	}
 }

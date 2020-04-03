@@ -8,7 +8,6 @@ import com.arcs.cibus.server.domain.User;
 import com.arcs.cibus.server.repository.UserRepository;
 import com.arcs.cibus.server.service.exceptions.MeLoginException;
 
-
 @Service
 public class LoginService {
 	
