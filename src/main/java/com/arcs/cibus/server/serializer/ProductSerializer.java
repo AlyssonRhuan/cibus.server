@@ -50,6 +50,7 @@ public class ProductSerializer extends JsonSerializer<Product> {
 		jsonGenerator.writeStringField("image", product.getImage());
 		jsonGenerator.writeNumberField("stockQuantity", product.getStockQuantity());
 		jsonGenerator.writeBooleanField("visible", product.getVisible());	
+		jsonGenerator.writeBooleanField("prodcutDigital", product.getProdcutDigital());	
 		
 		jsonGenerator.writeArrayFieldStart("categorys");
 		for(final Category category : product.getCategorys()) {

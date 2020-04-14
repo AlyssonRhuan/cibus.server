@@ -52,6 +52,7 @@ public class Product implements Serializable {
 	private String image;
 	private Double stockQuantity;
 	private Boolean visible;
+	private Boolean prodcutDigital;
 
 	@Builder.Default
 	@ManyToMany
@@ -66,5 +67,9 @@ public class Product implements Serializable {
 
 	public void addCategorys(List<Category> categorys) {
 		this.categorys.addAll(categorys);
+	}
+
+	public boolean isDigital() {
+		return this.getProdcutDigital();
 	}	
 }

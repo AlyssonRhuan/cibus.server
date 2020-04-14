@@ -1,0 +1,23 @@
+2020-04-04 16:48:14,872 [Worker-12] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: com.arcs:cibus.server:0.0.1-SNAPSHOT @ C:\workspace\cibus.server\pom.xml.
+2020-04-04 16:48:23,347 [Worker-12] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /cibus.server/src/main/java
+2020-04-04 16:48:23,348 [Worker-12] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /cibus.server/src/main/resources
+2020-04-04 16:48:23,362 [Worker-12] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /cibus.server/src/main/resources
+2020-04-04 16:48:23,373 [Worker-12] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /cibus.server/src/test/java
+2020-04-04 16:48:27,844 [Worker-12] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Imported and configured 1 project(s) in 22 sec
+2020-04-04 16:55:52,210 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2020-04-04 16:55:52,221 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2020-04-04 16:55:52,304 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2020-04-04 16:55:52,308 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2020-04-04 16:55:52,309 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\workspace\cibus.server\src\test\resources
+2020-04-04 16:56:00,140 [Worker-2] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update started
+2020-04-04 16:56:03,088 [Worker-2] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: com.arcs:cibus.server:0.0.1-SNAPSHOT @ C:\workspace\cibus.server\pom.xml.
+2020-04-04 16:56:07,770 [Worker-2] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /cibus.server/src/main/java
+2020-04-04 16:56:07,771 [Worker-2] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /cibus.server/src/main/resources
+2020-04-04 16:56:07,771 [Worker-2] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /cibus.server/src/main/resources
+2020-04-04 16:56:07,778 [Worker-2] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /cibus.server/src/test/java
+2020-04-04 16:56:08,942 [Worker-2] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update completed: 8 sec
+2020-04-04 16:56:12,783 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2020-04-04 16:56:12,785 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2020-04-04 16:56:12,819 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2020-04-04 16:56:12,824 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2020-04-04 16:56:12,826 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\workspace\cibus.server\src\test\resources

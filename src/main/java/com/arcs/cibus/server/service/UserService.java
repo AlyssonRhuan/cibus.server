@@ -28,16 +28,16 @@ public class UserService {
 	public User getById(Long usuarioId) throws ObjectNotFoundException {
 		Optional<User> usuario = usuarioRepository.findById(usuarioId);		
 		return usuario.orElseThrow(() -> new ObjectNotFoundException(
-				"Objeto não encontrado! Id " + usuarioId + " não existe."));
+				"User not found!"));
 	}
 	
 	public User getByEmail(String email) throws ObjectNotFoundException {
 		return usuarioRepository.findByEmail(email);
 	}
 	
-	public void delete(Long usuarioId) throws ConstraintViolationException, Exception {	
-		User usuario = this.getById(usuarioId);
-		usuarioRepository.delete(usuario);
+	public void delete(Long userId) throws ConstraintViolationException, Exception {	
+		User user = this.getById(userId);
+		usuarioRepository.delete(user);
 	}
 	
 	public User save(User user) throws Exception {		

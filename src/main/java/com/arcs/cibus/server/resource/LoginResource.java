@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -43,5 +44,13 @@ public class LoginResource {
 		newUser.setFirstLogin(Boolean.TRUE);
 		newUser = userService.save(newUser);
 		return ResponseEntity.ok(newUser);			
+	}
+
+	@RequestMapping(value="/account/{userId}", method = RequestMethod.PUT)
+	public ResponseEntity<User> confirmAccount(@PathVariable Long userId) throws Exception {		
+		User user = userService.getById(userId);
+		user.setEmailConfirmed(Boolean.TRUE);
+		user = userService.save(user);
+		return ResponseEntity.ok(user);			
 	}
 }

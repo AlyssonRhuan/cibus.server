@@ -32,9 +32,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		Long userId = user.getId();
 		String userEmail = user.getEmail();
 		String userPasspass = user.getPass();
+		boolean isEmailConfirmed = user.isEmailConfirmed();
 		Collection<? extends GrantedAuthority> userAuthorities = user.getProfiles().stream().map(
 				p -> new SimpleGrantedAuthority(p.getDescription())).collect(Collectors.toList());		
 		
-		return new UserSS(userId, userEmail, userPasspass, userAuthorities);
+		return new UserSS(userId, userEmail, userPasspass, isEmailConfirmed, userAuthorities);
 	}	
 }

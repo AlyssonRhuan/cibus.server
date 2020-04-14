@@ -17,10 +17,15 @@ public class UserSS implements UserDetails {
 	private Long id;
 	private String login;
 	private String pass;
+	private boolean isEmailConfirmed;
 	Collection<? extends GrantedAuthority> authorities;
 	
 	public Long getId() {
 		return id;
+	}
+	
+	public boolean isEmailConfirmed(){
+		return isEmailConfirmed;
 	}
 
 	//Perfis do usuário 

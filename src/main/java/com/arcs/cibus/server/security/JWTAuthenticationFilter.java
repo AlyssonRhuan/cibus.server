@@ -24,7 +24,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	private AuthenticationManager authenticationManager;
 	
 	private JWTUtil jwtUtil;
-	
+
 	public JWTAuthenticationFilter(AuthenticationManager authenticationManager, JWTUtil jwtUtil) {
     	setAuthenticationFailureHandler(new JWTAuthenticationFailureHandler());
 		this.authenticationManager = authenticationManager;
@@ -43,7 +43,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 			Authentication auth = authenticationManager.authenticate(authToken);
 			
 			return auth;
-		} catch (Exception e) {
+		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
 	}
@@ -56,9 +56,26 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		String username = userSS.getUsername();
 		String token = jwtUtil.generateToken(username);
 		Long userId = userSS.getId();
-		response.addHeader("Authorization", "Bearer " + token);
-		response.addHeader("AuthorizationId", userId.toString());
+		
+		if(userSS.isEmailConfirmed()){
+			response.addHeader("Authorization", "Bearer " + token);
+			response.addHeader("AuthorizationId", userId.toString());			
+		}
+		else{
+            response.setStatus(403);
+            response.setContentType("application/json"); 
+            response.getWriter().append(jsonIsEmailNotConfirmed());
+		}
 	}	
+    
+    private String jsonIsEmailNotConfirmed() {
+        long date = new Date().getTime();
+        return "{\"timestamp\": " + date + ", "
+            + "\"status\": 403, "
+            + "\"error\": \"Forbbiden\", "
+            + "\"message\": \"Email was not confirmed!\", "
+            + "\"path\": \"/login\"}";
+    }
 	
 	// CASO NÃO CONSIGA
 	private class JWTAuthenticationFailureHandler implements AuthenticationFailureHandler {
@@ -75,8 +92,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             long date = new Date().getTime();
             return "{\"timestamp\": " + date + ", "
                 + "\"status\": 401, "
-                + "\"error\": \"Não autorizado\", "
-                + "\"message\": \"Email ou senha inválidos\", "
+                + "\"error\": \"Not allowed\", "
+                + "\"message\": \"Email or password wrong!\", "
                 + "\"path\": \"/login\"}";
         }
     }

@@ -47,9 +47,15 @@ public class ProductResource {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Product> insert(@RequestBody Product produto) throws Exception {
-		produto.setId(null);
-		produto = produtoService.save(produto);
-		return ResponseEntity.ok(produto);			
+	public ResponseEntity<Product> insert(@RequestBody Product product) throws Exception {
+		product.setId(null);
+		
+		if(product.isDigital()){
+			product.setMinimumStock(new Double(0));
+			product.setStockQuantity(new Double(0));
+		}
+		
+		product = produtoService.save(product);
+		return ResponseEntity.ok(product);			
 	}
 }

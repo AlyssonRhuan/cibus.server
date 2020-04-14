@@ -64,11 +64,11 @@ public class UserResource {
 	public ResponseEntity<User> insert(@RequestBody User user) throws Exception {
 		user.setId(null);
 		user.setPass(passwordEncoder.encode(user.getPass()));
-		user = usuarioService.save(user);
 		user.addProfile(Profile.ADMIN);
 		
-		emailService.sendMailConfirmAccount(user.getEmail(), user.getName());
+		user = usuarioService.save(user);		
+		emailService.sendMailConfirmAccount(user);
 		
 		return ResponseEntity.ok(user);			
-	}
+	}	
 }
