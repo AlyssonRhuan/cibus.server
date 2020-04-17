@@ -3,7 +3,6 @@ package com.arcs.cibus.server.service;
 import java.util.Optional;
 
 import org.hibernate.exception.ConstraintViolationException;
-import org.hibernate.validator.internal.metadata.facets.Validatable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -42,11 +41,13 @@ public class UserService {
 		usuarioRepository.delete(user);
 	}
 	
-	public User save(User user) throws Exception {		
-		User validateUser = getByEmail(user.getEmail());
-		
-		if(validateUser != null) {
-			throw new EmailAlreadyRegisteredException("This E-mail already registered!");
+	public User save(User user) throws Exception {
+		if(user.getId() == null) {
+			User validateUser = getByEmail(user.getEmail());
+			
+			if(validateUser != null) {
+				throw new EmailAlreadyRegisteredException("This E-mail already registered!");
+			}			
 		}
 		
 		return usuarioRepository.save(user); 
