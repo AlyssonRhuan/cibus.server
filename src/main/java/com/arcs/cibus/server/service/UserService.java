@@ -3,6 +3,7 @@ package com.arcs.cibus.server.service;
 import java.util.Optional;
 
 import org.hibernate.exception.ConstraintViolationException;
+import org.hibernate.validator.internal.metadata.facets.Validatable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.arcs.cibus.server.domain.User;
 import com.arcs.cibus.server.repository.UserRepository;
+import com.arcs.cibus.server.service.exceptions.EmailAlreadyRegisteredException;
 import com.arcs.cibus.server.service.exceptions.ObjectNotFoundException;
 
 
@@ -41,6 +43,12 @@ public class UserService {
 	}
 	
 	public User save(User user) throws Exception {		
+		User validateUser = getByEmail(user.getEmail());
+		
+		if(validateUser != null) {
+			throw new EmailAlreadyRegisteredException("This E-mail already registered!");
+		}
+		
 		return usuarioRepository.save(user); 
 	}
 }

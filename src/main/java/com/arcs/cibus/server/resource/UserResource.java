@@ -23,7 +23,7 @@ import com.arcs.cibus.server.service.exceptions.ObjectNotFoundException;
 public class UserResource {
 	
 	@Autowired
-	private UserService usuarioService;
+	private UserService userService;
 
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
@@ -34,21 +34,21 @@ public class UserResource {
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<Page<User>> getAll(int page, int quantity) throws Exception {
-		Page<User> usuarios = usuarioService.getAll(page - 1, quantity);
+		Page<User> usuarios = userService.getAll(page - 1, quantity);
 		return ResponseEntity.ok(usuarios);
 	}
 
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(value="/{usuarioId}", method = RequestMethod.GET)
 	public ResponseEntity<User> getById(@PathVariable Long usuarioId) throws ObjectNotFoundException {
-		User usuario = usuarioService.getById(usuarioId);
+		User usuario = userService.getById(usuarioId);
 		return ResponseEntity.ok(usuario);
 	}
 
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(value="/{usuarioId}", method = RequestMethod.DELETE)
 	public ResponseEntity<Boolean> delete(@PathVariable Long usuarioId) throws ConstraintViolationException, Exception {
-		usuarioService.delete(usuarioId);
+		userService.delete(usuarioId);
 		return ResponseEntity.ok(Boolean.TRUE);	
 	}
 	
@@ -56,7 +56,7 @@ public class UserResource {
 	@RequestMapping(value="/{usuarioId}", method = RequestMethod.PUT)
 	public ResponseEntity<User> update(@PathVariable Long usuarioId, @RequestBody User usuario) throws Exception {
 		usuario.setId(usuarioId);
-		usuario = usuarioService.save(usuario);
+		usuario = userService.save(usuario);
 		return ResponseEntity.ok(usuario);			
 	}
 	
@@ -66,7 +66,7 @@ public class UserResource {
 		user.setPass(passwordEncoder.encode(user.getPass()));
 		user.addProfile(Profile.ADMIN);
 		
-		user = usuarioService.save(user);		
+		user = userService.save(user);		
 		emailService.sendMailConfirmAccount(user);
 		
 		return ResponseEntity.ok(user);			
