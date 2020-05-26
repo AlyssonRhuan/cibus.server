@@ -1,7 +1,6 @@
 package com.arcs.cibus.server.domain;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
 import com.arcs.cibus.server.domain.enums.TipoSerializer;
@@ -40,23 +40,24 @@ public class Product implements Serializable {
 	private static final long serialVersionUID = 1L;    
 	@Transient
 	@Builder.Default
-    private TipoSerializer tipoSerializer = TipoSerializer.FULL;
+    private TipoSerializer tipoSerializer = TipoSerializer.SIMPLE;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@EqualsAndHashCode.Include
 	private Long id;
 	private String name;
-	private BigDecimal price;
-	private Double minimumStock;
-	private String image;
-	private Double stockQuantity;
+	private String description;
 	private Boolean visible;
 	private Boolean prodcutDigital;
 
 	@Builder.Default
+	@OneToMany
+	private List<ProductSku> productsSku = new ArrayList<>();
+
+	@Builder.Default
 	@ManyToMany
-	@JoinTable(name = "cibus_product_ccategory", 
+	@JoinTable(name = "cibus_product_category", 
 		joinColumns = @JoinColumn(name = "productId"), 
 		inverseJoinColumns = @JoinColumn(name = "categoryId"))
 	private List<Category> categorys = new ArrayList<>();

@@ -34,6 +34,15 @@ public class ProductSerializer extends JsonSerializer<Product> {
 		
 		jsonGenerator.writeNumberField("id", product.getId());
 		jsonGenerator.writeStringField("name", product.getName());
+		jsonGenerator.writeBooleanField("visible", product.getVisible());	
+		jsonGenerator.writeBooleanField("prodcutDigital", product.getProdcutDigital());	
+		
+		jsonGenerator.writeArrayFieldStart("categorys");
+		for(final Category category : product.getCategorys()) {
+			category.setTipoSerializer(TipoSerializer.VALUELABEL);
+			jsonGenerator.writeObject(category);
+		}
+		jsonGenerator.writeEndArray();		
 		
 		jsonGenerator.writeEndObject();
 	}
@@ -45,12 +54,10 @@ public class ProductSerializer extends JsonSerializer<Product> {
 		
 		jsonGenerator.writeNumberField("id", product.getId());
 		jsonGenerator.writeStringField("name", product.getName());
-		jsonGenerator.writeNumberField("price", product.getPrice());
-		jsonGenerator.writeNumberField("minimumStock", product.getMinimumStock());
-		jsonGenerator.writeStringField("image", product.getImage());
-		jsonGenerator.writeNumberField("stockQuantity", product.getStockQuantity());
 		jsonGenerator.writeBooleanField("visible", product.getVisible());	
+		jsonGenerator.writeStringField("description", product.getDescription());
 		jsonGenerator.writeBooleanField("prodcutDigital", product.getProdcutDigital());	
+		jsonGenerator.writeNumberField("qtdSku", product.getProductsSku().size());		
 		
 		jsonGenerator.writeArrayFieldStart("categorys");
 		for(final Category category : product.getCategorys()) {

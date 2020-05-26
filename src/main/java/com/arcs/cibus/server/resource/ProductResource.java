@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.arcs.cibus.server.domain.Product;
+import com.arcs.cibus.server.domain.enums.TipoSerializer;
 import com.arcs.cibus.server.service.ProductService;
 import com.arcs.cibus.server.service.exceptions.ObjectNotFoundException;
 
@@ -30,6 +31,7 @@ public class ProductResource {
 	@RequestMapping(value="/{produtoId}", method = RequestMethod.GET)
 	public ResponseEntity<Product> getById(@PathVariable Long produtoId) throws ObjectNotFoundException {
 		Product produto = produtoService.getById(produtoId);
+		produto.setTipoSerializer(TipoSerializer.FULL);
 		return ResponseEntity.ok(produto);
 	}
 	
@@ -51,8 +53,7 @@ public class ProductResource {
 		product.setId(null);
 		
 		if(product.isDigital()){
-			product.setMinimumStock(new Double(0));
-			product.setStockQuantity(new Double(0));
+			// TODO STOCK QUANTITY IN SKU 0
 		}
 		
 		product = produtoService.save(product);

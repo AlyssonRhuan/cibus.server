@@ -24,10 +24,10 @@ public class ProductService {
 		return produtoRepository.findAll(paginacao);
 	}
 	
-	public Product getById(Long produtoId) throws ObjectNotFoundException {
-		Optional<Product> produto = produtoRepository.findById(produtoId);		
-		return produto.orElseThrow(() -> new ObjectNotFoundException(
-				"Objeto não encontrado! Id " + produtoId + " não existe."));
+	public Product getById(Long productId) throws ObjectNotFoundException {
+		Optional<Product> product = produtoRepository.findById(productId);
+		return product.orElseThrow(() -> new ObjectNotFoundException(
+				"Objeto não encontrado! Id " + productId + " não existe."));
 	}
 	
 	public void delete(Long produtoId) throws ConstraintViolationException, Exception {	
