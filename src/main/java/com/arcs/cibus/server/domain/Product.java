@@ -1,6 +1,7 @@
 package com.arcs.cibus.server.domain;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
 import com.arcs.cibus.server.domain.enums.TipoSerializer;
@@ -52,11 +52,11 @@ public class Product implements Serializable {
 	@Column(columnDefinition="TEXT")
 	private String description;
 	private Boolean visible;
-	private Boolean prodcutDigital;
 
-	@Builder.Default
-	@OneToMany
-	private List<ProductSku> productsSku = new ArrayList<>();
+	private String image;
+	private BigDecimal price;
+	private int stockQuantity;
+	private int minimumStock;
 
 	@Builder.Default
 	@ManyToMany
@@ -72,8 +72,4 @@ public class Product implements Serializable {
 	public void addCategorys(List<Category> categorys) {
 		this.categorys.addAll(categorys);
 	}
-
-	public boolean isDigital() {
-		return this.getProdcutDigital();
-	}	
 }
