@@ -31,7 +31,6 @@ public class ProductResource {
 	@RequestMapping(value="/{produtoId}", method = RequestMethod.GET)
 	public ResponseEntity<Product> getById(@PathVariable Long produtoId) throws ObjectNotFoundException {
 		Product produto = produtoService.getById(produtoId);
-		produto.setTipoSerializer(TipoSerializer.FULL);
 		return ResponseEntity.ok(produto);
 	}
 	

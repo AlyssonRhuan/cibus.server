@@ -34,7 +34,9 @@ public class ProductSerializer extends JsonSerializer<Product> {
 		
 		jsonGenerator.writeNumberField("id", product.getId());
 		jsonGenerator.writeStringField("name", product.getName());
-		jsonGenerator.writeBooleanField("visible", product.getVisible());	
+		jsonGenerator.writeNumberField("price", product.getPrice());
+		jsonGenerator.writeBooleanField("visible", product.getVisible());
+		jsonGenerator.writeStringField("description", product.getDescription());
 		
 		jsonGenerator.writeArrayFieldStart("categorys");
 		for(final Category category : product.getCategorys()) {

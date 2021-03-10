@@ -41,7 +41,7 @@ public class Product implements Serializable {
 	private static final long serialVersionUID = 1L;    
 	@Transient
 	@Builder.Default
-    private TipoSerializer tipoSerializer = TipoSerializer.SIMPLE;
+    private TipoSerializer tipoSerializer = TipoSerializer.FULL;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
