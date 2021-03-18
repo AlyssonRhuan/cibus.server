@@ -38,13 +38,6 @@ public class ProductSerializer extends JsonSerializer<Product> {
 		jsonGenerator.writeBooleanField("visible", product.getVisible());
 		jsonGenerator.writeStringField("description", product.getDescription());
 		
-		jsonGenerator.writeArrayFieldStart("categorys");
-		for(final Category category : product.getCategorys()) {
-			category.setTipoSerializer(TipoSerializer.VALUELABEL);
-			jsonGenerator.writeObject(category);
-		}
-		jsonGenerator.writeEndArray();		
-		
 		jsonGenerator.writeEndObject();
 	}
 	
