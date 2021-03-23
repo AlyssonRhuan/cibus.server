@@ -48,10 +48,6 @@ public class Sale implements Serializable {
 	private Product product;
 
 	@OneToOne
-	@JoinColumn(name = "category_id", referencedColumnName = "id")
-	private Category category;
-
-	@OneToOne
 	@JoinColumn(name = "client_id", referencedColumnName = "id")
 	private Client client;
 }

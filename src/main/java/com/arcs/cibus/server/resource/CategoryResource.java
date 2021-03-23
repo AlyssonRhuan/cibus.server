@@ -54,9 +54,15 @@ public class CategoryResource {
 		categoria = categoriaService.save(categoria);
 		return ResponseEntity.ok(categoria);			
 	}
-		
+
 	@RequestMapping(value="/valuelabel", method = RequestMethod.GET)
 	public ResponseEntity<List<Category>> getAllValueLabel() throws Exception {
+		List<Category> categorias = categoriaService.getAllValueLabel();
+		return ResponseEntity.ok(categorias);
+	}
+
+	@RequestMapping(value="/actives/valuelabel", method = RequestMethod.GET)
+	public ResponseEntity<List<Category>> getAllActivesValueLabel() throws Exception {
 		List<Category> categorias = categoriaService.getAllValueLabel();
 		return ResponseEntity.ok(categorias);
 	}

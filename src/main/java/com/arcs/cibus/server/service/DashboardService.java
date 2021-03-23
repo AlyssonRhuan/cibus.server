@@ -35,8 +35,6 @@ public class DashboardService {
 				.ordersOpenned(0)
 				.build();
 
-
-
 		for(Sale sale : sales){
 			BigDecimal pricaTotal = dashboard.getSalesTotal().add(sale.getPrice()).multiply(new BigDecimal(sale.getQuantity()));
 			dashboard.setSalesTotal(pricaTotal);
@@ -56,11 +54,12 @@ public class DashboardService {
 				dashboard.getQuantityProducts().put(sale.getProduct().getName(), sale.getQuantity());
 			}
 
-			if(dashboard.getPercentCategories().containsKey(sale.getCategory().getName())){
-				dashboard.getPercentCategories().put(sale.getCategory().getName(), sale.getQuantity() + dashboard.getPercentCategories().get(sale.getCategory().getName()).doubleValue());
-			}
-			else{
-				dashboard.getPercentCategories().put(sale.getCategory().getName(), sale.getQuantity().doubleValue());
+			for(Category category : sale.getProduct().getCategorys()) {
+				if (dashboard.getPercentCategories().containsKey(category.getName())) {
+					dashboard.getPercentCategories().put(category.getName(), sale.getQuantity() + dashboard.getPercentCategories().get(category.getName()).doubleValue());
+				} else {
+					dashboard.getPercentCategories().put(category.getName(), sale.getQuantity().doubleValue());
+				}
 			}
 		}
 

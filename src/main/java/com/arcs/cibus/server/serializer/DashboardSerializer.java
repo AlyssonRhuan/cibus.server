@@ -59,7 +59,7 @@ public class DashboardSerializer extends JsonSerializer<Dashboard> {
 		for(Map.Entry<String, Double> t : dashboard.getPercentCategories().entrySet()){
 			jsonGenerator.writeStartObject();
 			jsonGenerator.writeStringField("item", t.getKey());
-			jsonGenerator.writeNumberField("percent", t.getValue());
+			jsonGenerator.writeNumberField("percent", (double) Math.round(t.getValue() * 100) / 100);
 			jsonGenerator.writeEndObject();
 		}
 		jsonGenerator.writeEndArray();

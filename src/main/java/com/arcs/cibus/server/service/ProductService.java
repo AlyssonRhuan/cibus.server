@@ -38,4 +38,12 @@ public class ProductService {
 	public Product save(Product produto) throws Exception {
 		return produtoRepository.save(produto); 
 	}
+
+    public Page<Product> getAllByCategory(int pagina, int qtdElementos, Long categoryId) throws Exception {
+		if(categoryId.equals(0L)){
+			categoryId = null;
+		}
+		Pageable paginacao = PageRequest.of(pagina, qtdElementos);
+		return produtoRepository.getAllByCategory(paginacao, categoryId);
+    }
 }

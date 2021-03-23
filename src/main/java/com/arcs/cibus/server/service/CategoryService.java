@@ -1,5 +1,6 @@
 package com.arcs.cibus.server.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,11 +45,15 @@ public class CategoryService {
 
 	public List<Category> getAllValueLabel() {
 		List<Category> categoriasValueLabel = categoriaRepository.findAll();
-		
+		List<Category> retorno = new ArrayList<>();
+
 		for (Category categoria : categoriasValueLabel) {
-			categoria.setTipoSerializer(TipoSerializer.VALUELABEL);
+			if(categoria.getActive().equals(Boolean.TRUE)){
+				categoria.setTipoSerializer(TipoSerializer.VALUELABEL);
+				retorno.add(categoria);
+			}
 		}
 		
-		return categoriasValueLabel;
+		return retorno;
 	}
 }

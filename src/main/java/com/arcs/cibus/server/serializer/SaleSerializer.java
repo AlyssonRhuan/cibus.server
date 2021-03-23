@@ -57,10 +57,6 @@ public class SaleSerializer extends JsonSerializer<Sale> {
 		sale.getProduct().setTipoSerializer(TipoSerializer.SIMPLE);
 		jsonGenerator.writeObject(sale.getProduct());
 
-		jsonGenerator.writeFieldName("category");
-		sale.getCategory().setTipoSerializer(TipoSerializer.SIMPLE);
-		jsonGenerator.writeObject(sale.getCategory());
-
 //		jsonGenerator.writeFieldName("client");
 //		sale.getClient().setTipoSerializer(TipoSerializer.SIMPLE);
 //		jsonGenerator.writeObject(sale.getClient());

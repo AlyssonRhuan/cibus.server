@@ -22,6 +22,12 @@ public class ProductResource {
         return ResponseEntity.ok(produtos);
     }
 
+    @RequestMapping(value = "/category/{categoryId}", method = RequestMethod.GET)
+    public ResponseEntity<Page<Product>> getAllByCategory(int page, int quantity, @PathVariable Long categoryId) throws Exception {
+        Page<Product> produtos = produtoService.getAllByCategory(page - 1, quantity, categoryId);
+        return ResponseEntity.ok(produtos);
+    }
+
     @RequestMapping(value = "/{produtoId}", method = RequestMethod.GET)
     public ResponseEntity<Product> getById(@PathVariable Long produtoId) throws ObjectNotFoundException {
         Product produto = produtoService.getById(produtoId);
