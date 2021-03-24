@@ -8,6 +8,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
+import java.util.List;
+
 @Repository
 public interface SaleRepository extends JpaRepository<Sale, Long> {
 
@@ -20,4 +23,10 @@ public interface SaleRepository extends JpaRepository<Sale, Long> {
                             @Param("product") String product,
                             @Param("date") String date,
                             @Param("saleStatus") String saleStatus);
+
+    @Query("SELECT s FROM cibus_sales s "
+            + "WHERE s.saleDate BETWEEN :dateInitial AND :dateFinal"
+    )
+    List<Sale> findAllByPeriod(@Param("dateInitial") Date dateInitial,
+                               @Param("dateFinal") Date dateFinal);
 }

@@ -2,6 +2,7 @@ package com.arcs.cibus.server.resource;
 
 import com.arcs.cibus.server.domain.Dashboard;
 import com.arcs.cibus.server.domain.Product;
+import com.arcs.cibus.server.domain.enums.DashboardPeriod;
 import com.arcs.cibus.server.service.DashboardService;
 import com.arcs.cibus.server.service.ProductService;
 import com.arcs.cibus.server.service.exceptions.ObjectNotFoundException;
@@ -18,9 +19,9 @@ public class DashboardResource {
     @Autowired
     private DashboardService dashboardService;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<Dashboard> getData() throws Exception {
-        Dashboard darshboard = dashboardService.getData();
+    @RequestMapping(value="/{period}", method = RequestMethod.GET)
+    public ResponseEntity<Dashboard> getData(@PathVariable DashboardPeriod period) throws Exception {
+        Dashboard darshboard = dashboardService.getData(period);
         return ResponseEntity.ok(darshboard);
     }
 }

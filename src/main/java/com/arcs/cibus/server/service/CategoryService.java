@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.arcs.cibus.server.service.exceptions.DeleteException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -36,6 +37,9 @@ public class CategoryService {
 	
 	public void delete(Long categoriaId) throws ConstraintViolationException, Exception {	
 		Category categoria = this.getById(categoriaId);
+		if(categoria.getProducts().size() > 0){
+			throw new DeleteException("A caegoria " + categoria.getName() + " não pode ser deletada, pois tem produtos.");
+		}
 		categoriaRepository.delete(categoria);
 	}
 	
