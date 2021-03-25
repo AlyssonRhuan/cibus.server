@@ -1,5 +1,6 @@
 package com.arcs.cibus.server.repository;
 
+import com.arcs.cibus.server.domain.Category;
 import com.arcs.cibus.server.domain.Sale;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,4 +23,26 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     )
     Page<Product> getAllByCategory(Pageable pageable,
                             @Param("categoryId") Long categoryId);
+
+    @Query("SELECT p FROM cibus_products p "
+            + "INNER JOIN p.categorys c "
+            + "WHERE (:name is null or p.name LIKE %:name%) "
+            + "AND (:category is null or c.id = :category) "
+            + "AND (:active is null or p.visible is :active) "
+            + "ORDER BY p.name"
+    )
+    Page<Product> findAll(Pageable pageable,
+                           @Param("name") String name,
+                           @Param("category") Long categoryId,
+                           @Param("active") boolean active);
+
+    @Query("SELECT p FROM cibus_products p "
+            + "INNER JOIN p.categorys c "
+            + "WHERE (:name is null or p.name LIKE %:name%) "
+            + "AND (:category is null or c.id = :category) "
+            + "ORDER BY p.name"
+    )
+    Page<Product> findAll(Pageable pageable,
+                          @Param("name") String name,
+                          @Param("category") Long categoryId);
 }

@@ -2,6 +2,7 @@ package com.arcs.cibus.server.resource;
 
 import java.util.List;
 
+import com.arcs.cibus.server.domain.enums.DomainActive;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,8 +25,8 @@ public class CategoryResource {
 	private CategoryService categoriaService;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<Page<Category>> getAll(int page, int quantity) throws Exception {
-		Page<Category> categorias = categoriaService.getAll(page - 1, quantity);
+	public ResponseEntity<Page<Category>> getAll(int page, int quantity, String name, String description, DomainActive active) throws Exception {
+		Page<Category> categorias = categoriaService.getAll(page - 1, quantity, name, description, active);
 		return ResponseEntity.ok(categorias);
 	}
 	

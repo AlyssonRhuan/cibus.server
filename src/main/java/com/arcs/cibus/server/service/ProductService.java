@@ -2,6 +2,7 @@ package com.arcs.cibus.server.service;
 
 import java.util.Optional;
 
+import com.arcs.cibus.server.domain.enums.DomainActive;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,9 +20,20 @@ public class ProductService {
 	@Autowired
 	private ProductRepository produtoRepository;
 	
-	public Page<Product> getAll(int pagina, int qtdElementos) throws Exception {
+	public Page<Product> getAll(int pagina, int qtdElementos, String name, Long categoryId, DomainActive active) throws Exception {
 		Pageable paginacao = PageRequest.of(pagina, qtdElementos);
-		return produtoRepository.findAll(paginacao);
+
+
+		if(name.isEmpty()) name = null;
+		if(categoryId.equals(0L)) categoryId = null;
+
+		if(active.equals(DomainActive.BOUTH)){
+			return produtoRepository.findAll(paginacao, name, categoryId);
+		}
+		else{
+			boolean categoryActive = active.equals(DomainActive.YES) ? true : false;
+			return produtoRepository.findAll(paginacao, name, categoryId, categoryActive);
+		}
 	}
 	
 	public Product getById(Long productId) throws ObjectNotFoundException {

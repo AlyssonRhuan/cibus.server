@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum SaleStatus {
+public enum DomainActive {
 
-	PAID, ORDER, BOUTH;
+	YES, NO, BOUTH;
 }

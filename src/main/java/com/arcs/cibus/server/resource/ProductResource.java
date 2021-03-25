@@ -1,6 +1,7 @@
 package com.arcs.cibus.server.resource;
 
 import com.arcs.cibus.server.domain.Product;
+import com.arcs.cibus.server.domain.enums.DomainActive;
 import com.arcs.cibus.server.service.ProductService;
 import com.arcs.cibus.server.service.exceptions.ObjectNotFoundException;
 import org.hibernate.exception.ConstraintViolationException;
@@ -17,8 +18,8 @@ public class ProductResource {
     private ProductService produtoService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<Page<Product>> getAll(int page, int quantity) throws Exception {
-        Page<Product> produtos = produtoService.getAll(page - 1, quantity);
+    public ResponseEntity<Page<Product>> getAll(int page, int quantity, String name, Long categoryId, DomainActive active) throws Exception {
+        Page<Product> produtos = produtoService.getAll(page - 1, quantity, name, categoryId, active);
         return ResponseEntity.ok(produtos);
     }
 

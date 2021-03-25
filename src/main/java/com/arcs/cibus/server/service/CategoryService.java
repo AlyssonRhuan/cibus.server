@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.arcs.cibus.server.domain.enums.DomainActive;
 import com.arcs.cibus.server.service.exceptions.DeleteException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +25,19 @@ public class CategoryService {
 	@Autowired
 	private CategoryRepository categoriaRepository;
 	
-	public Page<Category> getAll(int pagina, int qtdElementos) throws Exception {
+	public Page<Category> getAll(int pagina, int qtdElementos, String name, String description, DomainActive active) throws Exception {
 		Pageable paginacao = PageRequest.of(pagina, qtdElementos);
-		return categoriaRepository.findAll(paginacao);
+
+		if(name.isEmpty()) name = null;
+		if(description.isEmpty()) description = null;
+
+		if(active.equals(DomainActive.BOUTH)){
+			return categoriaRepository.findAll(paginacao, name, description);
+		}
+		else{
+			boolean categoryActive = active.equals(DomainActive.YES) ? true : false;
+			return categoriaRepository.findAll(paginacao, name, description, categoryActive);
+		}
 	}
 	
 	public Category getById(Long categoriaId) throws ObjectNotFoundException {

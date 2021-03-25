@@ -1,6 +1,7 @@
 package com.arcs.cibus.server.resource;
 
 import com.arcs.cibus.server.domain.Sale;
+import com.arcs.cibus.server.domain.enums.SaleStatus;
 import com.arcs.cibus.server.service.SaleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,7 +22,7 @@ public class SaleResource {
     private SaleService saleService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<Page<Sale>> getAll(int page, int quantity, String product, String date, String saleStatus)
+    public ResponseEntity<Page<Sale>> getAll(int page, int quantity, String product, String date, SaleStatus saleStatus)
             throws Exception {
         Page<Sale> sales = saleService.getAll(page - 1, quantity, product, date, saleStatus);
         return ResponseEntity.ok(sales);

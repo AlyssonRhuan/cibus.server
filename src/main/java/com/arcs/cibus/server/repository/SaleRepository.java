@@ -1,6 +1,8 @@
 package com.arcs.cibus.server.repository;
 
+import com.arcs.cibus.server.domain.Product;
 import com.arcs.cibus.server.domain.Sale;
+import com.arcs.cibus.server.domain.enums.SaleStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,14 +17,25 @@ import java.util.List;
 public interface SaleRepository extends JpaRepository<Sale, Long> {
 
     @Query("SELECT s FROM cibus_sales s "
-            + "WHERE (:product is null or s.product.name = :product) "
-            + "  AND (:date is null or s.saleDate = :date)"
-            + "  AND (:saleStatus is null or s.saleStatus = :saleStatus)"
+            + "WHERE (:product is null or s.product.name LIKE %:product%) "
+            + "  AND (:dateInitial is null and :dateFinal is null or s.saleDate BETWEEN :dateInitial AND :dateFinal)"
+            + "  AND (:status is null or s.saleStatus = :status)"
     )
-    Page<Sale> findFiltered(Pageable pageable,
-                            @Param("product") String product,
-                            @Param("date") String date,
-                            @Param("saleStatus") String saleStatus);
+    Page<Sale> findAll(Pageable pageable,
+                        @Param("product") String product,
+                        @Param("dateInitial") Date dateInitial,
+                        @Param("dateFinal") Date dateFinal,
+                        @Param("status") SaleStatus status);
+
+
+    @Query("SELECT s FROM cibus_sales s "
+            + "WHERE (:product is null or s.product.name LIKE %:product%) "
+            + "  AND (:dateInitial is null and :dateFinal is null or s.saleDate BETWEEN :dateInitial AND :dateFinal)"
+    )
+    Page<Sale> findAll(Pageable pageable,
+                       @Param("product") String product,
+                       @Param("dateInitial") Date dateInitial,
+                       @Param("dateFinal") Date dateFinal);
 
     @Query("SELECT s FROM cibus_sales s "
             + "WHERE s.saleDate BETWEEN :dateInitial AND :dateFinal"
