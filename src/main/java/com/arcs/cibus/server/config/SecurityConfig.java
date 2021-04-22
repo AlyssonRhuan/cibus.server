@@ -45,15 +45,36 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			"/category/**",
 			"/product/**",
 			"/login/**",
-			"/dashboard/**"
+			"/dashboard/**",
+			"/cash/**",
+			"/me/**",
+			"/notification/**",
+			"/sale/**",
+			"/user/**"
 	};
 	
 	public static final String[] PUBLIC_MATCHERS_POST = {
+			"/category/**",
+			"/product/**",
+			"/login/**",
+			"/dashboard/**",
+			"/cash/**",
+			"/me/**",
+			"/notification/**",
+			"/sale/**",
 			"/user/**"
 	};
 	
 	public static final String[] PUBLIC_MATCHERS_PUT = {
-			"/login/**"
+			"/category/**",
+			"/product/**",
+			"/login/**",
+			"/dashboard/**",
+			"/cash/**",
+			"/me/**",
+			"/notification/**",
+			"/sale/**",
+			"/user/**"
 	};
 	
 	

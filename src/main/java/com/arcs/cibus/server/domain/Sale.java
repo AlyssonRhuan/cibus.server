@@ -49,6 +49,6 @@ public class Sale implements Serializable {
 
 	@OneToOne
 	@JoinColumn(name = "client_id", referencedColumnName = "id")
-	private Client client;
+	private User client;
 }
 	

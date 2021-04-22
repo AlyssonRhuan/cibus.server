@@ -32,8 +32,8 @@ public class DashboardSerializer extends JsonSerializer<Dashboard> {
 		jsonGenerator.writeStartObject();
 		
 		jsonGenerator.writeNumberField("salesTotal", dashboard.getSalesTotal());
-		jsonGenerator.writeNumberField("ordersOpenned", dashboard.getOrdersOpenned());
-		jsonGenerator.writeNumberField("ordersClosed", dashboard.getOrdersClosed());
+		jsonGenerator.writeNumberField("orders", dashboard.getOrders());
+		jsonGenerator.writeNumberField("cashs", dashboard.getCashs());
 		
 		jsonGenerator.writeEndObject();
 	}
@@ -43,8 +43,8 @@ public class DashboardSerializer extends JsonSerializer<Dashboard> {
 		jsonGenerator.writeStartObject();
 
 		jsonGenerator.writeNumberField("salesTotal", dashboard.getSalesTotal());
-		jsonGenerator.writeNumberField("ordersOpenned", dashboard.getOrdersOpenned());
-		jsonGenerator.writeNumberField("ordersClosed", dashboard.getOrdersClosed());
+		jsonGenerator.writeNumberField("orders", dashboard.getOrders());
+		jsonGenerator.writeNumberField("cashs", dashboard.getCashs());
 
 		jsonGenerator.writeArrayFieldStart("products");
 		for(Map.Entry<String, Long> t : dashboard.getQuantityProducts().entrySet()){

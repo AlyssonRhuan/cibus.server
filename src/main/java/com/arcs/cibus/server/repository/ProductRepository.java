@@ -19,6 +19,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             + "WHERE (:categoryId is null or c.id = :categoryId) "
             + "AND p.visible is true "
             + "AND c.active is true "
+            + "AND p.stockQuantity > 0 "
             + "ORDER BY p.name"
     )
     Page<Product> getAllByCategory(Pageable pageable,

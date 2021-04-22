@@ -3,6 +3,7 @@ package com.arcs.cibus.server.service;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+import com.arcs.cibus.server.domain.enums.Profile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -33,9 +34,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		String userEmail = user.getEmail();
 		String userPasspass = user.getPass();
 		boolean isEmailConfirmed = user.isEmailConfirmed();
-		Collection<? extends GrantedAuthority> userAuthorities = user.getProfiles().stream().map(
-				p -> new SimpleGrantedAuthority(p.getDescription())).collect(Collectors.toList());		
+		Profile userProfile = user.getProfile();
 		
-		return new UserSS(userId, userEmail, userPasspass, isEmailConfirmed, userAuthorities);
+		return new UserSS(userId, userEmail, userPasspass, isEmailConfirmed, userProfile);
 	}	
 }

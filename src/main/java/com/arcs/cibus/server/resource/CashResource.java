@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/cash")
@@ -47,7 +48,7 @@ public class CashResource {
         return ResponseEntity.ok(cash);
     }
 
-    @RequestMapping(value = "/{cashId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/close/{cashId}", method = RequestMethod.PUT)
     public ResponseEntity<Cash> closeCash(@PathVariable Long cashId) throws Exception {
         Cash cash = cashService.getById(cashId);
         cash.setCloseDate(new Date());
@@ -62,5 +63,11 @@ public class CashResource {
         cash.setCurrentValue(cash.getStartValue());
         cash = cashService.save(cash);
         return ResponseEntity.ok(cash);
+    }
+
+    @RequestMapping(value = "/all/open", method = RequestMethod.GET)
+    public ResponseEntity<List<Cash>> getAllOpenCashs() throws ObjectNotFoundException {
+        List<Cash> cashs = cashService.getAllOpenCashs();
+        return ResponseEntity.ok(cashs);
     }
 }

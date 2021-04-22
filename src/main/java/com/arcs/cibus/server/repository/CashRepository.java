@@ -28,4 +28,14 @@ public interface CashRepository extends JpaRepository<Cash, Long> {
                        @Param("description") String description,
                        @Param("openDate") Date openDate,
                        @Param("closeDate") Date closeDate);
+
+    @Query("SELECT COUNT(c) FROM cibus_cashs c "
+            + "WHERE c.closeDate IS NULL"
+    )
+    int CountOpenCashs();
+
+    @Query("SELECT c FROM cibus_cashs c "
+            + "WHERE c.closeDate IS NULL"
+    )
+    List<Cash> getAllOpenCashs();
 }

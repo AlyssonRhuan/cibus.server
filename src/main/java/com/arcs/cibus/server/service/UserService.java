@@ -1,5 +1,6 @@
 package com.arcs.cibus.server.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.hibernate.exception.ConstraintViolationException;
@@ -52,4 +53,8 @@ public class UserService {
 		
 		return usuarioRepository.save(user); 
 	}
+
+    public List<User> getAllAdmins() {
+		return null;
+    }
 }

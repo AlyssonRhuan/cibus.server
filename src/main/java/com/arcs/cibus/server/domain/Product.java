@@ -72,4 +72,8 @@ public class Product implements Serializable {
 	public void addCategorys(List<Category> categorys) {
 		this.categorys.addAll(categorys);
 	}
+
+	public boolean isInStockMinimum(){
+		return getStockQuantity() <= getMinimumStock();
+	}
 }

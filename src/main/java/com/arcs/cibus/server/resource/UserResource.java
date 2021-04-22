@@ -64,7 +64,7 @@ public class UserResource {
 	public ResponseEntity<User> insert(@RequestBody User user) throws Exception {
 		user.setId(null);
 		user.setPass(passwordEncoder.encode(user.getPass()));
-		user.addProfile(Profile.ADMIN);
+		user.setProfile(Profile.ROLE_ADMIN);
 		
 		user = userService.save(user);		
 		emailService.sendMailConfirmAccount(user);

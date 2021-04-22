@@ -25,7 +25,7 @@ public class CashSerializer extends JsonSerializer<Cash> {
 			case SIMPLE:
 				serializerSimples(cash, jsonGenerator, serializers);
 				break;
-			case FULL:			
+			case FULL:
 				serializerCompleta(cash, jsonGenerator, serializers);
 				break;
 		default:

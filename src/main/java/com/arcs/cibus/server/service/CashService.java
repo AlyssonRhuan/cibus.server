@@ -5,6 +5,7 @@ import com.arcs.cibus.server.domain.Product;
 import com.arcs.cibus.server.domain.Sale;
 import com.arcs.cibus.server.domain.User;
 import com.arcs.cibus.server.domain.enums.SaleStatus;
+import com.arcs.cibus.server.domain.enums.TipoSerializer;
 import com.arcs.cibus.server.repository.CashRepository;
 import com.arcs.cibus.server.repository.SaleRepository;
 import com.arcs.cibus.server.service.exceptions.DataException;
@@ -68,5 +69,9 @@ public class CashService {
 
 	public Cash save(Cash cash) throws Exception {
 		return cashRepository.save(cash);
+	}
+
+	public List<Cash> getAllOpenCashs() {
+		return cashRepository.getAllOpenCashs();
 	}
 }

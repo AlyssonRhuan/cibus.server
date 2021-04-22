@@ -6,6 +6,7 @@ import com.arcs.cibus.server.domain.Sale;
 import com.arcs.cibus.server.domain.enums.DashboardPeriod;
 import com.arcs.cibus.server.domain.enums.SaleStatus;
 import com.arcs.cibus.server.domain.enums.TipoSerializer;
+import com.arcs.cibus.server.repository.CashRepository;
 import com.arcs.cibus.server.repository.CategoryRepository;
 import com.arcs.cibus.server.repository.SaleRepository;
 import com.arcs.cibus.server.service.exceptions.ObjectNotFoundException;
@@ -32,6 +33,9 @@ public class DashboardService {
     @Autowired
     private SaleRepository saleRepository;
 
+    @Autowired
+    private CashRepository cashRepository;
+
     public Dashboard getData(DashboardPeriod period) {
         Date dateInitial = DateUtils.defineInitialDate(period);
         Date dateFinal = DateUtils.defineFinalDate(period);
@@ -39,21 +43,17 @@ public class DashboardService {
         List<Sale> sales = saleRepository.findAllByPeriod(dateInitial, dateFinal);
         Dashboard dashboard = Dashboard.builder()
                 .salesTotal(new BigDecimal(0))
-                .ordersClosed(0)
-                .ordersOpenned(0)
+                .orders(0)
+                .cashs(0)
                 .build();
+
+        dashboard.setCashs(cashRepository.CountOpenCashs());
 
         for (Sale sale : sales) {
             BigDecimal pricaTotal = dashboard.getSalesTotal().add(sale.getPrice().multiply(new BigDecimal(sale.getQuantity())));
             dashboard.setSalesTotal(pricaTotal);
 
-            if (sale.getSaleStatus().equals(SaleStatus.ORDER)) {
-                dashboard.setOrdersOpenned(dashboard.getOrdersOpenned() + 1);
-            }
-
-            if (sale.getSaleStatus().equals(SaleStatus.PAID)) {
-                dashboard.setOrdersClosed(dashboard.getOrdersClosed() + 1);
-            }
+            dashboard.setOrders(dashboard.getOrders() + 1);
 
             if (dashboard.getQuantityProducts().containsKey(sale.getProduct().getName())) {
                 dashboard.getQuantityProducts().put(sale.getProduct().getName(), sale.getQuantity() + dashboard.getQuantityProducts().get(sale.getProduct().getName()).longValue());
@@ -76,10 +76,14 @@ public class DashboardService {
     }
 
     private void updateCategoriesPercent(Dashboard dashboard) {
-        int totalOrders = dashboard.getOrdersClosed() + dashboard.getOrdersOpenned();
+        int total = 0;
+
+        for (Map.Entry<String, Long> t : dashboard.getQuantityProducts().entrySet()) {
+            total = total + t.getValue().intValue();
+        }
 
         for (Map.Entry<String, Double> t : dashboard.getPercentCategories().entrySet()) {
-            Double quantity = t.getValue() / totalOrders;
+            Double quantity = t.getValue() / total;
             dashboard.getPercentCategories().put(t.getKey(), quantity);
         }
     }

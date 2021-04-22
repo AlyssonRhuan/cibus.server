@@ -2,6 +2,7 @@ package com.arcs.cibus.server.security;
 
 import java.util.Collection;
 
+import com.arcs.cibus.server.domain.enums.Profile;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -18,7 +19,7 @@ public class UserSS implements UserDetails {
 	private String login;
 	private String pass;
 	private boolean isEmailConfirmed;
-	Collection<? extends GrantedAuthority> authorities;
+	private Profile profile;
 	
 	public Long getId() {
 		return id;
@@ -30,9 +31,7 @@ public class UserSS implements UserDetails {
 
 	//Perfis do usuário 
 	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return authorities;
-	}
+	public Collection<? extends GrantedAuthority> getAuthorities() { return null; }
 
 	@Override
 	public String getPassword() {

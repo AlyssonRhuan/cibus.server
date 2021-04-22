@@ -29,8 +29,8 @@ public class Dashboard implements Serializable {
     private TipoSerializer tipoSerializer = TipoSerializer.FULL;
 
     private BigDecimal salesTotal;
-    private int ordersOpenned;
-    private int ordersClosed;
+    private int orders;
+    private int cashs;
 
     @Builder.Default
     private Map<String, Double> percentCategories = new HashMap<>();
