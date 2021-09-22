@@ -1,31 +1,20 @@
 package com.arcs.cibus.server.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.math.BigDecimal;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.arcs.cibus.server.domain.enums.SaleStatus;
 import com.arcs.cibus.server.domain.enums.TipoSerializer;
-import com.arcs.cibus.server.serializer.SaleSerializer;
+import com.arcs.cibus.server.serializer.SaleProductSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import lombok.AllArgsConstructor;
@@ -43,11 +32,12 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-@JsonSerialize (using = SaleSerializer.class)
+@JsonSerialize (using = SaleProductSerializer.class)
 @Table
-@Entity (name = "cibus_sales")
-public class Sale implements Serializable
+@Entity (name = "cibus_sales_products")
+public class SaleProduct implements Serializable
 {
+
     private static final long serialVersionUID = 1L;
     @Transient
     @Builder.Default
@@ -57,20 +47,14 @@ public class Sale implements Serializable
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private Long id;
-    private Date saleDate;
-
-    @Enumerated (EnumType.STRING)
-    private SaleStatus saleStatus;
+    private Long quantity;
+    private BigDecimal price;
 
     @OneToOne
-    @JoinColumn (name = "client_id", referencedColumnName = "id")
-    private User client;
+    @JoinColumn (name = "product_id", referencedColumnName = "id")
+    private Product product;
 
-    @OneToOne
-    @JoinColumn (name = "payment_id", referencedColumnName = "id")
-    private Payment payment;
-
-    @Builder.Default
-    @OneToMany (mappedBy = "sale")
-    private Set<SaleProduct> saleProducts = new HashSet<>();
+    @ManyToOne
+    @JoinColumn (name = "sale_id", referencedColumnName = "id")
+    private Sale sale;
 }

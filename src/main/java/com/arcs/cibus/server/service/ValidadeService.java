@@ -3,6 +3,8 @@ package com.arcs.cibus.server.service;
 import com.arcs.cibus.server.domain.Notification;
 import com.arcs.cibus.server.domain.Product;
 import com.arcs.cibus.server.domain.Sale;
+import com.arcs.cibus.server.domain.SaleProduct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,10 +24,12 @@ public class ValidadeService {
 	private String STOCK_MESSAGE = "O produto %s está com o estoque abaixo do valor minimo.";
 
 	public void validateStock(Sale sale) throws Exception {
-		Product product = productService.getById(sale.getProduct().getId());
-		product.setStockQuantity(product.getStockQuantity() - sale.getQuantity().intValue());
-		if(product.isInStockMinimum()) this.notify(product);
-		productService.save(product);
+		for(SaleProduct saleProduct : sale.getSaleProducts()){
+			Product product = productService.getById(saleProduct.getProduct().getId());
+			product.setStockQuantity(product.getStockQuantity() - saleProduct.getQuantity().intValue());
+			if(product.isInStockMinimum()) this.notify(product);
+			productService.save(product);
+		}
 	}
 
 	public void notify(Product product) throws Exception {

@@ -17,23 +17,19 @@ import java.util.List;
 public interface SaleRepository extends JpaRepository<Sale, Long> {
 
     @Query("SELECT s FROM cibus_sales s "
-            + "WHERE (:product is null or s.product.name LIKE %:product%) "
-            + "  AND (:dateInitial is null and :dateFinal is null or s.saleDate BETWEEN :dateInitial AND :dateFinal)"
+            + "WHERE (:dateInitial is null and :dateFinal is null or s.saleDate BETWEEN :dateInitial AND :dateFinal)"
             + "  AND (:status is null or s.saleStatus = :status)"
     )
     Page<Sale> findAll(Pageable pageable,
-                        @Param("product") String product,
                         @Param("dateInitial") Date dateInitial,
                         @Param("dateFinal") Date dateFinal,
                         @Param("status") SaleStatus status);
 
 
     @Query("SELECT s FROM cibus_sales s "
-            + "WHERE (:product is null or s.product.name LIKE %:product%) "
-            + "  AND (:dateInitial is null and :dateFinal is null or s.saleDate BETWEEN :dateInitial AND :dateFinal)"
+            + "WHERE (:dateInitial is null and :dateFinal is null or s.saleDate BETWEEN :dateInitial AND :dateFinal)"
     )
     Page<Sale> findAll(Pageable pageable,
-                       @Param("product") String product,
                        @Param("dateInitial") Date dateInitial,
                        @Param("dateFinal") Date dateFinal);
 

@@ -51,6 +51,7 @@ public class Product implements Serializable {
 	
 	@Column(columnDefinition="TEXT")
 	private String description;
+	private String quickDescription;
 	private Boolean visible;
 
 	private String image;
