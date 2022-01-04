@@ -17,6 +17,7 @@ import java.util.List;
 public interface SaleRepository extends JpaRepository<Sale, Long> {
 
     @Query("SELECT s FROM cibus_sales s "
+//            + "INNER JOIN s.saleProducts sp "
             + "WHERE (:dateInitial is null and :dateFinal is null or s.saleDate BETWEEN :dateInitial AND :dateFinal)"
             + "  AND (:status is null or s.saleStatus = :status)"
     )
@@ -27,6 +28,7 @@ public interface SaleRepository extends JpaRepository<Sale, Long> {
 
 
     @Query("SELECT s FROM cibus_sales s "
+//            + "INNER JOIN s.saleProducts sp "
             + "WHERE (:dateInitial is null and :dateFinal is null or s.saleDate BETWEEN :dateInitial AND :dateFinal)"
     )
     Page<Sale> findAll(Pageable pageable,

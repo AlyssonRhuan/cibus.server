@@ -1,5 +1,6 @@
 package com.arcs.cibus.server.service;
 
+import java.util.Locale;
 import java.util.Optional;
 
 import com.arcs.cibus.server.domain.enums.DomainActive;
@@ -20,11 +21,10 @@ public class ProductService {
 	@Autowired
 	private ProductRepository produtoRepository;
 	
-	public Page<Product> getAll(int pagina, int qtdElementos, String name, Long categoryId, DomainActive active) throws Exception {
-		Pageable paginacao = PageRequest.of(pagina, qtdElementos);
+	public Page<Product> getAll(int page, int qtdElementos, String name, Long categoryId, DomainActive active) throws Exception {
+		Pageable paginacao = PageRequest.of(page, qtdElementos);
 
-
-		if(name.isEmpty()) name = null;
+		name = name.isEmpty() ? null : name.toLowerCase(Locale.ROOT);
 		if(categoryId.equals(0L)) categoryId = null;
 
 		if(active.equals(DomainActive.BOUTH)){

@@ -11,60 +11,69 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class CashSerializer extends JsonSerializer<Cash> {
+public class CashSerializer extends JsonSerializer<Cash>
+{
 
-	@Override
-	public void serialize(final Cash cash,
-			final JsonGenerator jsonGenerator, final SerializerProvider serializers)
-			throws IOException {
-		switch(cash.getTipoSerializer()) {
-			case SIMPLE:
-				serializerSimples(cash, jsonGenerator, serializers);
-				break;
-			case FULL:
-				serializerCompleta(cash, jsonGenerator, serializers);
-				break;
-		default:
-			break;
-		}
-	}
-	
-	private void serializerSimples(final Cash cash,
-			final JsonGenerator jsonGenerator, final SerializerProvider serializers)
-			throws IOException {				
-		jsonGenerator.writeStartObject();
+    @Override
+    public void serialize(final Cash cash,
+                          final JsonGenerator jsonGenerator, final SerializerProvider serializers)
+            throws IOException
+    {
+        switch (cash.getTipoSerializer())
+        {
+            case SIMPLE:
+                serializerSimples(cash, jsonGenerator, serializers);
+                break;
+            case FULL:
+                serializerCompleta(cash, jsonGenerator, serializers);
+                break;
+            default:
+                break;
+        }
+    }
 
-		jsonGenerator.writeNumberField("id", cash.getId());
-		jsonGenerator.writeStringField("description", cash.getDescription());
-		jsonGenerator.writeStringField("openDate", cash.getOpenDate().toString());
-		jsonGenerator.writeStringField("closeDate", cash.getCloseDate() == null ? "" : cash.getCloseDate().toString());
-		jsonGenerator.writeNumberField("startValue", cash.getStartValue());
-		jsonGenerator.writeNumberField("currentValue", cash.getCurrentValue());
-		jsonGenerator.writeStringField("user", cash.getUser().getName());
+    private void serializerSimples(final Cash cash,
+                                   final JsonGenerator jsonGenerator, final SerializerProvider serializers)
+            throws IOException
+    {
+        jsonGenerator.writeStartObject();
 
-		jsonGenerator.writeEndObject();
-	}
-	
-	private void serializerCompleta(final Cash cash,
-			final JsonGenerator jsonGenerator, final SerializerProvider serializers)
-			throws IOException {				
-		jsonGenerator.writeStartObject();
-		
-		jsonGenerator.writeNumberField("id", cash.getId());
-		jsonGenerator.writeStringField("description", cash.getDescription());
-		jsonGenerator.writeStringField("openDate", cash.getOpenDate().toString());
-		jsonGenerator.writeStringField("closeDate", cash.getCloseDate() == null ? "" : cash.getCloseDate().toString());
-		jsonGenerator.writeNumberField("startValue", cash.getStartValue());
-		jsonGenerator.writeNumberField("currentValue", cash.getCurrentValue());
+        jsonGenerator.writeNumberField("id", cash.getId());
+        jsonGenerator.writeStringField("description", cash.getDescription());
+        jsonGenerator.writeStringField("openDate", SerializerUtils.getDateInSimpleFormat(cash.getOpenDate()));
+        jsonGenerator.writeStringField("closeDate", SerializerUtils.getDateInSimpleFormat(cash.getCloseDate()));
+        jsonGenerator.writeNumberField("startValue", cash.getStartValue());
+        jsonGenerator.writeNumberField("currentValue", cash.getCurrentValue());
 
-		jsonGenerator.writeFieldName("user");
-		cash.getUser().setTipoSerializer(TipoSerializer.SIMPLE);
-		jsonGenerator.writeObject(cash.getUser());
-		
-		jsonGenerator.writeEndObject();
-	}
+        jsonGenerator.writeFieldName("user");
+        cash.getUser().setTipoSerializer(TipoSerializer.SIMPLE);
+        jsonGenerator.writeObject(cash.getUser());
+
+        jsonGenerator.writeEndObject();
+    }
+
+    private void serializerCompleta(final Cash cash,
+                                    final JsonGenerator jsonGenerator, final SerializerProvider serializers)
+            throws IOException
+    {
+        jsonGenerator.writeStartObject();
+
+        jsonGenerator.writeNumberField("id", cash.getId());
+        jsonGenerator.writeStringField("description", cash.getDescription());
+        jsonGenerator.writeStringField("openDate", SerializerUtils.getDateInSimpleFormat(cash.getOpenDate()));
+        jsonGenerator.writeStringField("closeDate", SerializerUtils.getDateInSimpleFormat(cash.getCloseDate()));
+        jsonGenerator.writeNumberField("startValue", cash.getStartValue());
+        jsonGenerator.writeNumberField("currentValue", cash.getCurrentValue());
+
+        jsonGenerator.writeFieldName("user");
+        cash.getUser().setTipoSerializer(TipoSerializer.FULL);
+        jsonGenerator.writeObject(cash.getUser());
+
+        jsonGenerator.writeEndObject();
+    }
 }

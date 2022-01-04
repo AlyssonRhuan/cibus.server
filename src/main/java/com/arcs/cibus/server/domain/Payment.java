@@ -47,4 +47,7 @@ public class Payment implements Serializable
     @Column (columnDefinition = "TEXT")
     private String description;
     private Boolean visible;
+
+    // Determine if this payment method can moviment the current value on cash
+    private Boolean isCashMoviment;
 }

@@ -31,12 +31,6 @@ public class MeResource {
 		return ResponseEntity.ok(user);
 	}
 	
-	@RequestMapping(value="/{userId}/image", method = RequestMethod.GET)
-	public ResponseEntity<String> getImageById(@PathVariable Long userId) throws ObjectNotFoundException {
-		User user = meService.getById(userId);
-		return ResponseEntity.ok(user.getImage());
-	}
-	
 	@RequestMapping(value="/{userId}", method = RequestMethod.PUT)
 	public ResponseEntity<User> update(@PathVariable Long userId, @RequestBody User user) throws Exception {
 		User newUser = meService.getById(userId);

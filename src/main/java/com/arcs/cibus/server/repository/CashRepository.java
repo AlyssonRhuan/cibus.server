@@ -18,10 +18,10 @@ import java.util.List;
 public interface CashRepository extends JpaRepository<Cash, Long> {
 
     @Query("SELECT c FROM cibus_cashs c "
-            + "WHERE (:user is null or c.user.name LIKE %:user%) "
+            + "WHERE (:user is null or LOWER(c.user.name) LIKE %:user%) "
             + "  AND (:openDate is null or c.openDate = :openDate)"
             + "  AND (:closeDate is null or c.closeDate = :closeDate)"
-            + "  AND (:description is null or c.description LIKE %:description%)"
+            + "  AND (:description is null or LOWER(c.description) LIKE %:description%)"
     )
     Page<Cash> findAll(Pageable pageable,
                        @Param("user") String user,

@@ -50,7 +50,6 @@ public class User implements Serializable {
     @Builder.Default
 	private boolean isEmailConfirmed = Boolean.FALSE;
 	private String pass;
-	private String image;
 
 	@Enumerated(EnumType.STRING)
 	private Profile profile;

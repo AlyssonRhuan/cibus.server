@@ -1,12 +1,7 @@
 package com.arcs.cibus.server.service;
 
-import com.arcs.cibus.server.domain.Payment;
-import com.arcs.cibus.server.domain.Sale;
-import com.arcs.cibus.server.domain.SaleProduct;
-import com.arcs.cibus.server.domain.enums.SaleStatus;
-import com.arcs.cibus.server.repository.SaleProductRepository;
-import com.arcs.cibus.server.repository.SaleRepository;
-import com.arcs.cibus.server.service.exceptions.DataException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,9 +9,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
+import com.arcs.cibus.server.domain.Sale;
+import com.arcs.cibus.server.domain.SaleProduct;
+import com.arcs.cibus.server.domain.enums.SaleStatus;
+import com.arcs.cibus.server.repository.SaleProductRepository;
+import com.arcs.cibus.server.repository.SaleRepository;
+import com.arcs.cibus.server.serializer.CashSerializer;
+import com.arcs.cibus.server.service.exceptions.DataException;
 
 
 @Service
@@ -30,6 +29,9 @@ public class SaleService
 
     @Autowired
     private ValidadeService validadeService;
+
+    @Autowired
+    private CashService cashService;
 
     public Page<Sale> getAll(int page, int quantity, String product, String date, SaleStatus saleStatus) throws Exception
     {
@@ -55,28 +57,43 @@ public class SaleService
         Date dateInitial = date.isEmpty() ? null : new SimpleDateFormat("dd/MM/yyyy hh:mm:ss").parse(date + " 00:00:00");
         Date dateFinal = date.isEmpty() ? null : new SimpleDateFormat("dd/MM/yyyy hh:mm:ss").parse(date + " 23:59:59");
 
+        Page<Sale> salePageable = null;
         if (saleStatus.equals(SaleStatus.BOUTH))
         {
-            return saleRepository.findAll(paginacao, dateInitial, dateFinal);
+            salePageable = saleRepository.findAll(paginacao, dateInitial, dateFinal);
         }
         else
         {
-            return saleRepository.findAll(paginacao, dateInitial, dateFinal, saleStatus);
+            salePageable = saleRepository.findAll(paginacao, dateInitial, dateFinal, saleStatus);
         }
+        return salePageable;
     }
 
     public Sale saveSale(Sale sale) throws Exception
     {
-        if (sale.getSaleStatus() == null)
+        Sale saleToSave = Sale.builder()
+                              .saleStatus(sale.getSaleStatus() != null ? sale.getSaleStatus() : SaleStatus.PAID)
+                              .saleDate(new Date())
+                              .client(sale.getClient())
+                              .payment(sale.getPayment())
+                              .build();
+
+        saleRepository.save(saleToSave);
+
+        for (SaleProduct saleProduct : sale.getSaleProducts())
         {
-            sale.setSaleStatus(SaleStatus.PAID);
+            saleProduct.setSale(saleToSave);
+            saleProductRepository.save(saleProduct);
         }
-        sale.setSaleDate(new Date());
 
-        sale = saleRepository.save(sale);
-        saleProductRepository.saveAll(sale.getSaleProducts());
+        saleToSave.setSaleProducts(sale.getSaleProducts());
 
-        validadeService.validateStock(sale);
-        return sale;
+        validadeService.validateStock(saleToSave);
+
+        if(sale.getPayment().getIsCashMoviment()){
+            cashService.updateCashValue(sale);
+        }
+
+        return saleToSave;
     }
 }

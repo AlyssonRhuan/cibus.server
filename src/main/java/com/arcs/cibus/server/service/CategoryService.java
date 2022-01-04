@@ -2,6 +2,7 @@ package com.arcs.cibus.server.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 import com.arcs.cibus.server.domain.enums.DomainActive;
@@ -28,8 +29,8 @@ public class CategoryService {
 	public Page<Category> getAll(int pagina, int qtdElementos, String name, String description, DomainActive active) throws Exception {
 		Pageable paginacao = PageRequest.of(pagina, qtdElementos);
 
-		if(name.isEmpty()) name = null;
-		if(description.isEmpty()) description = null;
+		name = name.isEmpty() ? null : name.toLowerCase(Locale.ROOT);
+		description = description.isEmpty() ? null : description.toLowerCase(Locale.ROOT);
 
 		if(active.equals(DomainActive.BOUTH)){
 			return categoriaRepository.findAll(paginacao, name, description);

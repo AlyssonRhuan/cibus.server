@@ -39,6 +39,8 @@ public class PaymentSerializer extends JsonSerializer<Payment>
 
         jsonGenerator.writeNumberField("id", payment.getId());
         jsonGenerator.writeStringField("payment", payment.getPayment());
+        jsonGenerator.writeBooleanField("visible", payment.getVisible());
+        jsonGenerator.writeBooleanField("isCashMoviment", payment.getIsCashMoviment());
 
         jsonGenerator.writeEndObject();
     }
@@ -52,6 +54,7 @@ public class PaymentSerializer extends JsonSerializer<Payment>
         jsonGenerator.writeNumberField("id", payment.getId());
         jsonGenerator.writeStringField("payment", payment.getPayment());
         jsonGenerator.writeBooleanField("visible", payment.getVisible());
+        jsonGenerator.writeBooleanField("isCashMoviment", payment.getIsCashMoviment());
         jsonGenerator.writeStringField("description", payment.getDescription());
 
         jsonGenerator.writeEndObject();

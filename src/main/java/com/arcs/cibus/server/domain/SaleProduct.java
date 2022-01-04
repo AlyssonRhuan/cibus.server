@@ -52,9 +52,13 @@ public class SaleProduct implements Serializable
 
     @OneToOne
     @JoinColumn (name = "product_id", referencedColumnName = "id")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Product product;
 
     @ManyToOne
-    @JoinColumn (name = "sale_id", referencedColumnName = "id")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @JoinColumn (name = "sale_id")
     private Sale sale;
 }

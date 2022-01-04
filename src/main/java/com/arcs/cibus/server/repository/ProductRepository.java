@@ -27,7 +27,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Query("SELECT p FROM cibus_products p "
             + "INNER JOIN p.categorys c "
-            + "WHERE (:name is null or p.name LIKE %:name%) "
+            + "WHERE (:name is null or LOWER(p.name) LIKE %:name%) "
             + "AND (:category is null or c.id = :category) "
             + "AND (:active is null or p.visible is :active) "
             + "ORDER BY p.name"
@@ -39,7 +39,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Query("SELECT p FROM cibus_products p "
             + "INNER JOIN p.categorys c "
-            + "WHERE (:name is null or p.name LIKE %:name%) "
+            + "WHERE (:name is null or LOWER(p.name) LIKE %:name%) "
             + "AND (:category is null or c.id = :category) "
             + "ORDER BY p.name"
     )

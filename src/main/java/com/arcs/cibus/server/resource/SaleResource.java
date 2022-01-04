@@ -31,7 +31,7 @@ public class SaleResource
     @RequestMapping (method = RequestMethod.POST)
     public ResponseEntity<Sale> saveSale(@RequestBody Sale sale) throws Exception
     {
-        saleService.saveSale(sale);
+        sale = saleService.saveSale(sale);
         return ResponseEntity.ok(sale);
     }
 }

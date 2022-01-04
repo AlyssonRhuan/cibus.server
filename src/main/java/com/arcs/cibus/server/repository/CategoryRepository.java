@@ -14,8 +14,8 @@ import com.arcs.cibus.server.domain.Category;
 public interface CategoryRepository extends JpaRepository<Category, Long> {
 
     @Query("SELECT c FROM cibus_categorys c "
-            + "WHERE (:name is null or c.name LIKE %:name%) "
-            + "AND (:description is null or c.description LIKE %:description%) "
+            + "WHERE (:name is null or LOWER(c.name) LIKE %:name%) "
+            + "AND (:description is null or LOWER(c.description) LIKE %:description%) "
             + "AND (:active is null or c.active is :active) "
             + "ORDER BY c.name"
     )
@@ -25,8 +25,8 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
                            @Param("active") boolean active);
 
     @Query("SELECT c FROM cibus_categorys c "
-            + "WHERE (:name is null or c.name LIKE %:name%) "
-            + "AND (:description is null or c.description LIKE %:description%) "
+            + "WHERE (:name is null or LOWER(c.name) LIKE %:name%) "
+            + "AND (:description is null or LOWER(c.description) LIKE %:description%) "
             + "ORDER BY c.name"
     )
     Page<Category> findAll(Pageable pageable,

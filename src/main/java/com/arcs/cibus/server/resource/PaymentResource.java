@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.arcs.cibus.server.domain.Category;
 import com.arcs.cibus.server.domain.Payment;
 import com.arcs.cibus.server.domain.Product;
 import com.arcs.cibus.server.domain.enums.DomainActive;
@@ -23,15 +24,21 @@ import com.arcs.cibus.server.service.exceptions.ObjectNotFoundException;
 @RequestMapping (value = "/payment")
 public class PaymentResource
 {
-
     @Autowired
     private PaymentService paymentService;
 
     @RequestMapping (method = RequestMethod.GET)
+    public ResponseEntity<Page<Payment>> getAll(int page, int quantity, String payment, String description, DomainActive active) throws Exception
+    {
+        Page<Payment> payments = paymentService.getAll(page - 1, quantity, payment, description, active);
+        return ResponseEntity.ok(payments);
+    }
+
+    @RequestMapping (value = "/visible",method = RequestMethod.GET)
     public ResponseEntity<List<Payment>> getAll() throws Exception
     {
-        List<Payment> Payment = paymentService.getAll();
-        return ResponseEntity.ok(Payment);
+        List<Payment> payments = paymentService.getAllVisible();
+        return ResponseEntity.ok(payments);
     }
 
     @RequestMapping (value = "/{paymentId}", method = RequestMethod.GET)

@@ -70,7 +70,11 @@ public class Sale implements Serializable
     @JoinColumn (name = "payment_id", referencedColumnName = "id")
     private Payment payment;
 
+    @OneToOne
+    @JoinColumn (name = "cash_id", referencedColumnName = "id")
+    private Cash cash;
+
     @Builder.Default
-    @OneToMany (mappedBy = "sale")
+    @OneToMany (mappedBy = "sale", cascade = CascadeType.ALL)
     private Set<SaleProduct> saleProducts = new HashSet<>();
 }

@@ -36,6 +36,7 @@ public class SaleProductSerializer extends JsonSerializer<SaleProduct>
         jsonGenerator.writeNumberField("id", saleProduct.getId());
         jsonGenerator.writeNumberField("quantity", saleProduct.getQuantity());
         jsonGenerator.writeNumberField("price", saleProduct.getPrice());
+        jsonGenerator.writeStringField("product", saleProduct.getProduct().getName());
 
         jsonGenerator.writeEndObject();
     }

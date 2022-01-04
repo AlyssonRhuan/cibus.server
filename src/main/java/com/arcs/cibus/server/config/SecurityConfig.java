@@ -39,8 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
     private JWTUtil jwtUtil;
 
     public static final String[] PUBLIC_MATCHERS = {
-            "/h2-console/**",
-            "/veiculos/**"
+            "/h2-console/**"
     };
 
     public static final String[] PUBLIC_MATCHERS_GET = {
@@ -79,7 +78,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
             "/user/**"
     };
 
-
     @Override
     protected void configure(HttpSecurity http) throws Exception
     {
@@ -111,7 +109,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
     {
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.setExposedHeaders(Arrays.asList("Authorization", "AuthorizationId"));
+        corsConfiguration.setExposedHeaders(Arrays.asList("Authorization", "AuthorizationId", "AuthorizationRole"));
         corsConfiguration.applyPermitDefaultValues();
         corsConfiguration.setAllowedOrigins(Arrays.asList("*"));
         corsConfiguration.setAllowedMethods(Arrays.asList("HEAD", "GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));

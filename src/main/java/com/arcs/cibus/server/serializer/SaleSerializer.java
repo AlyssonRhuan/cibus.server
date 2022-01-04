@@ -51,24 +51,16 @@ public class SaleSerializer extends JsonSerializer<Sale>
         jsonGenerator.writeStringField("saleStatus", sale.getSaleStatus().name());
 
         jsonGenerator.writeArrayFieldStart("saleProducts");
-        for (SaleProduct saleProduct : sale.getSaleProducts())
+
+        if (sale.getSaleProducts() != null || !sale.getSaleProducts().isEmpty())
         {
-            saleProduct.setTipoSerializer(TipoSerializer.SIMPLE);
-            jsonGenerator.writeObject(saleProduct);
+            for (SaleProduct saleProduct : sale.getSaleProducts())
+            {
+                saleProduct.setTipoSerializer(TipoSerializer.FULL);
+                jsonGenerator.writeObject(saleProduct);
+            }
         }
         jsonGenerator.writeEndArray();
-
-//        jsonGenerator.writeArrayFieldStart("saleProducts");
-//        for (final SaleProduct saleProduct : sale.getSaleProducts())
-//        {
-//            saleProduct.setTipoSerializer(TipoSerializer.FULL);
-//            jsonGenerator.writeObject(saleProduct);
-//        }
-//        jsonGenerator.writeEndArray();
-
-//		jsonGenerator.writeFieldName("client");
-//		sale.getClient().setTipoSerializer(TipoSerializer.SIMPLE);
-//		jsonGenerator.writeObject(sale.getClient());
 
         jsonGenerator.writeFieldName("payment");
         sale.getPayment().setTipoSerializer(TipoSerializer.FULL);
