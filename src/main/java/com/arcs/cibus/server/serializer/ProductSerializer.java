@@ -40,6 +40,7 @@ public class ProductSerializer extends JsonSerializer<Product>
         jsonGenerator.writeStringField("name", product.getName());
         jsonGenerator.writeNumberField("price", product.getPrice());
         jsonGenerator.writeBooleanField("visible", product.getVisible());
+        jsonGenerator.writeBooleanField("isActive", product.getIsActive());
         jsonGenerator.writeStringField("description", product.getDescription());
         jsonGenerator.writeStringField("quickDescription", product.getQuickDescription());
 
@@ -55,6 +56,7 @@ public class ProductSerializer extends JsonSerializer<Product>
         jsonGenerator.writeNumberField("id", product.getId());
         jsonGenerator.writeStringField("name", product.getName());
         jsonGenerator.writeBooleanField("visible", product.getVisible());
+        jsonGenerator.writeBooleanField("isActive", product.getIsActive());
         jsonGenerator.writeStringField("description", product.getDescription());
         jsonGenerator.writeStringField("quickDescription", product.getQuickDescription());
         jsonGenerator.writeStringField("image", product.getImage());

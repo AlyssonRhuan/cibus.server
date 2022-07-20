@@ -1,13 +1,13 @@
 package com.arcs.cibus.server.service.utils;
 
-import com.arcs.cibus.server.domain.enums.DashboardPeriod;
+import com.arcs.cibus.server.domain.enums.ReportPeriod;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
 public class DateUtils {
-    public static Date defineInitialDate(DashboardPeriod period) {
+    public static Date defineInitialDate(ReportPeriod period) {
         try {
             Calendar calendar = Calendar.getInstance();
             calendar.setFirstDayOfWeek(Calendar.SUNDAY);
@@ -40,7 +40,7 @@ public class DateUtils {
         }
     }
 
-    public static Date defineFinalDate(DashboardPeriod period) {
+    public static Date defineFinalDate(ReportPeriod period) {
         try {
             Calendar calendar = Calendar.getInstance();
             calendar.setFirstDayOfWeek(Calendar.SUNDAY);

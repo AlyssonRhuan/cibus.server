@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum DashboardPeriod {
+public enum ReportPeriod {
 
 	DAY, WEEK, MOUNTH;
 }

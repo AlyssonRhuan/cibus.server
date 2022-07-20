@@ -14,12 +14,16 @@ import org.springframework.stereotype.Service;
 import com.arcs.cibus.server.domain.Product;
 import com.arcs.cibus.server.repository.ProductRepository;
 import com.arcs.cibus.server.service.exceptions.ObjectNotFoundException;
+import org.springframework.util.StringUtils;
 
 @Service
 public class ProductService {
-	
+
 	@Autowired
 	private ProductRepository produtoRepository;
+
+	@Autowired
+	private ImageService imageService;
 	
 	public Page<Product> getAll(int page, int qtdElementos, String name, Long categoryId, DomainActive active) throws Exception {
 		Pageable paginacao = PageRequest.of(page, qtdElementos);
@@ -27,27 +31,50 @@ public class ProductService {
 		name = name.isEmpty() ? null : name.toLowerCase(Locale.ROOT);
 		if(categoryId.equals(0L)) categoryId = null;
 
+		Page<Product> productsPageable;
+
 		if(active.equals(DomainActive.BOUTH)){
-			return produtoRepository.findAll(paginacao, name, categoryId);
+			productsPageable = produtoRepository.findAll(paginacao, name, categoryId);
 		}
 		else{
 			boolean categoryActive = active.equals(DomainActive.YES) ? true : false;
-			return produtoRepository.findAll(paginacao, name, categoryId, categoryActive);
+			productsPageable = produtoRepository.findAll(paginacao, name, categoryId, categoryActive);
 		}
+
+		productsPageable.get().forEach(product -> {
+			String productImagePath = product.getImagePath();
+			if(!StringUtils.isEmpty(productImagePath)) {
+				String productImage = imageService.get(productImagePath);
+				product.setImage(productImage);
+			}
+		});
+
+		return productsPageable;
 	}
 	
 	public Product getById(Long productId) throws ObjectNotFoundException {
 		Optional<Product> product = produtoRepository.findById(productId);
+
+		if(!StringUtils.isEmpty(product.get().getImagePath())) {
+			product.get().setImage(imageService.get(product.get().getImagePath()));
+		}
+
+		product.get().setImage(imageService.get(product.get().getImagePath()));
 		return product.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id " + productId + " não existe."));
 	}
 	
 	public void delete(Long produtoId) throws ConstraintViolationException, Exception {	
 		Product produto = this.getById(produtoId);
-		produtoRepository.delete(produto);
+		produto.setIsActive(Boolean.FALSE);
+		produtoRepository.save(produto);
 	}
 	
 	public Product save(Product produto) throws Exception {
+		if(!StringUtils.isEmpty(produto.getImage())) {
+			String imagePath = imageService.save(produto.getImage(), produto.getName() + ".png");
+			produto.setImagePath(imagePath);
+		}
 		return produtoRepository.save(produto); 
 	}
 
@@ -55,7 +82,18 @@ public class ProductService {
 		if(categoryId.equals(0L)){
 			categoryId = null;
 		}
+
 		Pageable paginacao = PageRequest.of(pagina, qtdElementos);
-		return produtoRepository.getAllByCategory(paginacao, categoryId);
+		Page<Product> productsPageable = produtoRepository.getAllByCategory(paginacao, categoryId);
+
+		productsPageable.get().forEach(product -> {
+			String productImagePath = product.getImagePath();
+			if(!StringUtils.isEmpty(productImagePath)) {
+				String productImage = imageService.get(productImagePath);
+				product.setImage(productImage);
+			}
+		});
+
+		return productsPageable;
     }
 }

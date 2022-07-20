@@ -44,11 +44,9 @@ public class User implements Serializable {
 	
 	@NotEmpty(message = "mandatory")
 	private String name;
-	private String email;
+	private String login;
     @Builder.Default
 	private boolean isFirstLogin = Boolean.TRUE;
-    @Builder.Default
-	private boolean isEmailConfirmed = Boolean.FALSE;
 	private String pass;
 
 	@Enumerated(EnumType.STRING)

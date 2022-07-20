@@ -24,18 +24,17 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		User user = userRepository.findByEmail(email);
+		User user = userRepository.findByLogin(email);
 		
 		if(user == null){
 			throw new UsernameNotFoundException(email);
 		}
 		
 		Long userId = user.getId();
-		String userEmail = user.getEmail();
+		String userLogin = user.getLogin();
 		String userPasspass = user.getPass();
-		boolean isEmailConfirmed = user.isEmailConfirmed();
 		Profile userProfile = user.getProfile();
 		
-		return new UserSS(userId, userEmail, userPasspass, isEmailConfirmed, userProfile);
+		return new UserSS(userId, userLogin, userPasspass, userProfile);
 	}	
 }

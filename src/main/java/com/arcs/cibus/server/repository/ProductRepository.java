@@ -20,6 +20,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             + "AND p.visible is true "
             + "AND c.active is true "
             + "AND p.stockQuantity > 0 "
+            + "AND is_active IS NOT FALSE "
             + "ORDER BY p.name"
     )
     Page<Product> getAllByCategory(Pageable pageable,
@@ -30,6 +31,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             + "WHERE (:name is null or LOWER(p.name) LIKE %:name%) "
             + "AND (:category is null or c.id = :category) "
             + "AND (:active is null or p.visible is :active) "
+            + "AND is_active IS NOT FALSE "
             + "ORDER BY p.name"
     )
     Page<Product> findAll(Pageable pageable,
@@ -41,6 +43,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             + "INNER JOIN p.categorys c "
             + "WHERE (:name is null or LOWER(p.name) LIKE %:name%) "
             + "AND (:category is null or c.id = :category) "
+            + "AND is_active IS NOT FALSE "
             + "ORDER BY p.name"
     )
     Page<Product> findAll(Pageable pageable,

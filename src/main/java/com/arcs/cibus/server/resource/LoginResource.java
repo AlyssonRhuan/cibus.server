@@ -49,7 +49,6 @@ public class LoginResource {
 	@RequestMapping(value="/account/{userId}", method = RequestMethod.PUT)
 	public ResponseEntity<User> confirmAccount(@PathVariable Long userId) throws Exception {		
 		User user = userService.getById(userId);
-		user.setEmailConfirmed(Boolean.TRUE);
 		user = userService.save(user);
 		return ResponseEntity.ok(user);			
 	}

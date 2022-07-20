@@ -1,6 +1,7 @@
 package com.arcs.cibus.server.service;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 import org.hibernate.exception.ConstraintViolationException;
@@ -14,6 +15,7 @@ import com.arcs.cibus.server.domain.User;
 import com.arcs.cibus.server.repository.UserRepository;
 import com.arcs.cibus.server.service.exceptions.EmailAlreadyRegisteredException;
 import com.arcs.cibus.server.service.exceptions.ObjectNotFoundException;
+import org.springframework.util.StringUtils;
 
 
 @Service
@@ -22,9 +24,13 @@ public class UserService {
 	@Autowired
 	private UserRepository usuarioRepository;
 	
-	public Page<User> getAll(int pagina, int qtdElementos) throws Exception {
+	public Page<User> getAll(int pagina, int qtdElementos, String name, String login) throws Exception {
 		Pageable paginacao = PageRequest.of(pagina, qtdElementos);
-		return usuarioRepository.findAll(paginacao);
+
+		name = name.isEmpty() ? null : name.toLowerCase(Locale.ROOT);
+		login = login.isEmpty() ? null : login.toLowerCase(Locale.ROOT);
+
+		return usuarioRepository.findAll(paginacao, name, login);
 	}
 	
 	public User getById(Long usuarioId) throws ObjectNotFoundException {
@@ -34,7 +40,7 @@ public class UserService {
 	}
 	
 	public User getByEmail(String email) throws ObjectNotFoundException {
-		return usuarioRepository.findByEmail(email);
+		return usuarioRepository.findByLogin(email);
 	}
 	
 	public void delete(Long userId) throws ConstraintViolationException, Exception {	
@@ -44,11 +50,16 @@ public class UserService {
 	
 	public User save(User user) throws Exception {
 		if(user.getId() == null) {
-			User validateUser = getByEmail(user.getEmail());
+			User validateUser = getByEmail(user.getLogin());
 			
 			if(validateUser != null) {
-				throw new EmailAlreadyRegisteredException("This E-mail already registered!");
+				throw new EmailAlreadyRegisteredException("Este login já foi registrado!");
 			}			
+		}
+
+		if(StringUtils.isEmpty(user.getPass())) {
+			User oldUser = getById(user.getId());
+			user.setPass(oldUser.getPass());
 		}
 		
 		return usuarioRepository.save(user); 

@@ -35,7 +35,7 @@ public class MeResource {
 	public ResponseEntity<User> update(@PathVariable Long userId, @RequestBody User user) throws Exception {
 		User newUser = meService.getById(userId);
 		newUser.setName(user.getName());
-		newUser.setEmail(user.getEmail());
+		newUser.setLogin(user.getLogin());
 		user = userService.save(newUser);
 		return ResponseEntity.ok(user);			
 	}

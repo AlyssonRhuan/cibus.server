@@ -33,7 +33,8 @@ public class UserSerializer extends JsonSerializer<User> {
 		jsonGenerator.writeNumberField("id", user.getId());
 		jsonGenerator.writeBooleanField("firstLogin", user.isFirstLogin());
 		jsonGenerator.writeStringField("name", user.getName());
-		jsonGenerator.writeStringField("email", user.getEmail());
+		jsonGenerator.writeStringField("login", user.getLogin());
+		jsonGenerator.writeStringField("profile", user.getProfile().name());
 		
 		jsonGenerator.writeEndObject();
 	}
@@ -45,7 +46,7 @@ public class UserSerializer extends JsonSerializer<User> {
 		jsonGenerator.writeNumberField("id", user.getId());
 		jsonGenerator.writeBooleanField("firstLogin", user.isFirstLogin());
 		jsonGenerator.writeStringField("name", user.getName());
-		jsonGenerator.writeStringField("email", user.getEmail());
+		jsonGenerator.writeStringField("login", user.getLogin());
 		jsonGenerator.writeStringField("profile", user.getProfile().name());
 		
 		jsonGenerator.writeEndObject();

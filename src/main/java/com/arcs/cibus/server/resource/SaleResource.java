@@ -12,6 +12,7 @@ import com.arcs.cibus.server.domain.Sale;
 import com.arcs.cibus.server.domain.enums.SaleStatus;
 import com.arcs.cibus.server.service.SaleService;
 
+
 @RestController
 @RequestMapping (value = "/sale")
 public class SaleResource

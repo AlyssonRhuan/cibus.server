@@ -54,10 +54,15 @@ public class Product implements Serializable {
 	private String quickDescription;
 	private Boolean visible;
 
+	@Transient
 	private String image;
+
+	private String imagePath;
 	private BigDecimal price;
 	private int stockQuantity;
 	private int minimumStock;
+
+	private Boolean isActive;
 
 	@Builder.Default
 	@ManyToMany

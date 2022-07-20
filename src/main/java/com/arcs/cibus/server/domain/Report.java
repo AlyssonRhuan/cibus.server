@@ -3,6 +3,7 @@ package com.arcs.cibus.server.domain;
 import com.arcs.cibus.server.domain.enums.ReportType;
 import com.arcs.cibus.server.domain.enums.TipoSerializer;
 import com.arcs.cibus.server.serializer.CashSerializer;
+import com.arcs.cibus.server.serializer.ReportSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.*;
 
@@ -21,7 +22,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-@JsonSerialize(using = CashSerializer.class)
+@JsonSerialize(using = ReportSerializer.class)
 @Entity(name = "cibus_reports")
 public class Report implements Serializable {
 

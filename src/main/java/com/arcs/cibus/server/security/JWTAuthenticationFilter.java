@@ -42,7 +42,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         {
             User user = new ObjectMapper().readValue(request.getInputStream(), User.class);
             UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                    user.getEmail(), user.getPass(), new ArrayList<>());
+                    user.getLogin(), user.getPass(), new ArrayList<>());
 
             Authentication auth = authenticationManager.authenticate(authToken);
 
@@ -65,18 +65,9 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         Long userId = userSS.getId();
         String userRole = userSS.getProfile().name();
 
-        if (userSS.isEmailConfirmed())
-        {
-            response.addHeader("Authorization", "Bearer " + token);
-            response.addHeader("AuthorizationId", userId.toString());
-            response.addHeader("AuthorizationRole", userRole);
-        }
-        else
-        {
-            response.setStatus(403);
-            response.setContentType("application/json");
-            response.getWriter().append(jsonIsEmailNotConfirmed());
-        }
+        response.addHeader("Authorization", "Bearer " + token);
+        response.addHeader("AuthorizationId", userId.toString());
+        response.addHeader("AuthorizationRole", userRole);
     }
 
     private String jsonIsEmailNotConfirmed()

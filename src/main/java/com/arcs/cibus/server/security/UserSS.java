@@ -19,7 +19,6 @@ public class UserSS implements UserDetails
     private Long id;
     private String login;
     private String pass;
-    private boolean isEmailConfirmed;
     private Profile profile;
 
     public Long getId()
@@ -30,11 +29,6 @@ public class UserSS implements UserDetails
     public Profile getProfile()
     {
         return profile;
-    }
-
-    public boolean isEmailConfirmed()
-    {
-        return isEmailConfirmed;
     }
 
     //Perfis do usuário
