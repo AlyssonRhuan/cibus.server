@@ -1,12 +1,8 @@
 package com.arcs.cibus.server.domain;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 
 import com.arcs.cibus.server.domain.enums.Profile;
 import com.arcs.cibus.server.domain.enums.TipoSerializer;
@@ -41,8 +37,7 @@ public class User implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@EqualsAndHashCode.Include
 	private Long id;
-	
-	@NotEmpty(message = "mandatory")
+
 	private String name;
 	private String login;
     @Builder.Default

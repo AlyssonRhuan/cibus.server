@@ -8,6 +8,5 @@ import lombok.Getter;
 public enum Profile {
 
 	ROLE_ADMIN,
-	ROLE_SELLER,
 	ROLE_CLIENT;
 }
