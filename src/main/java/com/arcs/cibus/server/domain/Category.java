@@ -46,20 +46,19 @@ public class Category implements Serializable {
 	@EqualsAndHashCode.Include
 	private Long id;
 	private String name;
-	private String description;
     private Boolean active;
     private String icon;
 
     @Builder.Default
-	@ManyToMany(mappedBy = "categorys")
-    private List<Product> products = new ArrayList<>();
+	@ManyToMany(mappedBy = "categories")
+    private List<SubCategory> subCategories = new ArrayList<>();
 	
-	public void addProduct (Product product) {
-		products.add(product);
+	public void addSubCategory (SubCategory subCategory) {
+		subCategories.add(subCategory);
 	}
 	
-	public void addProducts(List<Product> products) {
-		this.products.addAll(products);
+	public void addSubCategories (List<SubCategory> subCategories) {
+		this.subCategories.addAll(subCategories);
 	}
 }
 	

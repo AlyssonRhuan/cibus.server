@@ -28,9 +28,6 @@ public class SaleService
     private SaleProductRepository saleProductRepository;
 
     @Autowired
-    private ValidadeService validadeService;
-
-    @Autowired
     private CashService cashService;
 
     public Page<Sale> getAll(int page, int quantity, String product, String date, SaleStatus saleStatus) throws Exception
@@ -87,8 +84,6 @@ public class SaleService
         }
 
         saleToSave.setSaleProducts(sale.getSaleProducts());
-
-        validadeService.validateStock(saleToSave);
 
         if(sale.getPayment().getIsCashMoviment()){
             cashService.updateCashValue(sale);

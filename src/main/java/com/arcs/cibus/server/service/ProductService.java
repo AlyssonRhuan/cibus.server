@@ -1,5 +1,6 @@
 package com.arcs.cibus.server.service;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -25,20 +26,20 @@ public class ProductService {
 	@Autowired
 	private ImageService imageService;
 	
-	public Page<Product> getAll(int page, int qtdElementos, String name, Long categoryId, DomainActive active) throws Exception {
+	public Page<Product> getAll(int page, int qtdElementos, String name, Long subCategoryId, DomainActive active) throws Exception {
 		Pageable paginacao = PageRequest.of(page, qtdElementos);
 
 		name = name.isEmpty() ? null : name.toLowerCase(Locale.ROOT);
-		if(categoryId.equals(0L)) categoryId = null;
+		if(subCategoryId.equals(0L)) subCategoryId = null;
 
 		Page<Product> productsPageable;
 
 		if(active.equals(DomainActive.BOUTH)){
-			productsPageable = produtoRepository.findAll(paginacao, name, categoryId);
+			productsPageable = produtoRepository.findAll(paginacao, name, subCategoryId);
 		}
 		else{
 			boolean categoryActive = active.equals(DomainActive.YES) ? true : false;
-			productsPageable = produtoRepository.findAll(paginacao, name, categoryId, categoryActive);
+			productsPageable = produtoRepository.findAll(paginacao, name, subCategoryId, categoryActive);
 		}
 
 		productsPageable.get().forEach(product -> {
@@ -78,15 +79,10 @@ public class ProductService {
 		return produtoRepository.save(produto); 
 	}
 
-    public Page<Product> getAllByCategory(int pagina, int qtdElementos, Long categoryId) throws Exception {
-		if(categoryId.equals(0L)){
-			categoryId = null;
-		}
+    public List<Product> getAllByCategory(Long categoryId) throws Exception {
+		List<Product> products = produtoRepository.getAllByCategory(categoryId);
 
-		Pageable paginacao = PageRequest.of(pagina, qtdElementos);
-		Page<Product> productsPageable = produtoRepository.getAllByCategory(paginacao, categoryId);
-
-		productsPageable.get().forEach(product -> {
+		products.forEach(product -> {
 			String productImagePath = product.getImagePath();
 			if(!StringUtils.isEmpty(productImagePath)) {
 				String productImage = imageService.get(productImagePath);
@@ -94,6 +90,6 @@ public class ProductService {
 			}
 		});
 
-		return productsPageable;
+		return products;
     }
 }

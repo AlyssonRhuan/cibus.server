@@ -4,6 +4,9 @@ import java.io.IOException;
 
 import com.arcs.cibus.server.domain.Category;
 import com.arcs.cibus.server.domain.Product;
+import com.arcs.cibus.server.domain.ProductVariations;
+import com.arcs.cibus.server.domain.SubCategory;
+import com.arcs.cibus.server.domain.enums.ProductVariationType;
 import com.arcs.cibus.server.domain.enums.TipoSerializer;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
@@ -42,7 +45,6 @@ public class ProductSerializer extends JsonSerializer<Product>
         jsonGenerator.writeBooleanField("visible", product.getVisible());
         jsonGenerator.writeBooleanField("isActive", product.getIsActive());
         jsonGenerator.writeStringField("description", product.getDescription());
-        jsonGenerator.writeStringField("quickDescription", product.getQuickDescription());
 
         jsonGenerator.writeEndObject();
     }
@@ -58,17 +60,36 @@ public class ProductSerializer extends JsonSerializer<Product>
         jsonGenerator.writeBooleanField("visible", product.getVisible());
         jsonGenerator.writeBooleanField("isActive", product.getIsActive());
         jsonGenerator.writeStringField("description", product.getDescription());
-        jsonGenerator.writeStringField("quickDescription", product.getQuickDescription());
         jsonGenerator.writeStringField("image", product.getImage());
         jsonGenerator.writeNumberField("price", product.getPrice());
         jsonGenerator.writeNumberField("stockQuantity", product.getStockQuantity());
         jsonGenerator.writeNumberField("minimumStock", product.getMinimumStock());
 
         jsonGenerator.writeArrayFieldStart("categorys");
-        for (final Category category : product.getCategorys())
+        for (final SubCategory subCategory : product.getSubCategories())
         {
-            category.setTipoSerializer(TipoSerializer.VALUELABEL);
-            jsonGenerator.writeObject(category);
+            subCategory.setTipoSerializer(TipoSerializer.VALUELABEL);
+            jsonGenerator.writeObject(subCategory);
+        }
+        jsonGenerator.writeEndArray();
+
+        jsonGenerator.writeArrayFieldStart("sizes");
+        for (final ProductVariations productVariations : product.getVariations())
+        {
+            productVariations.setTipoSerializer(TipoSerializer.FULL);
+            if(productVariations.getProductVariationType().equals(ProductVariationType.SIZE)) {
+                jsonGenerator.writeObject(productVariations);
+            }
+        }
+        jsonGenerator.writeEndArray();
+
+        jsonGenerator.writeArrayFieldStart("optionals");
+        for (final ProductVariations productVariations : product.getVariations())
+        {
+            productVariations.setTipoSerializer(TipoSerializer.FULL);
+            if(productVariations.getProductVariationType().equals(ProductVariationType.OPTIONAL)) {
+                jsonGenerator.writeObject(productVariations);
+            }
         }
         jsonGenerator.writeEndArray();
 

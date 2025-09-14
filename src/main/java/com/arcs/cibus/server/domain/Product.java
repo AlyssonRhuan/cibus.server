@@ -3,17 +3,11 @@ package com.arcs.cibus.server.domain;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Transient;
+import javax.persistence.*;
 
 import com.arcs.cibus.server.domain.enums.TipoSerializer;
 import com.arcs.cibus.server.serializer.ProductSerializer;
@@ -51,7 +45,6 @@ public class Product implements Serializable {
 	
 	@Column(columnDefinition="TEXT")
 	private String description;
-	private String quickDescription;
 	private Boolean visible;
 
 	@Transient
@@ -65,18 +58,22 @@ public class Product implements Serializable {
 	private Boolean isActive;
 
 	@Builder.Default
-	@ManyToMany
-	@JoinTable(name = "cibus_product_category", 
-		joinColumns = @JoinColumn(name = "productId"), 
-		inverseJoinColumns = @JoinColumn(name = "categoryId"))
-	private List<Category> categorys = new ArrayList<>();
+	@OneToMany (mappedBy = "product", cascade = CascadeType.ALL)
+	private List<ProductVariations> variations = new ArrayList<>();
 
-	public void addCategory(Category category) {
-		categorys.add(category);
+	@Builder.Default
+	@ManyToMany
+	@JoinTable(name = "cibus_product_subcategory",
+		joinColumns = @JoinColumn(name = "productId"), 
+		inverseJoinColumns = @JoinColumn(name = "subCategoryId"))
+	private List<SubCategory> subCategories = new ArrayList<>();
+
+	public void addSubCategory(SubCategory subCategory) {
+		subCategories.add(subCategory);
 	}
 
-	public void addCategorys(List<Category> categorys) {
-		this.categorys.addAll(categorys);
+	public void addSubCategories(List<SubCategory> subCategory) {
+		this.subCategories.addAll(subCategory);
 	}
 
 	public boolean isInStockMinimum(){

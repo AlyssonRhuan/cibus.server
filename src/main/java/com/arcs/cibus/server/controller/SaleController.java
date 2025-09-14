@@ -1,4 +1,4 @@
-package com.arcs.cibus.server.resource;
+package com.arcs.cibus.server.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,12 +12,10 @@ import com.arcs.cibus.server.domain.Sale;
 import com.arcs.cibus.server.domain.enums.SaleStatus;
 import com.arcs.cibus.server.service.SaleService;
 
-
 @RestController
 @RequestMapping (value = "/sale")
-public class SaleResource
+public class SaleController
 {
-
     @Autowired
     private SaleService saleService;
 

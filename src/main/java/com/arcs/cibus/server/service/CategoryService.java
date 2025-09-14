@@ -26,18 +26,17 @@ public class CategoryService {
 	@Autowired
 	private CategoryRepository categoriaRepository;
 	
-	public Page<Category> getAll(int pagina, int qtdElementos, String name, String description, DomainActive active) throws Exception {
+	public Page<Category> getAll(int pagina, int qtdElementos, String name, DomainActive active) throws Exception {
 		Pageable paginacao = PageRequest.of(pagina, qtdElementos);
 
 		name = name.isEmpty() ? null : name.toLowerCase(Locale.ROOT);
-		description = description.isEmpty() ? null : description.toLowerCase(Locale.ROOT);
 
 		if(active.equals(DomainActive.BOUTH)){
-			return categoriaRepository.findAll(paginacao, name, description);
+			return categoriaRepository.findAll(paginacao, name);
 		}
 		else{
 			boolean categoryActive = active.equals(DomainActive.YES) ? true : false;
-			return categoriaRepository.findAll(paginacao, name, description, categoryActive);
+			return categoriaRepository.findAll(paginacao, name, categoryActive);
 		}
 	}
 	
@@ -49,9 +48,9 @@ public class CategoryService {
 	
 	public void delete(Long categoriaId) throws ConstraintViolationException, Exception {	
 		Category categoria = this.getById(categoriaId);
-		if(categoria.getProducts().size() > 0){
-			throw new DeleteException("A caegoria " + categoria.getName() + " não pode ser deletada, pois tem produtos.");
-		}
+//		if(categoria.getProducts().size() > 0){
+//			throw new DeleteException("A caegoria " + categoria.getName() + " não pode ser deletada, pois tem produtos.");
+//		}
 		categoriaRepository.delete(categoria);
 	}
 	

@@ -1,11 +1,7 @@
-package com.arcs.cibus.server.resource;
+package com.arcs.cibus.server.controller;
 
 import com.arcs.cibus.server.domain.Cash;
-import com.arcs.cibus.server.domain.Product;
-import com.arcs.cibus.server.domain.User;
-import com.arcs.cibus.server.domain.enums.DomainActive;
 import com.arcs.cibus.server.service.CashService;
-import com.arcs.cibus.server.service.ProductService;
 import com.arcs.cibus.server.service.exceptions.ObjectNotFoundException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/cash")
-public class CashResource {
+public class CashController {
 
     @Autowired
     private CashService cashService;

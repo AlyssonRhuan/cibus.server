@@ -1,4 +1,4 @@
-package com.arcs.cibus.server.resource;
+package com.arcs.cibus.server.controller;
 
 import java.util.List;
 
@@ -12,17 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.arcs.cibus.server.domain.Category;
 import com.arcs.cibus.server.domain.Payment;
-import com.arcs.cibus.server.domain.Product;
 import com.arcs.cibus.server.domain.enums.DomainActive;
 import com.arcs.cibus.server.service.PaymentService;
-import com.arcs.cibus.server.service.ProductService;
 import com.arcs.cibus.server.service.exceptions.ObjectNotFoundException;
 
 @RestController
 @RequestMapping (value = "/payment")
-public class PaymentResource
+public class PaymentController
 {
     @Autowired
     private PaymentService paymentService;
